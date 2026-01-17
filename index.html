@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stance in Motion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #4da6ff;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px #0080ff, 0 0 30px #0080ff;
+        }
+        
+        .control-group {
+            background: #0f0f0f;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #0080ff;
+            box-shadow: 0 0 10px rgba(0, 128, 255, 0.3);
+        }
+        
+        .control-group h2 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #4da6ff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 15px 25px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        button:active {
+            transform: scale(0.95);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #00ff88, #00cc66);
+            color: #0a0a0a;
+            flex: 1;
+            min-width: 120px;
+            box-shadow: 0 0 20px #00ff88, 0 0 30px rgba(0, 255, 136, 0.5);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #33ffaa, #00ff88);
+            box-shadow: 0 0 30px #00ff88, 0 0 40px rgba(0, 255, 136, 0.7);
+        }
+        
+        .btn-secondary {
+            background: #1a1a1a;
+            color: #4da6ff;
+            flex: 1;
+            border: 1px solid #0080ff;
+        }
+        
+        .btn-secondary:hover {
+            background: #001a33;
+            box-shadow: 0 0 10px rgba(0, 128, 255, 0.3);
+        }
+        
+        .btn-secondary.active {
+            background: #0080ff;
+            color: #0a0a0a;
+            box-shadow: 0 0 15px #0080ff, 0 0 25px rgba(0, 128, 255, 0.5);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ff3366, #cc0044);
+            color: #0a0a0a;
+            box-shadow: 0 0 20px #ff3366, 0 0 30px rgba(255, 51, 102, 0.5);
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #ff6699, #ff3366);
+            box-shadow: 0 0 30px #ff3366, 0 0 40px rgba(255, 51, 102, 0.7);
+        }
+        
+        .slider-group {
+            margin-bottom: 15px;
+        }
+        
+        .slider-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #555;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #0080ff;
+            cursor: pointer;
+            box-shadow: 0 0 15px #0080ff;
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #0080ff;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 15px #0080ff;
+        }
+        
+        .status {
+            background: #0f0f0f;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid #0080ff;
+            box-shadow: 0 0 15px rgba(0, 128, 255, 0.3);
+        }
+        
+        .status-text {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .action-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: #ffffff;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 0 20px #0080ff, 0 0 30px #0080ff, 0 0 40px #0080ff;
+        }
+        
+        .timer {
+            font-size: 2em;
+            color: #4da6ff;
+            text-shadow: 0 0 15px #0080ff;
+        }
+        
+        .custom-timing {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .custom-timing input {
+            padding: 10px;
+            font-size: 1em;
+            border: 2px solid #0080ff;
+            border-radius: 5px;
+            background: #0a0a0a;
+            color: #4da6ff;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Mode buttons - two colors */
+        [data-mode="random"] {
+            background: #1a1a1a !important;
+            border-color: #00ff88 !important;
+            color: #cccccc !important;
+        }
+        
+        [data-mode="random"].active {
+            background: #00ff88 !important;
+            color: #0a0a0a !important;
+            box-shadow: 0 0 15px #00ff88 !important;
+        }
+        
+        [data-mode="course"] {
+            background: #1a1a1a !important;
+            border-color: #ff9900 !important;
+            color: #cccccc !important;
+        }
+        
+        [data-mode="course"].active {
+            background: #ff9900 !important;
+            color: #0a0a0a !important;
+            box-shadow: 0 0 15px #ff9900 !important;
+        }
+        
+        /* Speed buttons - colored outlines when inactive */
+        [data-speed="slow"] {
+            background: #1a1a1a !important;
+            border: 1px solid #4da6ff !important;
+            color: #cccccc !important;
+        }
+        
+        [data-speed="slow"].active {
+            background: linear-gradient(135deg, #4da6ff, #0080ff) !important;
+            color: #0a0a0a !important;
+            border: none !important;
+            box-shadow: 0 0 20px #4da6ff !important;
+        }
+        
+        [data-speed="normal"] {
+            background: #1a1a1a !important;
+            border: 1px solid #00ff88 !important;
+            color: #cccccc !important;
+        }
+        
+        [data-speed="normal"].active {
+            background: linear-gradient(135deg, #00ff88, #00cc66) !important;
+            color: #0a0a0a !important;
+            border: none !important;
+            box-shadow: 0 0 20px #00ff88 !important;
+        }
+        
+        [data-speed="fast"] {
+            background: #1a1a1a !important;
+            border: 1px solid #ffaa00 !important;
+            color: #cccccc !important;
+        }
+        
+        [data-speed="fast"].active {
+            background: linear-gradient(135deg, #ffaa00, #ff6600) !important;
+            color: #0a0a0a !important;
+            border: none !important;
+            box-shadow: 0 0 20px #ffaa00 !important;
+        }
+        
+        [data-speed="chaos"] {
+            background: #1a1a1a !important;
+            border: 1px solid #ff3366 !important;
+            color: #cccccc !important;
+        }
+        
+        [data-speed="chaos"].active {
+            background: linear-gradient(135deg, #ff3366, #cc0044) !important;
+            color: #0a0a0a !important;
+            border: none !important;
+            box-shadow: 0 0 20px #ff3366 !important;
+        }
+        
+        /* Timing buttons - cyan outline */
+        [data-timing] {
+            background: #1a1a1a !important;
+            border: 1px solid #00cccc !important;
+            color: #cccccc !important;
+        }
+        
+        [data-timing].active {
+            background: linear-gradient(135deg, #00ffff, #00cccc) !important;
+            color: #0a0a0a !important;
+            border: none !important;
+            box-shadow: 0 0 20px #00cccc !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stance in Motion</h1>
+        
+        <div class="status">
+            <div class="status-text">Ready</div>
+            <div class="action-display" id="actionDisplay">—</div>
+            <div class="timer" id="timer"></div>
+        </div>
+        
+        <div class="control-group">
+            <div class="button-group">
+                <button class="btn-primary" id="startBtn">START</button>
+                <button class="btn-danger hidden" id="pauseBtn">PAUSE</button>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <h2>Mode</h2>
+            <div class="button-group">
+                <button class="btn-secondary active" data-mode="random">Random</button>
+                <button class="btn-secondary" data-mode="course">Course</button>
+            </div>
+        </div>
+        
+        <div class="control-group hidden" id="courseSelector">
+            <h2>Course</h2>
+            <div class="button-group">
+                <button class="btn-secondary active" data-course="foundations">Setup & Transition</button>
+                <button class="btn-secondary" data-course="defense">Defense to Offense</button>
+                <button class="btn-secondary" data-course="chaos">Mid-Shot Chaos</button>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <h2>Options</h2>
+            <div class="button-group">
+                <button class="btn-secondary" id="comboBtn">Combos: OFF</button>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <h2>Speed</h2>
+            <div class="button-group">
+                <button class="btn-secondary" data-speed="slow">Slow</button>
+                <button class="btn-secondary active" data-speed="normal">Normal</button>
+                <button class="btn-secondary" data-speed="fast">Fast</button>
+                <button class="btn-secondary" data-speed="chaos">Chaos</button>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <h2>Timing</h2>
+            <div class="button-group">
+                <button class="btn-secondary active" data-timing="1-30">1min / 30s</button>
+                <button class="btn-secondary" data-timing="2-30">2min / 30s</button>
+                <button class="btn-secondary" data-timing="5-0">5min Continuous</button>
+                <button class="btn-secondary" data-timing="custom">Custom</button>
+            </div>
+            <div class="custom-timing hidden" id="customTiming">
+                <input type="number" id="workTime" placeholder="Work (sec)" value="60">
+                <input type="number" id="restTime" placeholder="Rest (sec)" value="30">
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <div class="slider-group">
+                <label>Volume: <span id="volumeValue">80%</span></label>
+                <input type="range" id="volumeSlider" min="0" max="100" value="80">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Action definitions
+        const ACTIONS = {
+            easy: ['Circle', 'Sprawl', 'Shoot', 'Down block'],
+            medium: ['Move left', 'Move right', 'Forward', 'Backward', 'Circle', 'Fake', 'Fake left', 'Fake right', 'Sprawl', 'Down block'],
+            hard: ['Sweep single', 'High crotch', 'Double', 'Left single', 'Right single', 'Left snatch single', 'Right snatch single', 'Circle left', 'Circle right', 'Sprawl', 'Down block', 'Switch left', 'Switch right', 'Reshoot', 'Level change']
+        };
+        
+        // Course sequences - grouped by training focus
+        const COURSES = {
+            foundations: {
+                name: 'Setup & Transition',
+                sequences: [
+                    ['Fake left', 'Right single'],
+                    ['Fake right', 'Left single'],
+                    ['Fake left', 'Right single', 'Switch left'],
+                    ['Fake right', 'Left single', 'Switch right'],
+                    ['Sweep single', 'High crotch'],
+                    ['Left single', 'High crotch'],
+                    ['Right single', 'High crotch']
+                ]
+            },
+            defense: {
+                name: 'Defense to Offense',
+                sequences: [
+                    ['Sprawl', 'Circle left'],
+                    ['Sprawl', 'Circle right'],
+                    ['Down block', 'Reshoot'],
+                    ['Sprawl', 'Reshoot'],
+                    ['Down block', 'Circle left', 'Shoot'],
+                    ['Down block', 'Circle right', 'Shoot']
+                ]
+            },
+            chaos: {
+                name: 'Mid-Shot Chaos',
+                sequences: [
+                    ['Fake', 'Sweep single', 'Switch right', 'High crotch'],
+                    ['Fake', 'Sweep single', 'Switch left', 'High crotch'],
+                    ['Left single', 'Switch right', 'High crotch'],
+                    ['Right single', 'Switch left', 'High crotch'],
+                    ['Sweep single', 'High crotch', 'Reshoot'],
+                    ['Level change', 'Double', 'Reshoot']
+                ]
+            }
+        };
+
+        // Combination definitions - setup → attack → adjust
+        const COMBINATIONS = [
+            // Setup → Entry
+            ['Fake', 'Sweep single'],
+            ['Fake', 'Double'],
+            ['Fake left', 'Right single'],
+            ['Fake right', 'Left single'],
+            ['Level change', 'High crotch'],
+            ['Circle left', 'Shoot'],
+            ['Circle right', 'Shoot'],
+            
+            // Entry → Transition
+            ['Sweep single', 'High crotch'],
+            ['High crotch', 'Sweep single'],
+            ['Left single', 'Switch right'],
+            ['Right single', 'Switch left'],
+            ['Double', 'Reshoot'],
+            
+            // Setup → Entry → Adjust
+            ['Fake', 'Sweep single', 'High crotch'],
+            ['Fake left', 'Right single', 'Switch left'],
+            ['Fake right', 'Left single', 'Switch right'],
+            ['Circle', 'Fake', 'Double'],
+            
+            // Defense → Counter
+            ['Down block', 'Reshoot'],
+            ['Sprawl', 'Circle left'],
+            ['Sprawl', 'Circle right']
+        ];
+
+        // Speed configurations
+        const SPEED_CONFIG = {
+            slow: { delay: [2500, 3500], jitter: 0.1, playbackRate: 0.85 },
+            normal: { delay: [2000, 2500], jitter: 0.1, playbackRate: 0.9 },
+            fast: { delay: [1300, 1800], jitter: 0.15, playbackRate: 1.0 },
+            chaos: { delay: [700, 1100], jitter: 0.2, playbackRate: 1.15 }
+        };
+
+        // State
+        let state = {
+            running: false,
+            speed: 'normal',
+            combosEnabled: false,
+            mode: 'random', // 'random' or 'course'
+            course: 'foundations',
+            workTime: 60,
+            restTime: 30,
+            volume: 0.8,
+            lastAction: null,
+            currentPhase: 'ready', // 'ready', 'work', 'rest'
+            timeRemaining: 0,
+            courseSequenceIndex: 0
+        };
+
+        let timers = {
+            phase: null,
+            callout: null
+        };
+
+        // DOM elements
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const actionDisplay = document.getElementById('actionDisplay');
+        const timerDisplay = document.getElementById('timer');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeValue = document.getElementById('volumeValue');
+        const comboBtn = document.getElementById('comboBtn');
+        const customTiming = document.getElementById('customTiming');
+        const courseSelector = document.getElementById('courseSelector');
+
+        // Speech synthesis
+        function speak(text, playbackRate = 1.0) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.volume = state.volume;
+            utterance.rate = playbackRate;
+            utterance.pitch = 1.0;
+            speechSynthesis.cancel();
+            speechSynthesis.speak(utterance);
+        }
+
+        // Get random delay with jitter
+        function getDelay() {
+            const config = SPEED_CONFIG[state.speed];
+            const base = config.delay[0] + Math.random() * (config.delay[1] - config.delay[0]);
+            const jitter = base * config.jitter * (Math.random() * 2 - 1);
+            return base + jitter;
+        }
+
+        // Select next action
+        function selectAction() {
+            // Course mode - use predefined sequences
+            if (state.mode === 'course') {
+                const sequences = COURSES[state.course].sequences;
+                const sequence = sequences[state.courseSequenceIndex % sequences.length];
+                state.courseSequenceIndex++;
+                return sequence;
+            }
+            
+            // Random mode - use all hard actions
+            const actions = ACTIONS.hard;
+            
+            // Occasionally use combination if enabled
+            if (state.combosEnabled && Math.random() < 0.3) {
+                return COMBINATIONS[Math.floor(Math.random() * COMBINATIONS.length)];
+            }
+            
+            // Select single action (avoid repeat)
+            let action;
+            do {
+                action = actions[Math.floor(Math.random() * actions.length)];
+            } while (action === state.lastAction && actions.length > 1);
+            
+            state.lastAction = action;
+            return [action];
+        }
+
+        // Call out action with proper speech timing
+        function calloutAction() {
+            if (!state.running || state.currentPhase !== 'work') return;
+
+            const actions = selectAction();
+            const config = SPEED_CONFIG[state.speed];
+            
+            // Display full sequence
+            actionDisplay.textContent = actions.join(' → ');
+            
+            // Faster speech for multi-action sequences
+            const sequenceRate = actions.length > 1 ? config.playbackRate * 1.15 : config.playbackRate;
+            
+            // Speak actions sequentially with proper timing
+            let totalDelay = 0;
+            actions.forEach((action, i) => {
+                setTimeout(() => {
+                    if (state.running && state.currentPhase === 'work') {
+                        const utterance = new SpeechSynthesisUtterance(action);
+                        utterance.volume = state.volume;
+                        utterance.rate = sequenceRate;
+                        utterance.pitch = 1.0;
+                        speechSynthesis.speak(utterance);
+                    }
+                }, totalDelay);
+                
+                // Estimate speech duration + rhythm pause
+                const wordCount = action.split(' ').length;
+                const speechDuration = (wordCount * 350) / sequenceRate;
+                const rhythmPause = 15;
+                totalDelay += speechDuration + rhythmPause;
+            });
+
+            // Schedule next callout after sequence completes
+            timers.callout = setTimeout(calloutAction, totalDelay + getDelay());
+        }
+
+        // Start work phase
+        function startWork() {
+            state.currentPhase = 'work';
+            state.timeRemaining = state.workTime;
+            actionDisplay.textContent = 'GO!';
+            speak('Go!', SPEED_CONFIG[state.speed].playbackRate);
+            
+            updateTimer();
+            timers.callout = setTimeout(calloutAction, getDelay());
+            
+            timers.phase = setInterval(() => {
+                state.timeRemaining--;
+                updateTimer();
+                
+                if (state.timeRemaining <= 0) {
+                    clearInterval(timers.phase);
+                    clearTimeout(timers.callout);
+                    if (state.restTime > 0) {
+                        startRest();
+                    } else {
+                        startWork(); // Continuous mode
+                    }
+                }
+            }, 1000);
+        }
+
+        // Start rest phase
+        function startRest() {
+            state.currentPhase = 'rest';
+            state.timeRemaining = state.restTime;
+            actionDisplay.textContent = 'REST';
+            speak('Rest');
+            
+            updateTimer();
+            
+            timers.phase = setInterval(() => {
+                state.timeRemaining--;
+                updateTimer();
+                
+                if (state.timeRemaining <= 0) {
+                    clearInterval(timers.phase);
+                    startWork();
+                }
+            }, 1000);
+        }
+
+        // Update timer display
+        function updateTimer() {
+            const mins = Math.floor(state.timeRemaining / 60);
+            const secs = state.timeRemaining % 60;
+            timerDisplay.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Start session
+        function start() {
+            state.running = true;
+            startBtn.classList.add('hidden');
+            pauseBtn.classList.remove('hidden');
+            startWork();
+        }
+
+        // Pause session
+        function pause() {
+            state.running = false;
+            startBtn.classList.remove('hidden');
+            pauseBtn.classList.add('hidden');
+            clearInterval(timers.phase);
+            clearTimeout(timers.callout);
+            speechSynthesis.cancel();
+            actionDisplay.textContent = 'PAUSED';
+            timerDisplay.textContent = '';
+        }
+
+        // Event listeners
+        startBtn.addEventListener('click', start);
+        pauseBtn.addEventListener('click', pause);
+
+        // Speed buttons
+        document.querySelectorAll('[data-speed]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('[data-speed]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                state.speed = btn.dataset.speed;
+            });
+        });
+
+        // Timing buttons
+        document.querySelectorAll('[data-timing]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('[data-timing]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                if (btn.dataset.timing === 'custom') {
+                    customTiming.classList.remove('hidden');
+                } else {
+                    customTiming.classList.add('hidden');
+                    const [work, rest] = btn.dataset.timing.split('-').map(Number);
+                    state.workTime = work * 60;
+                    state.restTime = rest;
+                }
+            });
+        });
+
+        // Custom timing inputs
+        document.getElementById('workTime').addEventListener('change', (e) => {
+            state.workTime = parseInt(e.target.value) || 60;
+        });
+        
+        document.getElementById('restTime').addEventListener('change', (e) => {
+            state.restTime = parseInt(e.target.value) || 30;
+        });
+
+        // Volume slider
+        volumeSlider.addEventListener('input', (e) => {
+            state.volume = e.target.value / 100;
+            volumeValue.textContent = `${e.target.value}%`;
+        });
+
+        // Combo toggle
+        comboBtn.addEventListener('click', () => {
+            state.combosEnabled = !state.combosEnabled;
+            comboBtn.textContent = `Combos: ${state.combosEnabled ? 'ON' : 'OFF'}`;
+            comboBtn.classList.toggle('active');
+        });
+        
+        // Mode buttons
+        document.querySelectorAll('[data-mode]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('[data-mode]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                state.mode = btn.dataset.mode;
+                
+                if (state.mode === 'course') {
+                    courseSelector.classList.remove('hidden');
+                } else {
+                    courseSelector.classList.add('hidden');
+                }
+            });
+        });
+        
+        // Course buttons
+        document.querySelectorAll('[data-course]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('[data-course]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                state.course = btn.dataset.course;
+                state.courseSequenceIndex = 0;
+            });
+        });
+    </script>
+</body>
+</html>
