@@ -54,7 +54,3 @@ Three structured courses with predefined sequences:
 ## Tech
 
 Pure HTML/CSS/JavaScript with Web Speech API. No dependencies.
-
-## License
-
-MIT
