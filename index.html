@@ -588,6 +588,7 @@
             <div class="button-group">
                 <button class="btn-secondary" id="comboBtn">Combos: OFF</button>
                 <button class="btn-secondary" id="showNextBtn">Show Next: OFF</button>
+                <button class="btn-secondary" id="showReactionBtnRandom">Show Reaction: OFF</button>
             </div>
         </div>
         
@@ -595,6 +596,7 @@
             <h2>Options</h2>
             <div class="button-group">
                 <button class="btn-secondary" id="showNextBtnCourse">Show Next: OFF</button>
+                <button class="btn-secondary" id="showReactionBtn">Show Reaction: OFF</button>
             </div>
         </div>
         
@@ -675,9 +677,6 @@
                     <div class="light" data-level="3"></div>
                     <div class="light" data-level="4"></div>
                 </div>
-            </div>
-            <div class="button-group">
-                <button class="btn-secondary" id="showReactionBtn">Show Reaction: OFF</button>
             </div>
         </div>
     </div>
@@ -824,7 +823,9 @@
         const comboSpeedLights = document.getElementById('comboSpeedLights');
         const comboBtn = document.getElementById('comboBtn');
         const showNextBtn = document.getElementById('showNextBtn');
+        const showNextBtnCourse = document.getElementById('showNextBtnCourse');
         const showReactionBtn = document.getElementById('showReactionBtn');
+        const showReactionBtnRandom = document.getElementById('showReactionBtnRandom');
         const customTiming = document.getElementById('customTiming');
         const courseSelector = document.getElementById('courseSelector');
         const combosGroup = document.getElementById('combosGroup');
@@ -1383,6 +1384,17 @@
             state.showReaction = !state.showReaction;
             showReactionBtn.textContent = `Show Reaction: ${state.showReaction ? 'ON' : 'OFF'}`;
             showReactionBtn.classList.toggle('active');
+            if (!state.showReaction) {
+                opponentReaction.classList.remove('always-show', 'show');
+                opponentReaction.textContent = '';
+            }
+        });
+        
+        // Show reaction toggle (random mode)
+        showReactionBtnRandom.addEventListener('click', () => {
+            state.showReaction = !state.showReaction;
+            showReactionBtnRandom.textContent = `Show Reaction: ${state.showReaction ? 'ON' : 'OFF'}`;
+            showReactionBtnRandom.classList.toggle('active');
             if (!state.showReaction) {
                 opponentReaction.classList.remove('always-show', 'show');
                 opponentReaction.textContent = '';
