@@ -1055,7 +1055,7 @@
                 opponentReaction.classList.add('always-show');
             } else {
                 opponentReaction.classList.add('show');
-                setTimeout(() => opponentReaction.classList.remove('show'), 2000);
+                setTimeout(() => opponentReaction.classList.remove('show'), 4000);
             }
         }
 
@@ -1123,7 +1123,7 @@
                 });
                 
                 if (allReactions.length > 0) {
-                    setTimeout(() => showAllOpponentReactions(allReactions), 1500);
+                    setTimeout(() => showAllOpponentReactions(allReactions), 500);
                 }
                 
                 return actions;
@@ -1148,7 +1148,7 @@
                         }
                     });
                     if (allReactions.length > 0) {
-                        setTimeout(() => showAllOpponentReactions(allReactions), 1500);
+                        setTimeout(() => showAllOpponentReactions(allReactions), 500);
                     }
                 }
                 
