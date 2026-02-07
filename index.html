@@ -233,6 +233,23 @@
             box-shadow: 0 0 15px rgba(255, 153, 0, 0.5);
         }
         
+        .voice-select {
+            flex: 1;
+            padding: 8px;
+            font-size: 0.95em;
+            border: 2px solid #0080ff;
+            border-radius: 5px;
+            background: #0a0a0a;
+            color: #4da6ff;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+        }
+        
+        .voice-select:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 128, 255, 0.3);
+        }
+        
         .system-info {
             font-size: 1em;
             color: #999;
@@ -582,7 +599,6 @@
             <h2>Options</h2>
             <div class="button-group">
                 <button class="btn-secondary" id="showNextBtnCourse">Show Next: OFF</button>
-                <button class="btn-secondary" id="showReactionBtn">Show Reaction: OFF</button>
             </div>
         </div>
         
@@ -641,6 +657,12 @@
         <div class="control-group">
             <h2>Additional Customization</h2>
             <div class="custom-row">
+                <span>Voice:</span>
+                <select id="voiceSelect" class="voice-select">
+                    <option value="0">Default</option>
+                </select>
+            </div>
+            <div class="custom-row">
                 <span>Speech Speed:</span>
                 <div class="volume-lights" id="speechLights">
                     <div class="light" data-level="1"></div>
@@ -657,6 +679,9 @@
                     <div class="light" data-level="3"></div>
                     <div class="light" data-level="4"></div>
                 </div>
+            </div>
+            <div class="button-group">
+                <button class="btn-secondary active" id="showReactionBtn">Show Reaction: ON</button>
             </div>
         </div>
     </div>
@@ -775,9 +800,10 @@
             speechMultiplier: 1.0,
             delayMultiplier: 1.0,
             showNext: false,
-            showReaction: false,
+            showReaction: true,
             nextActions: null,
-            currentReaction: null
+            currentReaction: null,
+            selectedVoice: null
         };
 
         let timers = {
@@ -805,6 +831,23 @@
         const systemSelect = document.getElementById('systemSelect');
         const systemInfo = document.getElementById('systemInfo');
         const opponentReaction = document.getElementById('opponentReaction');
+        const voiceSelect = document.getElementById('voiceSelect');
+        
+        // Load available voices
+        let voices = [];
+        function loadVoices() {
+            voices = speechSynthesis.getVoices();
+            voiceSelect.innerHTML = voices.map((voice, i) => 
+                `<option value="${i}">${voice.name} (${voice.lang})</option>`
+            ).join('');
+        }
+        
+        speechSynthesis.onvoiceschanged = loadVoices;
+        loadVoices();
+        
+        voiceSelect.addEventListener('change', (e) => {
+            state.selectedVoice = voices[parseInt(e.target.value)];
+        });
         
         const showNextBtnCourse = document.getElementById('showNextBtnCourse');
         
@@ -846,8 +889,10 @@
                     light.classList.remove('active');
                 }
             });
-            // Map 1-4 to 0.5x-2.0x delay between moves in combo
-            state.delayMultiplier = 0.5 + (level - 1) * 0.5;
+            // Map 1-4 to faster combos: higher level = shorter pause
+            // Level 1: 100ms, Level 2: 50ms, Level 3: 20ms, Level 4: 0ms
+            const pauseTimes = [100, 50, 20, 0];
+            state.delayMultiplier = pauseTimes[level - 1];
         }
         
         // Volume light interaction
@@ -985,11 +1030,10 @@
         
         function showOpponentReaction(reaction) {
             state.currentReaction = formatAction(reaction);
+            opponentReaction.textContent = state.currentReaction;
             if (state.showReaction) {
-                opponentReaction.textContent = state.currentReaction;
                 opponentReaction.classList.add('always-show');
             } else {
-                opponentReaction.textContent = state.currentReaction;
                 opponentReaction.classList.add('show');
                 setTimeout(() => opponentReaction.classList.remove('show'), 2000);
             }
@@ -1001,6 +1045,9 @@
             utterance.volume = state.volume;
             utterance.rate = playbackRate;
             utterance.pitch = 1.0;
+            if (state.selectedVoice) {
+                utterance.voice = state.selectedVoice;
+            }
             speechSynthesis.cancel();
             speechSynthesis.speak(utterance);
         }
@@ -1026,30 +1073,34 @@
                 
                 // Convert sequence steps to action labels, filtering redundant setup moves
                 const systemName = state.system.replace(/_/g, ' ');
-                const actions = seq.steps
-                    .map(step => formatAction(step.action))
-                    .filter(action => {
-                        const lowerAction = action.toLowerCase();
-                        // Filter out actions that are just establishing the current tie/system
-                        if (systemName.includes('collar') && lowerAction.includes('collar tie')) return false;
-                        if (systemName.includes('inside') && lowerAction.includes('inside tie')) return false;
-                        if (systemName.includes('two') && lowerAction.includes('two on one')) return false;
-                        if (systemName.includes('underhook') && lowerAction.includes('underhook') && !lowerAction.includes('counter')) return false;
-                        if (systemName.includes('overhook') && lowerAction.includes('overhook')) return false;
-                        return true;
-                    });
+                const filteredSteps = seq.steps.filter(step => {
+                    const action = formatAction(step.action);
+                    const lowerAction = action.toLowerCase();
+                    // Filter out actions that are just establishing the current tie/system
+                    if (systemName.includes('collar') && lowerAction.includes('collar tie')) return false;
+                    if (systemName.includes('inside') && lowerAction.includes('inside tie')) return false;
+                    if (systemName.includes('two') && lowerAction.includes('two on one')) return false;
+                    if (systemName.includes('underhook') && lowerAction.includes('underhook') && !lowerAction.includes('counter')) return false;
+                    if (systemName.includes('overhook') && lowerAction.includes('overhook')) return false;
+                    return true;
+                });
+                
+                const actions = filteredSteps.map(step => formatAction(step.action));
                 
                 // If all actions filtered out, return the original
                 if (actions.length === 0) {
                     return seq.steps.map(step => formatAction(step.action));
                 }
                 
-                // Show opponent reaction if present
-                if (seq.steps.length > 0 && seq.steps[0].expect_opponent) {
-                    const reactions = seq.steps[0].expect_opponent;
-                    const reaction = reactions[Math.floor(Math.random() * reactions.length)];
-                    setTimeout(() => showOpponentReaction(reaction), 1500);
-                }
+                // Show opponent reactions for steps that have them
+                filteredSteps.forEach((step, i) => {
+                    if (step.expect_opponent) {
+                        const reactions = step.expect_opponent;
+                        const reaction = reactions[Math.floor(Math.random() * reactions.length)];
+                        // Show reaction after the move is called (1.5s + index delay)
+                        setTimeout(() => showOpponentReaction(reaction), 1500 + (i * 1000));
+                    }
+                });
                 
                 return actions;
             }
@@ -1107,31 +1158,47 @@
             const sequenceRate = actions.length > 1 ? config.playbackRate * 1.15 : config.playbackRate;
             const finalRate = sequenceRate * state.speechMultiplier;
             
-            // Speak actions sequentially with proper timing
-            let totalDelay = 0;
-            actions.forEach((action, i) => {
-                setTimeout(() => {
-                    if (state.running && state.currentPhase === 'work') {
-                        const utterance = new SpeechSynthesisUtterance(action);
-                        utterance.volume = state.volume;
-                        utterance.rate = finalRate;
-                        utterance.pitch = 1.0;
-                        speechSynthesis.speak(utterance);
-                    }
-                }, totalDelay);
+            // Speak actions sequentially with proper timing using onend events
+            let currentIndex = 0;
+            
+            function speakNext() {
+                if (currentIndex >= actions.length || !state.running || state.currentPhase !== 'work') {
+                    // Schedule next callout after sequence completes
+                    const baseDelay = getDelay();
+                    const extraDelay = actions.length > 1 ? baseDelay * 0.3 : 0;
+                    timers.callout = setTimeout(calloutAction, baseDelay + extraDelay);
+                    return;
+                }
                 
-                // Estimate speech duration + natural pause between moves
-                const wordCount = action.split(' ').length;
-                const speechDuration = (wordCount * 350) / finalRate;
-                const naturalPause = i < actions.length - 1 ? (400 / state.delayMultiplier) : 0;
-                totalDelay += speechDuration + naturalPause;
-            });
-
-            // Schedule next callout after sequence completes
-            // Add 30% more delay for multi-action sequences
-            const baseDelay = getDelay();
-            const extraDelay = actions.length > 1 ? baseDelay * 0.3 : 0;
-            timers.callout = setTimeout(calloutAction, totalDelay + baseDelay + extraDelay);
+                const action = actions[currentIndex];
+                const startTime = Date.now();
+                console.log(`Speaking: "${action}" at index ${currentIndex}, delay multiplier: ${state.delayMultiplier}ms`);
+                
+                const utterance = new SpeechSynthesisUtterance(action);
+                utterance.volume = state.volume;
+                utterance.rate = finalRate;
+                utterance.pitch = 1.0;
+                utterance.lang = 'en-US';
+                if (state.selectedVoice) {
+                    utterance.voice = state.selectedVoice;
+                }
+                
+                utterance.onend = () => {
+                    const endTime = Date.now();
+                    console.log(`Finished speaking in ${endTime - startTime}ms, waiting ${state.delayMultiplier}ms before next`);
+                    currentIndex++;
+                    if (currentIndex < actions.length) {
+                        // Add fluid pause before next move
+                        setTimeout(speakNext, state.delayMultiplier);
+                    } else {
+                        speakNext(); // Trigger next callout
+                    }
+                };
+                
+                speechSynthesis.speak(utterance);
+            }
+            
+            speakNext();
         }
 
         // Start work phase
@@ -1315,7 +1382,7 @@
         // Initialize lights
         setVolumeLights(6);
         setSpeechLights(3); // 1.1x
-        setComboSpeedLights(2); // 1.0x
+        setComboSpeedLights(4); // 0ms pause (instant)
     </script>
 </body>
 </html>
