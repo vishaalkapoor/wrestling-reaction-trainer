@@ -1,0 +1,1866 @@
+{
+  "basic_moves": [
+    {
+      "id": "stance_reset",
+      "label": "Stance Reset",
+      "category": "movement",
+      "systems": [
+        "open_no_tie",
+        "collar_tie",
+        "inside_tie",
+        "two_on_one",
+        "underhook",
+        "overhook_whizzer",
+        "counter_shot"
+      ],
+      "typical_reactions": [],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "step_in",
+      "label": "Step In",
+      "category": "movement",
+      "systems": [
+        "open_no_tie",
+        "collar_tie",
+        "inside_tie"
+      ],
+      "typical_reactions": [
+        "reaches",
+        "circles_out"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "step_out",
+      "label": "Step Out",
+      "category": "movement",
+      "systems": [
+        "open_no_tie",
+        "collar_tie",
+        "inside_tie",
+        "two_on_one"
+      ],
+      "typical_reactions": [
+        "reaches",
+        "plants_feet"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "circle",
+      "label": "Circle",
+      "category": "movement",
+      "systems": [
+        "open_no_tie",
+        "collar_tie",
+        "inside_tie",
+        "two_on_one",
+        "underhook"
+      ],
+      "typical_reactions": [
+        "circles_out",
+        "squares_up"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "level_change",
+      "label": "Level Change",
+      "category": "movement",
+      "systems": [
+        "open_no_tie",
+        "inside_tie",
+        "two_on_one"
+      ],
+      "typical_reactions": [
+        "sprawl",
+        "downblock",
+        "hips_back"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "penetration_step",
+      "label": "Penetration Step",
+      "category": "movement",
+      "systems": [
+        "open_no_tie",
+        "inside_tie"
+      ],
+      "typical_reactions": [
+        "sprawl",
+        "hips_back"
+      ],
+      "risk": "medium",
+      "energy": "medium"
+    },
+    {
+      "id": "angle_step",
+      "label": "Angle Step",
+      "category": "movement",
+      "systems": [
+        "two_on_one",
+        "underhook",
+        "collar_tie"
+      ],
+      "typical_reactions": [
+        "squares_up",
+        "circles_out"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "sprawl",
+      "label": "Sprawl",
+      "category": "movement",
+      "systems": [
+        "counter_shot"
+      ],
+      "typical_reactions": [
+        "counter_shot"
+      ],
+      "risk": "low",
+      "energy": "medium"
+    },
+    {
+      "id": "downblock",
+      "label": "Down Block",
+      "category": "movement",
+      "systems": [
+        "counter_shot"
+      ],
+      "typical_reactions": [
+        "counter_shot"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "handfight_post",
+      "label": "Hand Fight",
+      "category": "handfight",
+      "systems": [
+        "open_no_tie"
+      ],
+      "typical_reactions": [
+        "reaches",
+        "breaks_grip"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "wrist_control",
+      "label": "Wrist Control",
+      "category": "handfight",
+      "systems": [
+        "open_no_tie",
+        "collar_tie"
+      ],
+      "typical_reactions": [
+        "breaks_grip",
+        "circles_out"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "collar_tie",
+      "label": "Collar Tie",
+      "category": "handfight",
+      "systems": [
+        "collar_tie"
+      ],
+      "typical_reactions": [
+        "stiff_arm",
+        "breaks_grip"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "inside_tie",
+      "label": "Inside Tie",
+      "category": "handfight",
+      "systems": [
+        "inside_tie"
+      ],
+      "typical_reactions": [
+        "breaks_grip",
+        "circles_out"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "clear_tie",
+      "label": "Clear Tie",
+      "category": "handfight",
+      "systems": [
+        "collar_tie",
+        "inside_tie",
+        "two_on_one"
+      ],
+      "typical_reactions": [],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "pummel_inside",
+      "label": "Pummel Inside",
+      "category": "handfight",
+      "systems": [
+        "inside_tie",
+        "underhook"
+      ],
+      "typical_reactions": [
+        "breaks_grip",
+        "whizzer"
+      ],
+      "risk": "medium",
+      "energy": "medium"
+    },
+    {
+      "id": "two_on_one_grip",
+      "label": "Two-on-One Grip",
+      "category": "handfight",
+      "systems": [
+        "two_on_one"
+      ],
+      "typical_reactions": [
+        "squares_up",
+        "breaks_grip"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "underhook",
+      "label": "Underhook",
+      "category": "handfight",
+      "systems": [
+        "underhook"
+      ],
+      "typical_reactions": [
+        "whizzer",
+        "circles_out"
+      ],
+      "risk": "medium",
+      "energy": "medium"
+    },
+    {
+      "id": "overhook",
+      "label": "Overhook",
+      "category": "handfight",
+      "systems": [
+        "overhook_whizzer"
+      ],
+      "typical_reactions": [
+        "breaks_grip",
+        "circles_out"
+      ],
+      "risk": "medium",
+      "energy": "medium"
+    },
+    {
+      "id": "head_position_win",
+      "label": "Win Head Position",
+      "category": "handfight",
+      "systems": [
+        "collar_tie",
+        "inside_tie",
+        "counter_shot"
+      ],
+      "typical_reactions": [
+        "resists_up",
+        "circles_out"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "foot_feint",
+      "label": "Foot Feint",
+      "category": "setup",
+      "systems": [
+        "open_no_tie",
+        "inside_tie"
+      ],
+      "typical_reactions": [
+        "reaches",
+        "hips_back"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "level_feint",
+      "label": "Level Feint",
+      "category": "setup",
+      "systems": [
+        "open_no_tie",
+        "inside_tie"
+      ],
+      "typical_reactions": [
+        "sprawl",
+        "hips_back"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "snap_feint",
+      "label": "Snap Feint",
+      "category": "setup",
+      "systems": [
+        "collar_tie",
+        "inside_tie"
+      ],
+      "typical_reactions": [
+        "resists_up",
+        "hands_post"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "reach_bait",
+      "label": "Reach Bait",
+      "category": "setup",
+      "systems": [
+        "open_no_tie"
+      ],
+      "typical_reactions": [
+        "reaches"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "shoulder_fake",
+      "label": "Shoulder Fake",
+      "category": "setup",
+      "systems": [
+        "open_no_tie",
+        "inside_tie"
+      ],
+      "typical_reactions": [
+        "reaches",
+        "hips_back"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "misdirection_step",
+      "label": "Misdirection Step",
+      "category": "setup",
+      "systems": [
+        "open_no_tie",
+        "inside_tie",
+        "two_on_one"
+      ],
+      "typical_reactions": [
+        "circles_out",
+        "plants_feet"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "snapdown",
+      "label": "Snapdown",
+      "category": "attack",
+      "systems": [
+        "collar_tie",
+        "inside_tie",
+        "two_on_one",
+        "underhook"
+      ],
+      "typical_reactions": [
+        "hands_post",
+        "resists_up",
+        "front_head_exposed"
+      ],
+      "risk": "low",
+      "energy": "medium"
+    },
+    {
+      "id": "front_headlock",
+      "label": "Front Headlock",
+      "category": "attack",
+      "systems": [
+        "collar_tie",
+        "counter_shot"
+      ],
+      "typical_reactions": [
+        "hands_post",
+        "circles_out"
+      ],
+      "risk": "medium",
+      "energy": "medium"
+    },
+    {
+      "id": "go_behind",
+      "label": "Go Behind",
+      "category": "attack",
+      "systems": [
+        "collar_tie",
+        "inside_tie",
+        "two_on_one",
+        "underhook",
+        "overhook_whizzer",
+        "counter_shot"
+      ],
+      "typical_reactions": [],
+      "risk": "low",
+      "energy": "medium"
+    },
+    {
+      "id": "duck_under",
+      "label": "Duck Under",
+      "category": "attack",
+      "systems": [
+        "collar_tie"
+      ],
+      "typical_reactions": [
+        "stiff_arm",
+        "circles_out"
+      ],
+      "risk": "medium",
+      "energy": "medium"
+    },
+    {
+      "id": "shuck_by",
+      "label": "Shuck By",
+      "category": "attack",
+      "systems": [
+        "collar_tie"
+      ],
+      "typical_reactions": [
+        "stiff_arm",
+        "circles_out"
+      ],
+      "risk": "medium",
+      "energy": "medium"
+    },
+    {
+      "id": "arm_drag",
+      "label": "Arm Drag",
+      "category": "attack",
+      "systems": [
+        "inside_tie",
+        "two_on_one"
+      ],
+      "typical_reactions": [
+        "circles_out",
+        "squares_up"
+      ],
+      "risk": "medium",
+      "energy": "low"
+    },
+    {
+      "id": "sweep_single",
+      "label": "Sweep Single",
+      "category": "attack",
+      "systems": [
+        "inside_tie"
+      ],
+      "typical_reactions": [
+        "hop_defense",
+        "sprawl",
+        "whizzer"
+      ],
+      "risk": "medium",
+      "energy": "medium"
+    },
+    {
+      "id": "snatch_single",
+      "label": "Snatch Single",
+      "category": "attack",
+      "systems": [
+        "open_no_tie"
+      ],
+      "typical_reactions": [
+        "hop_defense",
+        "sprawl"
+      ],
+      "risk": "medium",
+      "energy": "medium"
+    },
+    {
+      "id": "high_crotch",
+      "label": "High Crotch",
+      "category": "attack",
+      "systems": [
+        "inside_tie",
+        "two_on_one"
+      ],
+      "typical_reactions": [
+        "crackdown",
+        "sprawl",
+        "whizzer"
+      ],
+      "risk": "medium",
+      "energy": "high"
+    },
+    {
+      "id": "double_leg",
+      "label": "Double Leg",
+      "category": "attack",
+      "systems": [
+        "open_no_tie",
+        "inside_tie"
+      ],
+      "typical_reactions": [
+        "sprawl",
+        "hips_back"
+      ],
+      "risk": "high",
+      "energy": "high"
+    },
+    {
+      "id": "blast_double",
+      "label": "Blast Double",
+      "category": "attack",
+      "systems": [
+        "open_no_tie"
+      ],
+      "typical_reactions": [
+        "sprawl",
+        "hips_back"
+      ],
+      "risk": "high",
+      "energy": "high"
+    },
+    {
+      "id": "inside_step_shot",
+      "label": "Inside Step Shot",
+      "category": "attack",
+      "systems": [
+        "inside_tie",
+        "two_on_one"
+      ],
+      "typical_reactions": [
+        "sprawl",
+        "whizzer"
+      ],
+      "risk": "medium",
+      "energy": "medium"
+    },
+    {
+      "id": "knee_tap",
+      "label": "Knee Tap",
+      "category": "attack",
+      "systems": [
+        "two_on_one",
+        "underhook"
+      ],
+      "typical_reactions": [
+        "hips_back",
+        "circles_out"
+      ],
+      "risk": "medium",
+      "energy": "medium"
+    },
+    {
+      "id": "body_lock",
+      "label": "Body Lock",
+      "category": "attack",
+      "systems": [
+        "underhook"
+      ],
+      "typical_reactions": [
+        "hips_back",
+        "whizzer"
+      ],
+      "risk": "high",
+      "energy": "high"
+    },
+    {
+      "id": "throw_by",
+      "label": "Throw By",
+      "category": "attack",
+      "systems": [
+        "underhook"
+      ],
+      "typical_reactions": [
+        "circles_out"
+      ],
+      "risk": "medium",
+      "energy": "medium"
+    },
+    {
+      "id": "whizzer_kickout",
+      "label": "Whizzer Kickout",
+      "category": "attack",
+      "systems": [
+        "overhook_whizzer"
+      ],
+      "typical_reactions": [
+        "circles_out",
+        "breaks_grip"
+      ],
+      "risk": "medium",
+      "energy": "medium"
+    },
+    {
+      "id": "spin_behind",
+      "label": "Spin Behind",
+      "category": "attack",
+      "systems": [
+        "counter_shot"
+      ],
+      "typical_reactions": [],
+      "risk": "low",
+      "energy": "medium"
+    },
+    {
+      "id": "reshot",
+      "label": "Reshot",
+      "category": "attack",
+      "systems": [
+        "counter_shot",
+        "open_no_tie"
+      ],
+      "typical_reactions": [
+        "sprawl",
+        "hips_back"
+      ],
+      "risk": "high",
+      "energy": "high"
+    }
+  ],
+  "combos": [
+    {
+      "id": "snap_go",
+      "name": "Snap to Go-Behind",
+      "system": "collar_tie",
+      "objective": "Break posture, force hands post, circle behind.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "collar_tie"
+        },
+        {
+          "action": "snapdown"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "hands_post",
+            "resists_up"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "hands_post",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        },
+        {
+          "if_opponent_reaction": "resists_up",
+          "next_steps": [
+            {
+              "action": "snapdown"
+            },
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "snap_front_head",
+      "name": "Snap to Front Headlock",
+      "system": "collar_tie",
+      "objective": "Break posture, secure front headlock control.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "collar_tie"
+        },
+        {
+          "action": "snapdown"
+        },
+        {
+          "action": "front_headlock"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "hands_post",
+            "front_head_exposed"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "hands_post",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "score"
+        },
+        {
+          "if_opponent_reaction": "circles_out",
+          "next_steps": [
+            {
+              "action": "stance_reset"
+            }
+          ],
+          "resolution": "reset"
+        }
+      ]
+    },
+    {
+      "id": "collar_duck",
+      "name": "Collar Tie Duck Under",
+      "system": "collar_tie",
+      "objective": "Opponent stiff-arms, duck under for back exposure.",
+      "difficulty": "intermediate",
+      "tags": [
+        "counter",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "collar_tie"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 1,
+          "likely_reactions": [
+            "stiff_arm"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "stiff_arm",
+          "next_steps": [
+            {
+              "action": "duck_under"
+            },
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "collar_shuck",
+      "name": "Collar Tie Shuck By",
+      "system": "collar_tie",
+      "objective": "Opponent resists, shuck by for angle.",
+      "difficulty": "beginner",
+      "tags": [
+        "counter",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "collar_tie"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 1,
+          "likely_reactions": [
+            "stiff_arm",
+            "resists_up"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "stiff_arm",
+          "next_steps": [
+            {
+              "action": "shuck_by"
+            },
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "snap_feint_shot",
+      "name": "Snap Feint to Shot",
+      "system": "collar_tie",
+      "objective": "Fake snap, opponent posts, attack legs.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "collar_tie"
+        },
+        {
+          "action": "snap_feint"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "hands_post",
+            "resists_up"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "resists_up",
+          "next_steps": [
+            {
+              "action": "level_change"
+            },
+            {
+              "action": "double_leg"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "inside_sweep",
+      "name": "Inside Tie Sweep Single",
+      "system": "inside_tie",
+      "objective": "Control inside, level change, sweep single.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "inside_tie"
+        },
+        {
+          "action": "level_change"
+        },
+        {
+          "action": "sweep_single"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 3,
+          "likely_reactions": [
+            "hop_defense",
+            "whizzer",
+            "sprawl"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "whizzer",
+          "next_steps": [
+            {
+              "action": "high_crotch"
+            }
+          ],
+          "resolution": "near_score"
+        },
+        {
+          "if_opponent_reaction": "sprawl",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "inside_high_c",
+      "name": "Inside Tie High Crotch",
+      "system": "inside_tie",
+      "objective": "Control inside, level change, high crotch finish.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "inside_tie"
+        },
+        {
+          "action": "level_change"
+        },
+        {
+          "action": "high_crotch"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 3,
+          "likely_reactions": [
+            "crackdown",
+            "whizzer"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "crackdown",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "score"
+        }
+      ]
+    },
+    {
+      "id": "inside_sweep_whizzer_go",
+      "name": "Sweep Single Whizzer to Go-Behind",
+      "system": "inside_tie",
+      "objective": "Attack sweep, opponent whizzers, circle behind.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack",
+        "re-attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "inside_tie"
+        },
+        {
+          "action": "level_change"
+        },
+        {
+          "action": "sweep_single"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 3,
+          "likely_reactions": [
+            "whizzer"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "whizzer",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "inside_double",
+      "name": "Inside Tie Double Leg",
+      "system": "inside_tie",
+      "objective": "Control inside, penetrate, double leg.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "inside_tie"
+        },
+        {
+          "action": "level_change"
+        },
+        {
+          "action": "penetration_step"
+        },
+        {
+          "action": "double_leg"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 4,
+          "likely_reactions": [
+            "sprawl",
+            "hips_back"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "sprawl",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "inside_arm_drag",
+      "name": "Inside Tie Arm Drag",
+      "system": "inside_tie",
+      "objective": "Control inside, drag arm for angle.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "inside_tie"
+        },
+        {
+          "action": "arm_drag"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "circles_out",
+            "squares_up"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "circles_out",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "two_on_one_angle_knee",
+      "name": "Two-on-One Angle to Knee Tap",
+      "system": "two_on_one",
+      "objective": "Control arm, create angle, knee tap finish.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "two_on_one_grip"
+        },
+        {
+          "action": "angle_step"
+        },
+        {
+          "action": "knee_tap"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 3,
+          "likely_reactions": [
+            "hips_back",
+            "circles_out"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "circles_out",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "two_on_one_square_snap",
+      "name": "Two-on-One Square to Snap",
+      "system": "two_on_one",
+      "objective": "Opponent squares up, snap down for control.",
+      "difficulty": "intermediate",
+      "tags": [
+        "counter",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "two_on_one_grip"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 1,
+          "likely_reactions": [
+            "squares_up"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "squares_up",
+          "next_steps": [
+            {
+              "action": "snapdown"
+            },
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "two_on_one_shot",
+      "name": "Two-on-One Inside Step Shot",
+      "system": "two_on_one",
+      "objective": "Control arm, level change, inside step shot.",
+      "difficulty": "advanced",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "two_on_one_grip"
+        },
+        {
+          "action": "level_change"
+        },
+        {
+          "action": "inside_step_shot"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 3,
+          "likely_reactions": [
+            "sprawl",
+            "whizzer"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "sprawl",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "two_on_one_drag",
+      "name": "Two-on-One Arm Drag",
+      "system": "two_on_one",
+      "objective": "Control arm, drag for back exposure.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "two_on_one_grip"
+        },
+        {
+          "action": "arm_drag"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "circles_out"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "circles_out",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "underhook_whizzer_knee",
+      "name": "Underhook Whizzer to Knee Tap",
+      "system": "underhook",
+      "objective": "Opponent whizzers, attack near knee.",
+      "difficulty": "intermediate",
+      "tags": [
+        "counter",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "underhook"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 1,
+          "likely_reactions": [
+            "whizzer"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "whizzer",
+          "next_steps": [
+            {
+              "action": "angle_step"
+            },
+            {
+              "action": "knee_tap"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "underhook_circle_throw",
+      "name": "Underhook Circle to Throw By",
+      "system": "underhook",
+      "objective": "Opponent circles, throw by for back.",
+      "difficulty": "intermediate",
+      "tags": [
+        "counter",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "underhook"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 1,
+          "likely_reactions": [
+            "circles_out"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "circles_out",
+          "next_steps": [
+            {
+              "action": "throw_by"
+            },
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "underhook_body_lock",
+      "name": "Underhook Body Lock",
+      "system": "underhook",
+      "objective": "Secure underhook, lock body for throw.",
+      "difficulty": "advanced",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "underhook"
+        },
+        {
+          "action": "angle_step"
+        },
+        {
+          "action": "body_lock"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 3,
+          "likely_reactions": [
+            "hips_back",
+            "whizzer"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "hips_back",
+          "next_steps": [
+            {
+              "action": "knee_tap"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "underhook_snap",
+      "name": "Underhook Snap",
+      "system": "underhook",
+      "objective": "Control underhook, snap for front head.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "underhook"
+        },
+        {
+          "action": "snapdown"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "hands_post",
+            "resists_up"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "hands_post",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "whizzer_kickout_go",
+      "name": "Whizzer Kickout to Go-Behind",
+      "system": "overhook_whizzer",
+      "objective": "Secure whizzer, kick out, circle behind.",
+      "difficulty": "intermediate",
+      "tags": [
+        "counter",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "overhook"
+        },
+        {
+          "action": "whizzer_kickout"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "circles_out",
+            "breaks_grip"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "circles_out",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "whizzer_snap",
+      "name": "Whizzer Snap",
+      "system": "overhook_whizzer",
+      "objective": "Control whizzer, snap for front head.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "overhook"
+        },
+        {
+          "action": "snapdown"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "hands_post"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "hands_post",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "whizzer_angle",
+      "name": "Whizzer Angle Step",
+      "system": "overhook_whizzer",
+      "objective": "Control whizzer, create angle for attack.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "overhook"
+        },
+        {
+          "action": "angle_step"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "circles_out",
+            "squares_up"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "circles_out",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "reach_bait_snatch",
+      "name": "Reach Bait to Snatch Single",
+      "system": "open_no_tie",
+      "objective": "Bait reach, snatch single on extension.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "reach_bait"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 1,
+          "likely_reactions": [
+            "reaches"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "reaches",
+          "next_steps": [
+            {
+              "action": "snatch_single"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "level_feint_blast",
+      "name": "Level Feint to Blast Double",
+      "system": "open_no_tie",
+      "objective": "Fake level, opponent reacts, blast double.",
+      "difficulty": "advanced",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "level_feint"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 1,
+          "likely_reactions": [
+            "hips_back",
+            "sprawl"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "hips_back",
+          "next_steps": [
+            {
+              "action": "level_change"
+            },
+            {
+              "action": "penetration_step"
+            },
+            {
+              "action": "blast_double"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "foot_feint_shot",
+      "name": "Foot Feint to Shot",
+      "system": "open_no_tie",
+      "objective": "Fake step, opponent reaches, attack legs.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "foot_feint"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 1,
+          "likely_reactions": [
+            "reaches"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "reaches",
+          "next_steps": [
+            {
+              "action": "level_change"
+            },
+            {
+              "action": "double_leg"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "open_double",
+      "name": "Open Double Leg",
+      "system": "open_no_tie",
+      "objective": "Direct attack, penetrate, double leg.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "level_change"
+        },
+        {
+          "action": "penetration_step"
+        },
+        {
+          "action": "double_leg"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 3,
+          "likely_reactions": [
+            "sprawl",
+            "hips_back"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "sprawl",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "open_snatch",
+      "name": "Open Snatch Single",
+      "system": "open_no_tie",
+      "objective": "Direct attack, snatch extended leg.",
+      "difficulty": "beginner",
+      "tags": [
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "level_change"
+        },
+        {
+          "action": "snatch_single"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "hop_defense",
+            "sprawl"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "sprawl",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "sprawl_spin",
+      "name": "Sprawl to Spin Behind",
+      "system": "counter_shot",
+      "objective": "Defend shot, win head, spin behind.",
+      "difficulty": "beginner",
+      "tags": [
+        "counter",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "sprawl"
+        },
+        {
+          "action": "head_position_win"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "counter_shot"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "counter_shot",
+          "next_steps": [
+            {
+              "action": "spin_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "sprawl_front_head",
+      "name": "Sprawl to Front Headlock",
+      "system": "counter_shot",
+      "objective": "Defend shot, secure front headlock.",
+      "difficulty": "intermediate",
+      "tags": [
+        "counter",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "sprawl"
+        },
+        {
+          "action": "head_position_win"
+        },
+        {
+          "action": "front_headlock"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 3,
+          "likely_reactions": [
+            "hands_post"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "hands_post",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "score"
+        }
+      ]
+    },
+    {
+      "id": "downblock_go",
+      "name": "Down Block to Go-Behind",
+      "system": "counter_shot",
+      "objective": "Block shot, circle behind.",
+      "difficulty": "beginner",
+      "tags": [
+        "counter",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "downblock"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 1,
+          "likely_reactions": [
+            "counter_shot"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "counter_shot",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "sprawl_reshot",
+      "name": "Sprawl to Reshot",
+      "system": "counter_shot",
+      "objective": "Defend shot, immediately reattack.",
+      "difficulty": "advanced",
+      "tags": [
+        "counter",
+        "re-attack"
+      ],
+      "steps": [
+        {
+          "action": "sprawl"
+        },
+        {
+          "action": "spin_behind"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "counter_shot"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "counter_shot",
+          "next_steps": [
+            {
+              "action": "reshot"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    }
+  ]
+}

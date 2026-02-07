@@ -1,0 +1,97 @@
+[
+  {
+    "id": "snap_go",
+    "name": "Snap to Go-Behind",
+    "system": "collar_tie",
+    "objective": "Break posture, force hands post, circle behind for back exposure.",
+    "difficulty": "beginner",
+    "tags": ["setup", "attack", "finish"],
+    "steps": [
+      { "action": "collar_tie" },
+      { "action": "snapdown" }
+    ],
+    "reaction_points": [
+      {
+        "after_step": 2,
+        "likely_reactions": ["hands_post", "resists_up", "front_head_exposed"]
+      }
+    ],
+    "branches": [
+      {
+        "if_opponent_reaction": "hands_post",
+        "next_steps": [{ "action": "go_behind" }],
+        "resolution": "near_score"
+      },
+      {
+        "if_opponent_reaction": "resists_up",
+        "next_steps": [{ "action": "snapdown" }, { "action": "go_behind" }],
+        "resolution": "near_score"
+      },
+      {
+        "if_opponent_reaction": "breaks_grip",
+        "next_steps": [{ "action": "clear_tie" }, { "action": "stance_reset" }],
+        "resolution": "reset"
+      }
+    ]
+  },
+  {
+    "id": "snap_front_head_go",
+    "name": "Snap to Front Headlock to Go-Behind",
+    "system": "collar_tie",
+    "objective": "Break posture, secure front headlock, finish with back exposure.",
+    "difficulty": "intermediate",
+    "tags": ["setup", "attack", "re-attack", "finish"],
+    "steps": [
+      { "action": "collar_tie" },
+      { "action": "snapdown" },
+      { "action": "front_headlock" }
+    ],
+    "reaction_points": [
+      {
+        "after_step": 2,
+        "likely_reactions": ["hands_post", "front_head_exposed"]
+      }
+    ],
+    "branches": [
+      {
+        "if_opponent_reaction": "hands_post",
+        "next_steps": [{ "action": "go_behind" }],
+        "resolution": "score"
+      },
+      {
+        "if_opponent_reaction": "circles_out",
+        "next_steps": [{ "action": "clear_tie" }, { "action": "stance_reset" }],
+        "resolution": "reset"
+      }
+    ]
+  },
+  {
+    "id": "collar_stiffarm_duck",
+    "name": "Collar Tie Stiff-Arm to Duck Under",
+    "system": "collar_tie",
+    "objective": "Opponent stiff-arms, use pressure to duck under for angle.",
+    "difficulty": "intermediate",
+    "tags": ["setup", "counter", "attack"],
+    "steps": [
+      { "action": "collar_tie" }
+    ],
+    "reaction_points": [
+      {
+        "after_step": 1,
+        "likely_reactions": ["stiff_arm", "breaks_grip"]
+      }
+    ],
+    "branches": [
+      {
+        "if_opponent_reaction": "stiff_arm",
+        "next_steps": [{ "action": "duck_under" }, { "action": "go_behind" }],
+        "resolution": "near_score"
+      },
+      {
+        "if_opponent_reaction": "breaks_grip",
+        "next_steps": [{ "action": "stance_reset" }],
+        "resolution": "reset"
+      }
+    ]
+  }
+]

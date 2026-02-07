@@ -687,20 +687,25 @@
     </div>
 
     <script>
-        // Load courses data
+        // Load courses data and wrestling moves
         let SYSTEMS = {};
+        let BASIC_MOVES = [];
+        let COMBOS = [];
         
-        fetch('courses.json')
-            .then(r => r.json())
-            .then(data => {
-                SYSTEMS = data.systems.reduce((acc, sys) => {
-                    acc[sys.system] = sys;
-                    return acc;
-                }, {});
-                updateSystemInfo();
-            });
+        Promise.all([
+            fetch('courses.json').then(r => r.json()),
+            fetch('wrestling_moves.json').then(r => r.json())
+        ]).then(([coursesData, movesData]) => {
+            SYSTEMS = coursesData.systems.reduce((acc, sys) => {
+                acc[sys.system] = sys;
+                return acc;
+            }, {});
+            BASIC_MOVES = movesData.basic_moves;
+            COMBOS = movesData.combos;
+            updateSystemInfo();
+        });
         
-        // Action definitions
+        // Action definitions (legacy - kept for compatibility)
         const ACTIONS = {
             easy: ['Circle', 'Sprawl', 'Shoot', 'Down block'],
             medium: ['Move left', 'Move right', 'Forward', 'Backward', 'Circle', 'Fake', 'Fake left', 'Fake right', 'Sprawl', 'Down block'],
@@ -1105,33 +1110,47 @@
                 return actions;
             }
             
-            // Random mode - use all hard actions
-            const actions = ACTIONS.hard;
-            
+            // Random mode - use basic moves and combos
             // Occasionally use combination if enabled
-            if (state.combosEnabled && Math.random() < 0.3) {
-                // 50% chance to use course sequences, 50% hardcoded combos
-                if (Math.random() < 0.5 && Object.keys(SYSTEMS).length > 0) {
-                    // Pick random system and random sequence from it
-                    const systemKeys = Object.keys(SYSTEMS);
-                    const randomSystem = SYSTEMS[systemKeys[Math.floor(Math.random() * systemKeys.length)]];
-                    if (randomSystem.sequences && randomSystem.sequences.length > 0) {
-                        const seq = randomSystem.sequences[Math.floor(Math.random() * randomSystem.sequences.length)];
-                        return seq.steps.map(step => formatAction(step.action));
-                    }
+            if (state.combosEnabled && Math.random() < 0.4 && COMBOS.length > 0) {
+                // Pick random combo
+                const combo = COMBOS[Math.floor(Math.random() * COMBOS.length)];
+                
+                // Get main path actions
+                const actions = combo.steps.map(step => formatAction(step.action));
+                
+                // Show opponent reactions if present
+                if (combo.reaction_points && combo.reaction_points.length > 0) {
+                    combo.reaction_points.forEach(rp => {
+                        if (rp.likely_reactions && rp.likely_reactions.length > 0) {
+                            const reaction = rp.likely_reactions[Math.floor(Math.random() * rp.likely_reactions.length)];
+                            setTimeout(() => showOpponentReaction(reaction), 1500);
+                        }
+                    });
                 }
-                // Fallback to hardcoded combos
-                return COMBINATIONS[Math.floor(Math.random() * COMBINATIONS.length)];
+                
+                return actions;
             }
             
-            // Select single action (avoid repeat)
-            let action;
-            do {
-                action = actions[Math.floor(Math.random() * actions.length)];
-            } while (action === state.lastAction && actions.length > 1);
+            // Select single basic move (avoid repeat)
+            if (BASIC_MOVES.length === 0) {
+                // Fallback to legacy actions if moves not loaded yet
+                const actions = ACTIONS.hard;
+                let action;
+                do {
+                    action = actions[Math.floor(Math.random() * actions.length)];
+                } while (action === state.lastAction && actions.length > 1);
+                state.lastAction = action;
+                return [action];
+            }
             
-            state.lastAction = action;
-            return [action];
+            let move;
+            do {
+                move = BASIC_MOVES[Math.floor(Math.random() * BASIC_MOVES.length)];
+            } while (move.label === state.lastAction && BASIC_MOVES.length > 1);
+            
+            state.lastAction = move.label;
+            return [move.label];
         }
 
         // Call out action with proper speech timing
