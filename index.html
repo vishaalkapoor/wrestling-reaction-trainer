@@ -274,17 +274,11 @@
         }
         
         .opponent-reaction {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 1.2em;
-            color: #ff6699;
-            text-shadow: 0 0 10px #ff6699;
+            font-size: 0.45em;
+            color: #ffffff;
+            text-shadow: 0 0 15px #ff6699, 0 0 25px #ff6699;
             opacity: 0;
             transition: opacity 0.3s;
-            pointer-events: none;
-            z-index: 100;
         }
         
         .opponent-reaction.show {
@@ -566,11 +560,10 @@
             <div class="action-display" id="actionDisplay">
                 <div id="currentMove">—</div>
                 <div class="next-move" id="nextMove"></div>
+                <div class="opponent-reaction" id="opponentReaction"></div>
             </div>
             <div class="timer" id="timer"></div>
         </div>
-        
-        <div class="opponent-reaction" id="opponentReaction"></div>
         
         <div class="control-group">
             <div class="button-group">
