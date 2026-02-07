@@ -675,7 +675,7 @@
                 </div>
             </div>
             <div class="button-group">
-                <button class="btn-secondary active" id="showReactionBtn">Show Reaction: ON</button>
+                <button class="btn-secondary" id="showReactionBtn">Show Reaction: OFF</button>
             </div>
         </div>
     </div>
@@ -799,7 +799,7 @@
             speechMultiplier: 1.0,
             delayMultiplier: 1.0,
             showNext: false,
-            showReaction: true,
+            showReaction: false,
             nextActions: null,
             currentReaction: null,
             selectedVoice: null
@@ -1045,7 +1045,7 @@
         function showAllOpponentReactions(reactions) {
             if (!reactions || reactions.length === 0) return;
             
-            const reactionText = reactions.map(r => formatAction(r)).join(' → ');
+            const reactionText = 'Opponent: ' + reactions.map(r => formatAction(r)).join(' → ');
             opponentReaction.textContent = reactionText;
             
             // Remove previous classes
