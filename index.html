@@ -627,14 +627,14 @@
         <div class="control-group">
             <h2>Timing</h2>
             <div class="button-group">
-                <button class="btn-secondary active" data-timing="1-30">1min / 30s</button>
+                <button class="btn-secondary active" data-timing="1-20">1min / 20s</button>
                 <button class="btn-secondary" data-timing="2-30">2min / 30s</button>
                 <button class="btn-secondary" data-timing="5-0">5min Continuous</button>
                 <button class="btn-secondary" data-timing="custom">Custom</button>
             </div>
             <div class="custom-timing hidden" id="customTiming">
                 <input type="number" id="workTime" placeholder="Work (sec)" value="60">
-                <input type="number" id="restTime" placeholder="Rest (sec)" value="30">
+                <input type="number" id="restTime" placeholder="Rest (sec)" value="20">
             </div>
         </div>
         
@@ -766,7 +766,7 @@
             mode: 'random', // 'random' or 'course'
             system: 'collar_tie',
             workTime: 60,
-            restTime: 30,
+            restTime: 20,
             volume: 0.75,
             lastAction: null,
             currentPhase: 'ready', // 'ready', 'work', 'rest'
@@ -1024,8 +1024,25 @@
                 const seq = sequences[state.courseSequenceIndex % sequences.length];
                 state.courseSequenceIndex++;
                 
-                // Convert sequence steps to action labels with opponent reactions
-                const actions = seq.steps.map(step => formatAction(step.action));
+                // Convert sequence steps to action labels, filtering redundant setup moves
+                const systemName = state.system.replace(/_/g, ' ');
+                const actions = seq.steps
+                    .map(step => formatAction(step.action))
+                    .filter(action => {
+                        const lowerAction = action.toLowerCase();
+                        // Filter out actions that are just establishing the current tie/system
+                        if (systemName.includes('collar') && lowerAction.includes('collar tie')) return false;
+                        if (systemName.includes('inside') && lowerAction.includes('inside tie')) return false;
+                        if (systemName.includes('two') && lowerAction.includes('two on one')) return false;
+                        if (systemName.includes('underhook') && lowerAction.includes('underhook') && !lowerAction.includes('counter')) return false;
+                        if (systemName.includes('overhook') && lowerAction.includes('overhook')) return false;
+                        return true;
+                    });
+                
+                // If all actions filtered out, return the original
+                if (actions.length === 0) {
+                    return seq.steps.map(step => formatAction(step.action));
+                }
                 
                 // Show opponent reaction if present
                 if (seq.steps.length > 0 && seq.steps[0].expect_opponent) {
@@ -1042,6 +1059,17 @@
             
             // Occasionally use combination if enabled
             if (state.combosEnabled && Math.random() < 0.3) {
+                // 50% chance to use course sequences, 50% hardcoded combos
+                if (Math.random() < 0.5 && Object.keys(SYSTEMS).length > 0) {
+                    // Pick random system and random sequence from it
+                    const systemKeys = Object.keys(SYSTEMS);
+                    const randomSystem = SYSTEMS[systemKeys[Math.floor(Math.random() * systemKeys.length)]];
+                    if (randomSystem.sequences && randomSystem.sequences.length > 0) {
+                        const seq = randomSystem.sequences[Math.floor(Math.random() * randomSystem.sequences.length)];
+                        return seq.steps.map(step => formatAction(step.action));
+                    }
+                }
+                // Fallback to hardcoded combos
                 return COMBINATIONS[Math.floor(Math.random() * COMBINATIONS.length)];
             }
             
