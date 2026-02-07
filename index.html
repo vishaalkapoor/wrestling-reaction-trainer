@@ -851,8 +851,6 @@
             state.selectedVoice = voices[parseInt(e.target.value)];
         });
         
-        const showNextBtnCourse = document.getElementById('showNextBtnCourse');
-        
         // Initialize volume lights
         function setVolumeLights(level) {
             const lights = volumeLights.querySelectorAll('.light');
@@ -1429,7 +1427,7 @@
         
         // Initialize lights
         setVolumeLights(6);
-        setSpeechLights(3); // 1.1x
+        setSpeechLights(2); // 1.0x
         setComboSpeedLights(4); // 0ms pause (instant)
     </script>
 </body>
