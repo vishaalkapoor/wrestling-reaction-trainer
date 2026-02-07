@@ -1045,19 +1045,14 @@
         
         function showAllOpponentReactions(reactions) {
             if (!reactions || reactions.length === 0) return;
+            if (!state.showReaction) return; // Don't show if disabled
             
             const reactionText = 'Opponent: ' + reactions.map(r => formatAction(r)).join(' → ');
             opponentReaction.textContent = reactionText;
             
             // Remove previous classes
             opponentReaction.classList.remove('show', 'always-show');
-            
-            if (state.showReaction) {
-                opponentReaction.classList.add('always-show');
-            } else {
-                opponentReaction.classList.add('show');
-                setTimeout(() => opponentReaction.classList.remove('show'), 4000);
-            }
+            opponentReaction.classList.add('always-show');
         }
 
         // Speech synthesis
@@ -1388,11 +1383,8 @@
             showReactionBtn.textContent = `Show Reaction: ${state.showReaction ? 'ON' : 'OFF'}`;
             showReactionBtn.classList.toggle('active');
             if (!state.showReaction) {
-                opponentReaction.classList.remove('always-show');
+                opponentReaction.classList.remove('always-show', 'show');
                 opponentReaction.textContent = '';
-            } else if (state.currentReaction) {
-                opponentReaction.textContent = state.currentReaction;
-                opponentReaction.classList.add('always-show');
             }
         });
         
