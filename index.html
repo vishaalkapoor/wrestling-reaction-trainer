@@ -575,12 +575,12 @@
         <div class="control-group">
             <h2>Mode</h2>
             <div class="button-group">
-                <button class="btn-secondary active" data-mode="random">Random</button>
-                <button class="btn-secondary" data-mode="course">Course</button>
+                <button class="btn-secondary active" data-mode="course">Course</button>
+                <button class="btn-secondary" data-mode="random">Random</button>
             </div>
         </div>
         
-        <div class="control-group" id="combosGroup">
+        <div class="control-group hidden" id="combosGroup">
             <h2>Options</h2>
             <div class="button-group">
                 <button class="btn-secondary" id="comboBtn">Combos: OFF</button>
@@ -588,14 +588,14 @@
             </div>
         </div>
         
-        <div class="control-group hidden" id="courseOptionsGroup">
+        <div class="control-group" id="courseOptionsGroup">
             <h2>Options</h2>
             <div class="button-group">
                 <button class="btn-secondary" id="showNextBtnCourse">Show Next: OFF</button>
             </div>
         </div>
         
-        <div class="control-group hidden" id="courseSelector">
+        <div class="control-group" id="courseSelector">
             <h2>System</h2>
             <select id="systemSelect" class="system-select">
                 <option value="collar_tie">Collar Tie</option>
@@ -786,7 +786,7 @@
             running: false,
             speed: 'normal',
             combosEnabled: false,
-            mode: 'random', // 'random' or 'course'
+            mode: 'course', // 'random' or 'course'
             system: 'collar_tie',
             workTime: 60,
             restTime: 20,
