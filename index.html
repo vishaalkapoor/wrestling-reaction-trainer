@@ -1036,6 +1036,10 @@
         function showOpponentReaction(reaction) {
             state.currentReaction = formatAction(reaction);
             opponentReaction.textContent = state.currentReaction;
+            
+            // Remove previous classes
+            opponentReaction.classList.remove('show', 'always-show');
+            
             if (state.showReaction) {
                 opponentReaction.classList.add('always-show');
             } else {
