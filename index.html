@@ -20,7 +20,7 @@
         }
         
         .container {
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
         }
         
@@ -183,6 +183,14 @@
             align-items: center;
             justify-content: center;
             text-shadow: 0 0 20px #0080ff, 0 0 30px #0080ff, 0 0 40px #0080ff;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .next-move {
+            font-size: 0.5em;
+            color: #ffaa00;
+            text-shadow: 0 0 10px #ffaa00;
         }
         
         .timer {
@@ -259,10 +267,106 @@
             opacity: 0;
             transition: opacity 0.3s;
             pointer-events: none;
+            z-index: 100;
         }
         
         .opponent-reaction.show {
             opacity: 1;
+        }
+        
+        .opponent-reaction.always-show {
+            opacity: 1;
+            transition: none;
+        }
+        
+        .volume-lights {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .light {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .light.active[data-level="1"],
+        .light.active[data-level="2"] {
+            background: #00ff88;
+            border-color: #00ff88;
+            box-shadow: 0 0 15px #00ff88;
+        }
+        
+        .light.active[data-level="3"],
+        .light.active[data-level="4"] {
+            background: #4da6ff;
+            border-color: #4da6ff;
+            box-shadow: 0 0 15px #4da6ff;
+        }
+        
+        .light.active[data-level="5"],
+        .light.active[data-level="6"] {
+            background: #ffaa00;
+            border-color: #ffaa00;
+            box-shadow: 0 0 15px #ffaa00;
+        }
+        
+        .light.active[data-level="7"],
+        .light.active[data-level="8"] {
+            background: #ff3366;
+            border-color: #ff3366;
+            box-shadow: 0 0 15px #ff3366;
+        }
+        
+        .light:hover {
+            border-color: #0080ff;
+        }
+        
+        .custom-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+        }
+        
+        .custom-row span:first-child {
+            min-width: 110px;
+            color: #999;
+        }
+        
+        .custom-row span:nth-child(3) {
+            min-width: 50px;
+            text-align: center;
+            color: #4da6ff;
+            font-weight: 600;
+        }
+        
+        .btn-adjust {
+            width: 35px;
+            height: 35px;
+            padding: 0;
+            font-size: 1.3em;
+            background: #1a1a1a;
+            color: #4da6ff;
+            border: 1px solid #0080ff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-adjust:hover {
+            background: #001a33;
+            box-shadow: 0 0 10px rgba(0, 128, 255, 0.3);
+        }
+        
+        .btn-adjust:active {
+            transform: scale(0.95);
         }
         
         .hidden {
@@ -442,7 +546,10 @@
         
         <div class="status">
             <div class="status-text">Ready</div>
-            <div class="action-display" id="actionDisplay">—</div>
+            <div class="action-display" id="actionDisplay">
+                <div id="currentMove">—</div>
+                <div class="next-move" id="nextMove"></div>
+            </div>
             <div class="timer" id="timer"></div>
         </div>
         
@@ -463,6 +570,22 @@
             </div>
         </div>
         
+        <div class="control-group" id="combosGroup">
+            <h2>Options</h2>
+            <div class="button-group">
+                <button class="btn-secondary" id="comboBtn">Combos: OFF</button>
+                <button class="btn-secondary" id="showNextBtn">Show Next: OFF</button>
+            </div>
+        </div>
+        
+        <div class="control-group hidden" id="courseOptionsGroup">
+            <h2>Options</h2>
+            <div class="button-group">
+                <button class="btn-secondary" id="showNextBtnCourse">Show Next: OFF</button>
+                <button class="btn-secondary" id="showReactionBtn">Show Reaction: OFF</button>
+            </div>
+        </div>
+        
         <div class="control-group hidden" id="courseSelector">
             <h2>System</h2>
             <select id="systemSelect" class="system-select">
@@ -477,13 +600,6 @@
             <div id="systemInfo" class="system-info"></div>
         </div>
         
-        <div class="control-group" id="optionsGroup">
-            <h2>Options</h2>
-            <div class="button-group">
-                <button class="btn-secondary" id="comboBtn">Combos: OFF</button>
-            </div>
-        </div>
-        
         <div class="control-group">
             <h2>Speed</h2>
             <div class="button-group">
@@ -491,6 +607,20 @@
                 <button class="btn-secondary active" data-speed="normal">Normal</button>
                 <button class="btn-secondary" data-speed="fast">Fast</button>
                 <button class="btn-secondary" data-speed="chaos">Chaos</button>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <h2>Volume</h2>
+            <div class="volume-lights" id="volumeLights">
+                <div class="light" data-level="1"></div>
+                <div class="light" data-level="2"></div>
+                <div class="light" data-level="3"></div>
+                <div class="light" data-level="4"></div>
+                <div class="light" data-level="5"></div>
+                <div class="light" data-level="6"></div>
+                <div class="light" data-level="7"></div>
+                <div class="light" data-level="8"></div>
             </div>
         </div>
         
@@ -509,9 +639,24 @@
         </div>
         
         <div class="control-group">
-            <div class="slider-group">
-                <label>Volume: <span id="volumeValue">80%</span></label>
-                <input type="range" id="volumeSlider" min="0" max="100" value="80">
+            <h2>Additional Customization</h2>
+            <div class="custom-row">
+                <span>Speech Speed:</span>
+                <div class="volume-lights" id="speechLights">
+                    <div class="light" data-level="1"></div>
+                    <div class="light" data-level="2"></div>
+                    <div class="light" data-level="3"></div>
+                    <div class="light" data-level="4"></div>
+                </div>
+            </div>
+            <div class="custom-row">
+                <span>Combo Speed:</span>
+                <div class="volume-lights" id="comboSpeedLights">
+                    <div class="light" data-level="1"></div>
+                    <div class="light" data-level="2"></div>
+                    <div class="light" data-level="3"></div>
+                    <div class="light" data-level="4"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -607,10 +752,10 @@
 
         // Speed configurations
         const SPEED_CONFIG = {
-            slow: { delay: [2500, 3500], jitter: 0.1, playbackRate: 0.85 },
-            normal: { delay: [2500, 3000], jitter: 0.1, playbackRate: 0.9 },
-            fast: { delay: [1300, 1800], jitter: 0.15, playbackRate: 1.0 },
-            chaos: { delay: [700, 1100], jitter: 0.2, playbackRate: 1.15 }
+            slow: { delay: [3500, 4500], jitter: 0.1, playbackRate: 1.1 },
+            normal: { delay: [3000, 3500], jitter: 0.1, playbackRate: 1.15 },
+            fast: { delay: [1800, 2300], jitter: 0.15, playbackRate: 1.2 },
+            chaos: { delay: [700, 1100], jitter: 0.2, playbackRate: 1.3 }
         };
 
         // State
@@ -622,11 +767,17 @@
             system: 'collar_tie',
             workTime: 60,
             restTime: 30,
-            volume: 0.8,
+            volume: 0.75,
             lastAction: null,
             currentPhase: 'ready', // 'ready', 'work', 'rest'
             timeRemaining: 0,
-            courseSequenceIndex: 0
+            courseSequenceIndex: 0,
+            speechMultiplier: 1.0,
+            delayMultiplier: 1.0,
+            showNext: false,
+            showReaction: false,
+            nextActions: null,
+            currentReaction: null
         };
 
         let timers = {
@@ -638,16 +789,178 @@
         const startBtn = document.getElementById('startBtn');
         const pauseBtn = document.getElementById('pauseBtn');
         const actionDisplay = document.getElementById('actionDisplay');
+        const currentMove = document.getElementById('currentMove');
+        const nextMove = document.getElementById('nextMove');
         const timerDisplay = document.getElementById('timer');
-        const volumeSlider = document.getElementById('volumeSlider');
-        const volumeValue = document.getElementById('volumeValue');
+        const volumeLights = document.getElementById('volumeLights');
+        const speechLights = document.getElementById('speechLights');
+        const comboSpeedLights = document.getElementById('comboSpeedLights');
         const comboBtn = document.getElementById('comboBtn');
+        const showNextBtn = document.getElementById('showNextBtn');
+        const showReactionBtn = document.getElementById('showReactionBtn');
         const customTiming = document.getElementById('customTiming');
         const courseSelector = document.getElementById('courseSelector');
-        const optionsGroup = document.getElementById('optionsGroup');
+        const combosGroup = document.getElementById('combosGroup');
+        const courseOptionsGroup = document.getElementById('courseOptionsGroup');
         const systemSelect = document.getElementById('systemSelect');
         const systemInfo = document.getElementById('systemInfo');
         const opponentReaction = document.getElementById('opponentReaction');
+        
+        const showNextBtnCourse = document.getElementById('showNextBtnCourse');
+        
+        // Initialize volume lights
+        function setVolumeLights(level) {
+            const lights = volumeLights.querySelectorAll('.light');
+            lights.forEach((light, i) => {
+                if (i < level) {
+                    light.classList.add('active');
+                } else {
+                    light.classList.remove('active');
+                }
+            });
+            // Amplify volume at max level
+            state.volume = level === 8 ? 1.5 : level / 8;
+        }
+        
+        // Initialize speech speed lights (0.9x to 1.2x)
+        function setSpeechLights(level) {
+            const lights = speechLights.querySelectorAll('.light');
+            lights.forEach((light, i) => {
+                if (i < level) {
+                    light.classList.add('active');
+                } else {
+                    light.classList.remove('active');
+                }
+            });
+            // Map 1-4 to 0.9-1.2
+            state.speechMultiplier = 0.9 + (level - 1) * 0.1;
+        }
+        
+        // Initialize combo speed lights (slower to faster)
+        function setComboSpeedLights(level) {
+            const lights = comboSpeedLights.querySelectorAll('.light');
+            lights.forEach((light, i) => {
+                if (i < level) {
+                    light.classList.add('active');
+                } else {
+                    light.classList.remove('active');
+                }
+            });
+            // Map 1-4 to 0.5x-2.0x delay between moves in combo
+            state.delayMultiplier = 0.5 + (level - 1) * 0.5;
+        }
+        
+        // Volume light interaction
+        let isDragging = false;
+        
+        volumeLights.addEventListener('mousedown', (e) => {
+            if (e.target.classList.contains('light')) {
+                isDragging = true;
+                const level = parseInt(e.target.dataset.level);
+                setVolumeLights(level);
+            }
+        });
+        
+        volumeLights.addEventListener('mousemove', (e) => {
+            if (isDragging && e.target.classList.contains('light')) {
+                const level = parseInt(e.target.dataset.level);
+                setVolumeLights(level);
+            }
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+        
+        volumeLights.addEventListener('touchstart', (e) => {
+            if (e.target.classList.contains('light')) {
+                const level = parseInt(e.target.dataset.level);
+                setVolumeLights(level);
+            }
+        });
+        
+        volumeLights.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            const element = document.elementFromPoint(touch.clientX, touch.clientY);
+            if (element && element.classList.contains('light')) {
+                const level = parseInt(element.dataset.level);
+                setVolumeLights(level);
+            }
+        });
+        
+        // Speech speed light interaction
+        let speechDragging = false;
+        
+        speechLights.addEventListener('mousedown', (e) => {
+            if (e.target.classList.contains('light')) {
+                speechDragging = true;
+                const level = parseInt(e.target.dataset.level);
+                setSpeechLights(level);
+            }
+        });
+        
+        speechLights.addEventListener('mousemove', (e) => {
+            if (speechDragging && e.target.classList.contains('light')) {
+                const level = parseInt(e.target.dataset.level);
+                setSpeechLights(level);
+            }
+        });
+        
+        speechLights.addEventListener('touchstart', (e) => {
+            if (e.target.classList.contains('light')) {
+                const level = parseInt(e.target.dataset.level);
+                setSpeechLights(level);
+            }
+        });
+        
+        speechLights.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            const element = document.elementFromPoint(touch.clientX, touch.clientY);
+            if (element && element.classList.contains('light')) {
+                const level = parseInt(element.dataset.level);
+                setSpeechLights(level);
+            }
+        });
+        
+        // Combo speed light interaction
+        let comboSpeedDragging = false;
+        
+        comboSpeedLights.addEventListener('mousedown', (e) => {
+            if (e.target.classList.contains('light')) {
+                comboSpeedDragging = true;
+                const level = parseInt(e.target.dataset.level);
+                setComboSpeedLights(level);
+            }
+        });
+        
+        comboSpeedLights.addEventListener('mousemove', (e) => {
+            if (comboSpeedDragging && e.target.classList.contains('light')) {
+                const level = parseInt(e.target.dataset.level);
+                setComboSpeedLights(level);
+            }
+        });
+        
+        comboSpeedLights.addEventListener('touchstart', (e) => {
+            if (e.target.classList.contains('light')) {
+                const level = parseInt(e.target.dataset.level);
+                setComboSpeedLights(level);
+            }
+        });
+        
+        comboSpeedLights.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            const element = document.elementFromPoint(touch.clientX, touch.clientY);
+            if (element && element.classList.contains('light')) {
+                const level = parseInt(element.dataset.level);
+                setComboSpeedLights(level);
+            }
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            speechDragging = false;
+            comboSpeedDragging = false;
+        });
         
         // Update system info display
         function updateSystemInfo() {
@@ -671,9 +984,15 @@
         }
         
         function showOpponentReaction(reaction) {
-            opponentReaction.textContent = formatAction(reaction);
-            opponentReaction.classList.add('show');
-            setTimeout(() => opponentReaction.classList.remove('show'), 2000);
+            state.currentReaction = formatAction(reaction);
+            if (state.showReaction) {
+                opponentReaction.textContent = state.currentReaction;
+                opponentReaction.classList.add('always-show');
+            } else {
+                opponentReaction.textContent = state.currentReaction;
+                opponentReaction.classList.add('show');
+                setTimeout(() => opponentReaction.classList.remove('show'), 2000);
+            }
         }
 
         // Speech synthesis
@@ -743,11 +1062,22 @@
             const actions = selectAction();
             const config = SPEED_CONFIG[state.speed];
             
-            // Display full sequence
-            actionDisplay.textContent = actions.join(' → ');
+            // Store next actions for preview
+            state.nextActions = selectAction();
+            
+            // Display current move
+            currentMove.textContent = actions.join(' → ');
+            
+            // Display next move if enabled
+            if (state.showNext && state.nextActions) {
+                nextMove.textContent = 'Next: ' + state.nextActions.join(' → ');
+            } else {
+                nextMove.textContent = '';
+            }
             
             // Faster speech for multi-action sequences
             const sequenceRate = actions.length > 1 ? config.playbackRate * 1.15 : config.playbackRate;
+            const finalRate = sequenceRate * state.speechMultiplier;
             
             // Speak actions sequentially with proper timing
             let totalDelay = 0;
@@ -756,29 +1086,33 @@
                     if (state.running && state.currentPhase === 'work') {
                         const utterance = new SpeechSynthesisUtterance(action);
                         utterance.volume = state.volume;
-                        utterance.rate = sequenceRate;
+                        utterance.rate = finalRate;
                         utterance.pitch = 1.0;
                         speechSynthesis.speak(utterance);
                     }
                 }, totalDelay);
                 
-                // Estimate speech duration + rhythm pause
+                // Estimate speech duration + natural pause between moves
                 const wordCount = action.split(' ').length;
-                const speechDuration = (wordCount * 350) / sequenceRate;
-                const rhythmPause = 15;
-                totalDelay += speechDuration + rhythmPause;
+                const speechDuration = (wordCount * 350) / finalRate;
+                const naturalPause = i < actions.length - 1 ? (400 / state.delayMultiplier) : 0;
+                totalDelay += speechDuration + naturalPause;
             });
 
             // Schedule next callout after sequence completes
-            timers.callout = setTimeout(calloutAction, totalDelay + getDelay());
+            // Add 30% more delay for multi-action sequences
+            const baseDelay = getDelay();
+            const extraDelay = actions.length > 1 ? baseDelay * 0.3 : 0;
+            timers.callout = setTimeout(calloutAction, totalDelay + baseDelay + extraDelay);
         }
 
         // Start work phase
         function startWork() {
             state.currentPhase = 'work';
             state.timeRemaining = state.workTime;
-            actionDisplay.textContent = 'GO!';
-            speak('Go!', SPEED_CONFIG[state.speed].playbackRate);
+            currentMove.textContent = 'GO!';
+            nextMove.textContent = '';
+            speak('Go!', SPEED_CONFIG[state.speed].playbackRate * state.speechMultiplier);
             
             updateTimer();
             timers.callout = setTimeout(calloutAction, getDelay());
@@ -803,7 +1137,8 @@
         function startRest() {
             state.currentPhase = 'rest';
             state.timeRemaining = state.restTime;
-            actionDisplay.textContent = 'REST';
+            currentMove.textContent = 'REST';
+            nextMove.textContent = '';
             speak('Rest');
             
             updateTimer();
@@ -842,7 +1177,8 @@
             clearInterval(timers.phase);
             clearTimeout(timers.callout);
             speechSynthesis.cancel();
-            actionDisplay.textContent = 'PAUSED';
+            currentMove.textContent = 'PAUSED';
+            nextMove.textContent = '';
             timerDisplay.textContent = '';
         }
 
@@ -885,17 +1221,41 @@
             state.restTime = parseInt(e.target.value) || 30;
         });
 
-        // Volume slider
-        volumeSlider.addEventListener('input', (e) => {
-            state.volume = e.target.value / 100;
-            volumeValue.textContent = `${e.target.value}%`;
-        });
-
         // Combo toggle
         comboBtn.addEventListener('click', () => {
             state.combosEnabled = !state.combosEnabled;
             comboBtn.textContent = `Combos: ${state.combosEnabled ? 'ON' : 'OFF'}`;
             comboBtn.classList.toggle('active');
+        });
+        
+        // Show next toggle
+        showNextBtn.addEventListener('click', () => {
+            state.showNext = !state.showNext;
+            showNextBtn.textContent = `Show Next: ${state.showNext ? 'ON' : 'OFF'}`;
+            showNextBtn.classList.toggle('active');
+            if (!state.showNext) nextMove.textContent = '';
+        });
+        
+        // Show next toggle (course mode)
+        showNextBtnCourse.addEventListener('click', () => {
+            state.showNext = !state.showNext;
+            showNextBtnCourse.textContent = `Show Next: ${state.showNext ? 'ON' : 'OFF'}`;
+            showNextBtnCourse.classList.toggle('active');
+            if (!state.showNext) nextMove.textContent = '';
+        });
+        
+        // Show reaction toggle
+        showReactionBtn.addEventListener('click', () => {
+            state.showReaction = !state.showReaction;
+            showReactionBtn.textContent = `Show Reaction: ${state.showReaction ? 'ON' : 'OFF'}`;
+            showReactionBtn.classList.toggle('active');
+            if (!state.showReaction) {
+                opponentReaction.classList.remove('always-show');
+                opponentReaction.textContent = '';
+            } else if (state.currentReaction) {
+                opponentReaction.textContent = state.currentReaction;
+                opponentReaction.classList.add('always-show');
+            }
         });
         
         // Mode buttons
@@ -907,10 +1267,12 @@
                 
                 if (state.mode === 'course') {
                     courseSelector.classList.remove('hidden');
-                    optionsGroup.classList.add('hidden');
+                    combosGroup.classList.add('hidden');
+                    courseOptionsGroup.classList.remove('hidden');
                 } else {
                     courseSelector.classList.add('hidden');
-                    optionsGroup.classList.remove('hidden');
+                    combosGroup.classList.remove('hidden');
+                    courseOptionsGroup.classList.add('hidden');
                 }
             });
         });
@@ -921,6 +1283,11 @@
             state.courseSequenceIndex = 0;
             updateSystemInfo();
         });
+        
+        // Initialize lights
+        setVolumeLights(6);
+        setSpeechLights(3); // 1.1x
+        setComboSpeedLights(2); // 1.0x
     </script>
 </body>
 </html>
