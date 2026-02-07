@@ -279,6 +279,7 @@
             text-shadow: 0 0 15px #ff6699, 0 0 25px #ff6699;
             opacity: 0;
             transition: opacity 0.3s;
+            margin-top: 20px;
         }
         
         .opponent-reaction.show {
@@ -1040,6 +1041,23 @@
                 setTimeout(() => opponentReaction.classList.remove('show'), 2000);
             }
         }
+        
+        function showAllOpponentReactions(reactions) {
+            if (!reactions || reactions.length === 0) return;
+            
+            const reactionText = reactions.map(r => formatAction(r)).join(' → ');
+            opponentReaction.textContent = reactionText;
+            
+            // Remove previous classes
+            opponentReaction.classList.remove('show', 'always-show');
+            
+            if (state.showReaction) {
+                opponentReaction.classList.add('always-show');
+            } else {
+                opponentReaction.classList.add('show');
+                setTimeout(() => opponentReaction.classList.remove('show'), 2000);
+            }
+        }
 
         // Speech synthesis
         function speak(text, playbackRate = 1.0) {
@@ -1095,14 +1113,18 @@
                 }
                 
                 // Show opponent reactions for steps that have them
-                filteredSteps.forEach((step, i) => {
+                const allReactions = [];
+                filteredSteps.forEach((step) => {
                     if (step.expect_opponent) {
                         const reactions = step.expect_opponent;
                         const reaction = reactions[Math.floor(Math.random() * reactions.length)];
-                        // Show reaction after the move is called (1.5s + index delay)
-                        setTimeout(() => showOpponentReaction(reaction), 1500 + (i * 1000));
+                        allReactions.push(reaction);
                     }
                 });
+                
+                if (allReactions.length > 0) {
+                    setTimeout(() => showAllOpponentReactions(allReactions), 1500);
+                }
                 
                 return actions;
             }
@@ -1118,12 +1140,16 @@
                 
                 // Show opponent reactions if present
                 if (combo.reaction_points && combo.reaction_points.length > 0) {
+                    const allReactions = [];
                     combo.reaction_points.forEach(rp => {
                         if (rp.likely_reactions && rp.likely_reactions.length > 0) {
                             const reaction = rp.likely_reactions[Math.floor(Math.random() * rp.likely_reactions.length)];
-                            setTimeout(() => showOpponentReaction(reaction), 1500);
+                            allReactions.push(reaction);
                         }
                     });
+                    if (allReactions.length > 0) {
+                        setTimeout(() => showAllOpponentReactions(allReactions), 1500);
+                    }
                 }
                 
                 return actions;
