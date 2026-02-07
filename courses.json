@@ -1,0 +1,944 @@
+{
+  "version": "1.0",
+  "title": "Wrestling Stance & Motion Simulator - Neutral Systems (Upgraded JSON)",
+  "notes": {
+    "design_intent": [
+      "Discrete-state simulator (not physics).",
+      "Action legality gated by preconditions over state.",
+      "Opponent intent is explicit and can be rendered on-screen."
+    ],
+    "ui_fields_recommended": [
+      "state_summary",
+      "opponent_intent",
+      "legal_actions",
+      "last_transition_reason"
+    ]
+  },
+  "state_schema": {
+    "range": {
+      "type": "enum",
+      "values": ["open", "contact"]
+    },
+    "tie": {
+      "type": "enum",
+      "values": ["none", "collar", "inside", "two_on_one", "underhook", "overhook"]
+    },
+    "angle": {
+      "type": "enum",
+      "values": ["square", "slight_angle", "dominant_angle"]
+    },
+    "level": {
+      "type": "enum",
+      "values": ["high", "mid", "low"]
+    },
+    "pressure": {
+      "type": "enum",
+      "values": ["forward", "neutral", "backward"]
+    },
+    "head_position": {
+      "type": "enum",
+      "values": ["won", "neutral", "lost"]
+    },
+    "opponent_base": {
+      "type": "enum",
+      "values": ["planted", "stepping", "reaching", "circling"]
+    },
+    "opponent_intent": {
+      "type": "enum",
+      "values": [
+        "handfight",
+        "tie_up",
+        "snap_attempt",
+        "shoot_attempt",
+        "pummel_underhook",
+        "pummel_overhook",
+        "break_grip",
+        "square_up",
+        "circle_out",
+        "stall",
+        "retreat"
+      ]
+    },
+    "fatigue": {
+      "type": "enum",
+      "values": ["fresh", "working", "tired"]
+    },
+    "score_state": {
+      "type": "enum",
+      "values": ["down_2", "down_1", "even", "up_1", "up_2"]
+    },
+    "clock_state": {
+      "type": "enum",
+      "values": ["early", "mid", "late"]
+    }
+  },
+  "initial_state": {
+    "range": "open",
+    "tie": "none",
+    "angle": "square",
+    "level": "mid",
+    "pressure": "neutral",
+    "head_position": "neutral",
+    "opponent_base": "stepping",
+    "opponent_intent": "handfight",
+    "fatigue": "fresh",
+    "score_state": "even",
+    "clock_state": "early"
+  },
+  "global_concepts": {
+    "risk_levels": ["low", "medium", "high"],
+    "energy_cost_levels": ["low", "medium", "high"],
+    "position_gain_tags": [
+      "tie_upgrade",
+      "tie_downgrade",
+      "angle_plus",
+      "angle_minus",
+      "head_plus",
+      "head_minus",
+      "range_close",
+      "range_open",
+      "shot_initiated",
+      "front_head_exposed",
+      "back_exposure"
+    ]
+  },
+  "opponent_model": {
+    "intent_display": {
+      "show_on_screen": true,
+      "field": "opponent_intent"
+    },
+    "default_reaction_weights": {
+      "sprawl": 0.35,
+      "hop_defense": 0.2,
+      "whizzer": 0.2,
+      "hands_post": 0.15,
+      "square_up": 0.1
+    },
+    "intent_transition_rules": [
+      {
+        "when": { "tie": "none", "range": "open" },
+        "next_intents": [
+          { "intent": "handfight", "weight": 0.35 },
+          { "intent": "tie_up", "weight": 0.25 },
+          { "intent": "shoot_attempt", "weight": 0.2 },
+          { "intent": "circle_out", "weight": 0.1 },
+          { "intent": "retreat", "weight": 0.1 }
+        ]
+      },
+      {
+        "when": { "range": "contact", "tie": "collar" },
+        "next_intents": [
+          { "intent": "snap_attempt", "weight": 0.25 },
+          { "intent": "break_grip", "weight": 0.25 },
+          { "intent": "square_up", "weight": 0.2 },
+          { "intent": "pummel_underhook", "weight": 0.15 },
+          { "intent": "circle_out", "weight": 0.15 }
+        ]
+      },
+      {
+        "when": { "range": "contact", "tie": "two_on_one" },
+        "next_intents": [
+          { "intent": "square_up", "weight": 0.35 },
+          { "intent": "break_grip", "weight": 0.35 },
+          { "intent": "circle_out", "weight": 0.2 },
+          { "intent": "shoot_attempt", "weight": 0.1 }
+        ]
+      },
+      {
+        "when": { "range": "contact", "tie": "underhook" },
+        "next_intents": [
+          { "intent": "pummel_overhook", "weight": 0.35 },
+          { "intent": "circle_out", "weight": 0.25 },
+          { "intent": "level_change", "weight": 0.2 },
+          { "intent": "break_grip", "weight": 0.2 }
+        ],
+        "note": "level_change intent is represented by opponent_intent=shoot_attempt with opponent_base=reaching or planted; implementer may extend enum."
+      }
+    ]
+  },
+  "actions": [
+    {
+      "id": "enter_contact",
+      "label": "Close distance to contact",
+      "system_tags": ["open_no_tie"],
+      "preconditions": [{ "range": "open" }],
+      "effects": [{ "set": { "range": "contact" } }],
+      "risk": "low",
+      "energy_cost": "low",
+      "position_gain": ["range_close"]
+    },
+    {
+      "id": "disengage",
+      "label": "Disengage to open range",
+      "system_tags": ["all"],
+      "preconditions": [{ "range": "contact" }],
+      "effects": [{ "set": { "range": "open", "tie": "none", "angle": "square" } }],
+      "risk": "low",
+      "energy_cost": "low",
+      "position_gain": ["range_open", "tie_downgrade"]
+    },
+
+    {
+      "id": "collar_tie",
+      "label": "Establish collar tie",
+      "system_tags": ["collar_tie"],
+      "preconditions": [{ "range": "contact" }, { "tie": "none" }],
+      "effects": [{ "set": { "tie": "collar" } }],
+      "risk": "low",
+      "energy_cost": "low",
+      "position_gain": ["tie_upgrade"]
+    },
+    {
+      "id": "inside_tie",
+      "label": "Establish inside tie",
+      "system_tags": ["inside_tie"],
+      "preconditions": [{ "range": "contact" }, { "tie": "none" }],
+      "effects": [{ "set": { "tie": "inside" } }],
+      "risk": "low",
+      "energy_cost": "low",
+      "position_gain": ["tie_upgrade"]
+    },
+    {
+      "id": "two_on_one_grip",
+      "label": "Secure 2-on-1 grip",
+      "system_tags": ["two_on_one"],
+      "preconditions": [{ "range": "contact" }, { "tie": "inside" }],
+      "effects": [{ "set": { "tie": "two_on_one", "angle": "slight_angle" } }],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["tie_upgrade", "angle_plus"]
+    },
+    {
+      "id": "underhook",
+      "label": "Establish underhook",
+      "system_tags": ["underhook"],
+      "preconditions": [{ "range": "contact" }, { "tie": "inside" }],
+      "effects": [{ "set": { "tie": "underhook", "angle": "slight_angle" } }],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["tie_upgrade", "angle_plus"]
+    },
+    {
+      "id": "overhook",
+      "label": "Establish overhook/whizzer",
+      "system_tags": ["overhook_whizzer"],
+      "preconditions": [{ "range": "contact" }, { "tie": "underhook" }],
+      "effects": [{ "set": { "tie": "overhook", "angle": "slight_angle" } }],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["tie_upgrade"]
+    },
+
+    {
+      "id": "re_angle_step",
+      "label": "Re-angle step to outside",
+      "system_tags": ["two_on_one", "underhook", "collar_tie"],
+      "preconditions": [{ "range": "contact" }],
+      "effects": [
+        {
+          "conditional_set": [
+            { "if": { "angle": "square" }, "then": { "angle": "slight_angle" } },
+            { "if": { "angle": "slight_angle" }, "then": { "angle": "dominant_angle" } }
+          ]
+        }
+      ],
+      "risk": "low",
+      "energy_cost": "low",
+      "position_gain": ["angle_plus"]
+    },
+    {
+      "id": "level_change",
+      "label": "Level change",
+      "system_tags": ["all"],
+      "preconditions": [],
+      "effects": [{ "set": { "level": "low" } }],
+      "risk": "low",
+      "energy_cost": "low",
+      "position_gain": []
+    },
+    {
+      "id": "penetration_step",
+      "label": "Penetration step",
+      "system_tags": ["open_no_tie", "inside_tie"],
+      "preconditions": [{ "level": "low" }],
+      "effects": [],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["shot_initiated"]
+    },
+
+    {
+      "id": "snapdown",
+      "label": "Snapdown",
+      "system_tags": ["collar_tie", "inside_tie", "two_on_one", "underhook"],
+      "preconditions": [
+        { "range": "contact" },
+        { "tie": ["collar", "inside", "two_on_one", "underhook"] },
+        { "head_position": ["won", "neutral"] }
+      ],
+      "effects": [
+        {
+          "reaction_branches": [
+            {
+              "opponent_reaction": "hands_post",
+              "weight": 0.45,
+              "apply": { "set": { "head_position": "won" } }
+            },
+            {
+              "opponent_reaction": "resists_up",
+              "weight": 0.35,
+              "apply": { "set": { "head_position": "neutral" } }
+            },
+            {
+              "opponent_reaction": "slips_free",
+              "weight": 0.2,
+              "apply": { "set": { "tie": "none", "range": "contact", "angle": "square" } }
+            }
+          ]
+        }
+      ],
+      "risk": "low",
+      "energy_cost": "medium",
+      "position_gain": ["front_head_exposed"]
+    },
+    {
+      "id": "front_headlock",
+      "label": "Front headlock",
+      "system_tags": ["collar_tie", "inside_tie", "counter_shot"],
+      "preconditions": [{ "range": "contact" }, { "head_position": "won" }],
+      "effects": [{ "set": { "tie": "none" } }],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["front_head_exposed"]
+    },
+    {
+      "id": "go_behind",
+      "label": "Go-behind",
+      "system_tags": ["collar_tie", "two_on_one", "underhook", "counter_shot"],
+      "preconditions": [
+        { "range": "contact" },
+        { "head_position": ["won", "neutral"] },
+        { "angle": ["slight_angle", "dominant_angle"] }
+      ],
+      "effects": [{ "set": { "tie": "none", "range": "contact" } }],
+      "risk": "low",
+      "energy_cost": "medium",
+      "position_gain": ["back_exposure"]
+    },
+
+    {
+      "id": "duck_under",
+      "label": "Duck-under",
+      "system_tags": ["collar_tie", "counter_collar"],
+      "preconditions": [{ "range": "contact" }, { "tie": "collar" }],
+      "effects": [
+        {
+          "reaction_branches": [
+            {
+              "opponent_reaction": "stiff_arm",
+              "weight": 0.4,
+              "apply": { "set": { "angle": "square" } }
+            },
+            {
+              "opponent_reaction": "late_spin",
+              "weight": 0.6,
+              "apply": { "set": { "angle": "dominant_angle", "head_position": "won" } }
+            }
+          ]
+        }
+      ],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["angle_plus", "back_exposure"]
+    },
+    {
+      "id": "shuck_by",
+      "label": "Shuck-by",
+      "system_tags": ["collar_tie"],
+      "preconditions": [{ "range": "contact" }, { "tie": "collar" }],
+      "effects": [{ "set": { "angle": "slight_angle" } }],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["angle_plus"]
+    },
+
+    {
+      "id": "sweep_single",
+      "label": "Sweep single",
+      "system_tags": ["inside_tie"],
+      "preconditions": [{ "range": "contact" }, { "tie": "inside" }, { "level": "low" }],
+      "effects": [
+        {
+          "reaction_branches": [
+            { "opponent_reaction": "hop_defense", "weight": 0.45, "apply": {} },
+            { "opponent_reaction": "sprawl", "weight": 0.35, "apply": {} },
+            { "opponent_reaction": "whizzer", "weight": 0.2, "apply": {} }
+          ]
+        }
+      ],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["shot_initiated"]
+    },
+    {
+      "id": "high_crotch",
+      "label": "High crotch",
+      "system_tags": ["inside_tie"],
+      "preconditions": [{ "range": "contact" }, { "tie": "inside" }, { "level": "low" }],
+      "effects": [
+        {
+          "reaction_branches": [
+            { "opponent_reaction": "crackdown", "weight": 0.4, "apply": {} },
+            { "opponent_reaction": "sprawl", "weight": 0.35, "apply": {} },
+            { "opponent_reaction": "whizzer", "weight": 0.25, "apply": {} }
+          ]
+        }
+      ],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["shot_initiated"]
+    },
+    {
+      "id": "inside_step_double",
+      "label": "Inside-step double",
+      "system_tags": ["inside_tie"],
+      "preconditions": [{ "range": "contact" }, { "tie": "inside" }, { "level": "low" }],
+      "effects": [
+        {
+          "reaction_branches": [
+            { "opponent_reaction": "sprawl", "weight": 0.5, "apply": {} },
+            { "opponent_reaction": "hips_back", "weight": 0.25, "apply": {} },
+            { "opponent_reaction": "downblock", "weight": 0.25, "apply": {} }
+          ]
+        }
+      ],
+      "risk": "high",
+      "energy_cost": "high",
+      "position_gain": ["shot_initiated"]
+    },
+    {
+      "id": "short_arm_drag",
+      "label": "Short arm drag",
+      "system_tags": ["inside_tie", "counter_collar"],
+      "preconditions": [{ "range": "contact" }, { "tie": "inside" }],
+      "effects": [{ "set": { "angle": "slight_angle" } }],
+      "risk": "medium",
+      "energy_cost": "low",
+      "position_gain": ["angle_plus"]
+    },
+
+    {
+      "id": "single_leg",
+      "label": "Single leg",
+      "system_tags": ["two_on_one", "open_no_tie"],
+      "preconditions": [
+        { "level": "low" },
+        {
+          "any": [
+            { "tie": "two_on_one", "range": "contact" },
+            { "tie": "none", "range": "open" }
+          ]
+        }
+      ],
+      "effects": [
+        {
+          "reaction_branches": [
+            { "opponent_reaction": "hop_defense", "weight": 0.45, "apply": {} },
+            { "opponent_reaction": "sprawl", "weight": 0.35, "apply": {} },
+            { "opponent_reaction": "whizzer", "weight": 0.2, "apply": {} }
+          ]
+        }
+      ],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["shot_initiated"]
+    },
+    {
+      "id": "knee_tap",
+      "label": "Knee tap",
+      "system_tags": ["two_on_one", "underhook"],
+      "preconditions": [
+        { "range": "contact" },
+        { "tie": ["two_on_one", "underhook"] },
+        { "angle": ["slight_angle", "dominant_angle"] }
+      ],
+      "effects": [
+        {
+          "reaction_branches": [
+            { "opponent_reaction": "base_widens", "weight": 0.4, "apply": {} },
+            { "opponent_reaction": "falls", "weight": 0.35, "apply": {} },
+            { "opponent_reaction": "circles_out", "weight": 0.25, "apply": { "set": { "tie": "none", "angle": "square" } } }
+          ]
+        }
+      ],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["angle_plus"]
+    },
+    {
+      "id": "inside_step_shot",
+      "label": "Inside-step shot",
+      "system_tags": ["two_on_one"],
+      "preconditions": [{ "range": "contact" }, { "tie": "two_on_one" }, { "level": "low" }],
+      "effects": [
+        {
+          "reaction_branches": [
+            { "opponent_reaction": "sprawl", "weight": 0.45, "apply": {} },
+            { "opponent_reaction": "hips_back", "weight": 0.3, "apply": {} },
+            { "opponent_reaction": "whizzer", "weight": 0.25, "apply": {} }
+          ]
+        }
+      ],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["shot_initiated"]
+    },
+
+    {
+      "id": "body_lock",
+      "label": "Body lock",
+      "system_tags": ["underhook"],
+      "preconditions": [{ "range": "contact" }, { "tie": "underhook" }, { "angle": ["slight_angle", "dominant_angle"] }],
+      "effects": [
+        {
+          "reaction_branches": [
+            { "opponent_reaction": "hips_back", "weight": 0.4, "apply": {} },
+            { "opponent_reaction": "pummels_out", "weight": 0.35, "apply": { "set": { "tie": "none", "angle": "square" } } },
+            { "opponent_reaction": "locked", "weight": 0.25, "apply": { "set": { "angle": "dominant_angle" } } }
+          ]
+        }
+      ],
+      "risk": "high",
+      "energy_cost": "high",
+      "position_gain": ["angle_plus"]
+    },
+    {
+      "id": "throw_by",
+      "label": "Throw-by",
+      "system_tags": ["underhook"],
+      "preconditions": [{ "range": "contact" }, { "tie": "underhook" }, { "opponent_base": ["circling", "stepping"] }],
+      "effects": [{ "set": { "angle": "dominant_angle", "head_position": "won" } }],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["angle_plus", "back_exposure"]
+    },
+
+    {
+      "id": "whizzer_kickout",
+      "label": "Whizzer kick-out",
+      "system_tags": ["overhook_whizzer", "counter_underhook"],
+      "preconditions": [{ "range": "contact" }, { "tie": ["overhook", "underhook"] }],
+      "effects": [{ "set": { "tie": "none", "angle": "slight_angle" } }],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["tie_downgrade", "angle_plus"]
+    },
+    {
+      "id": "inside_step_counter",
+      "label": "Inside-step counter",
+      "system_tags": ["overhook_whizzer", "counter_two_on_one"],
+      "preconditions": [{ "range": "contact" }, { "tie": ["overhook", "two_on_one"] }, { "level": "low" }],
+      "effects": [{ "set": { "angle": "slight_angle" } }],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["angle_plus"]
+    },
+
+    {
+      "id": "low_single",
+      "label": "Low single",
+      "system_tags": ["open_no_tie"],
+      "preconditions": [{ "range": "open" }, { "level": "low" }, { "opponent_base": ["reaching", "stepping"] }],
+      "effects": [
+        {
+          "reaction_branches": [
+            { "opponent_reaction": "sprawl", "weight": 0.45, "apply": {} },
+            { "opponent_reaction": "hops_back", "weight": 0.3, "apply": {} },
+            { "opponent_reaction": "downblock", "weight": 0.25, "apply": {} }
+          ]
+        }
+      ],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["shot_initiated"]
+    },
+    {
+      "id": "snatch_single",
+      "label": "Snatch single",
+      "system_tags": ["open_no_tie"],
+      "preconditions": [{ "range": "open" }, { "level": ["mid", "low"] }, { "opponent_base": "reaching" }],
+      "effects": [
+        {
+          "reaction_branches": [
+            { "opponent_reaction": "hop_defense", "weight": 0.45, "apply": {} },
+            { "opponent_reaction": "sprawl", "weight": 0.35, "apply": {} },
+            { "opponent_reaction": "whizzer", "weight": 0.2, "apply": {} }
+          ]
+        }
+      ],
+      "risk": "medium",
+      "energy_cost": "medium",
+      "position_gain": ["shot_initiated"]
+    },
+    {
+      "id": "blast_double",
+      "label": "Blast double",
+      "system_tags": ["open_no_tie"],
+      "preconditions": [{ "range": "open" }, { "level": "low" }, { "opponent_base": "planted" }],
+      "effects": [
+        {
+          "reaction_branches": [
+            { "opponent_reaction": "sprawl", "weight": 0.55, "apply": {} },
+            { "opponent_reaction": "hips_back", "weight": 0.25, "apply": {} },
+            { "opponent_reaction": "late_react", "weight": 0.2, "apply": {} }
+          ]
+        }
+      ],
+      "risk": "high",
+      "energy_cost": "high",
+      "position_gain": ["shot_initiated"]
+    },
+
+    {
+      "id": "sprawl",
+      "label": "Sprawl",
+      "system_tags": ["counter_shot"],
+      "preconditions": [{ "opponent_intent": "shoot_attempt" }],
+      "effects": [{ "set": { "head_position": "won", "range": "contact" } }],
+      "risk": "low",
+      "energy_cost": "medium",
+      "position_gain": ["head_plus"]
+    },
+    {
+      "id": "spin_behind",
+      "label": "Spin behind",
+      "system_tags": ["counter_shot"],
+      "preconditions": [{ "head_position": "won" }, { "range": "contact" }],
+      "effects": [{ "set": { "tie": "none", "angle": "dominant_angle" } }],
+      "risk": "low",
+      "energy_cost": "medium",
+      "position_gain": ["back_exposure", "angle_plus"]
+    },
+    {
+      "id": "reshot",
+      "label": "Immediate reshot",
+      "system_tags": ["open_no_tie", "counter_shot"],
+      "preconditions": [{ "level": "low" }],
+      "effects": [{ "set": { "range": "open", "tie": "none" } }],
+      "risk": "medium",
+      "energy_cost": "high",
+      "position_gain": ["shot_initiated"]
+    }
+  ],
+  "systems": [
+    {
+      "system": "collar_tie",
+      "description": "Posture control to force head movement and predictable reactions for attacks.",
+      "high_level_goals": [
+        "Break posture",
+        "Create head and weight movement",
+        "Trigger predictable posts and steps",
+        "Route to shots or back exposure"
+      ],
+      "primary_attacks": ["snapdown", "go_behind", "front_headlock", "duck_under", "shuck_by", "single_leg"],
+      "recommended_entries": ["enter_contact", "collar_tie"],
+      "legal_actions_priority": [
+        "snapdown",
+        "duck_under",
+        "shuck_by",
+        "front_headlock",
+        "go_behind",
+        "disengage"
+      ],
+      "sequences": [
+        {
+          "name": "snap_post_go",
+          "steps": [
+            { "action": "collar_tie" },
+            { "action": "snapdown", "expect_opponent": ["hands_post", "resists_up"] },
+            { "action": "go_behind" }
+          ]
+        },
+        {
+          "name": "snap_resnap_single",
+          "steps": [
+            { "action": "collar_tie" },
+            { "action": "snapdown", "expect_opponent": ["resists_up"] },
+            { "action": "level_change" },
+            { "action": "single_leg", "expect_opponent": ["sprawl", "hop_defense", "whizzer"] }
+          ]
+        },
+        {
+          "name": "duck_under_off_pressure",
+          "steps": [
+            { "action": "collar_tie" },
+            { "action": "duck_under", "expect_opponent": ["stiff_arm", "late_spin"] },
+            { "action": "go_behind" }
+          ]
+        }
+      ]
+    },
+    {
+      "system": "inside_tie",
+      "description": "Inside space control enabling fast entries and routing to higher-control ties.",
+      "high_level_goals": [
+        "Own inside position",
+        "Read opponent base and pressure",
+        "Access sweep single or high crotch quickly",
+        "Transition to 2-on-1 or underhook"
+      ],
+      "primary_attacks": ["sweep_single", "high_crotch", "inside_step_double", "short_arm_drag", "snapdown"],
+      "recommended_entries": ["enter_contact", "inside_tie"],
+      "legal_actions_priority": [
+        "sweep_single",
+        "high_crotch",
+        "inside_step_double",
+        "two_on_one_grip",
+        "underhook",
+        "snapdown",
+        "disengage"
+      ],
+      "sequences": [
+        {
+          "name": "inside_sweep_single",
+          "steps": [
+            { "action": "inside_tie" },
+            { "action": "level_change" },
+            { "action": "sweep_single", "expect_opponent": ["hop_defense", "sprawl", "whizzer"] }
+          ]
+        },
+        {
+          "name": "inside_high_crotch",
+          "steps": [
+            { "action": "inside_tie" },
+            { "action": "level_change" },
+            { "action": "high_crotch", "expect_opponent": ["crackdown", "sprawl", "whizzer"] }
+          ]
+        },
+        {
+          "name": "inside_to_two_on_one_then_attack",
+          "steps": [
+            { "action": "inside_tie" },
+            { "action": "two_on_one_grip" },
+            { "action": "re_angle_step" },
+            { "action": "knee_tap", "expect_opponent": ["falls", "base_widens", "circles_out"] }
+          ]
+        }
+      ]
+    },
+    {
+      "system": "two_on_one",
+      "description": "Asymmetry and angle system limiting opponent options and forcing predictable defense.",
+      "high_level_goals": [
+        "Remove one arm from play",
+        "Achieve outside angle",
+        "Force square-up or grip break attempts",
+        "Convert to single, knee tap, or go-behind"
+      ],
+      "primary_attacks": ["single_leg", "knee_tap", "snapdown", "go_behind", "inside_step_shot"],
+      "recommended_entries": ["inside_tie", "two_on_one_grip"],
+      "legal_actions_priority": [
+        "re_angle_step",
+        "single_leg",
+        "knee_tap",
+        "snapdown",
+        "go_behind",
+        "inside_step_shot",
+        "disengage"
+      ],
+      "sequences": [
+        {
+          "name": "angle_to_single",
+          "steps": [
+            { "action": "two_on_one_grip" },
+            { "action": "re_angle_step", "expect_opponent": ["square_up", "break_grip"] },
+            { "action": "level_change" },
+            { "action": "single_leg", "expect_opponent": ["hop_defense", "sprawl", "whizzer"] }
+          ]
+        },
+        {
+          "name": "square_snap_go",
+          "steps": [
+            { "action": "two_on_one_grip" },
+            { "action": "snapdown", "expect_opponent": ["hands_post", "resists_up"] },
+            { "action": "go_behind" }
+          ]
+        },
+        {
+          "name": "knee_tap_off_angle",
+          "steps": [
+            { "action": "two_on_one_grip" },
+            { "action": "re_angle_step" },
+            { "action": "knee_tap", "expect_opponent": ["falls", "base_widens", "circles_out"] }
+          ]
+        }
+      ]
+    },
+    {
+      "system": "underhook",
+      "description": "Hip-territory system forcing whizzer or circle, enabling quick collapses and scores.",
+      "high_level_goals": [
+        "Claim hip line and side control",
+        "Force whizzer or circle-out",
+        "Convert quickly to knee tap or body lock",
+        "Exit if stalled or squared"
+      ],
+      "primary_attacks": ["knee_tap", "body_lock", "throw_by", "snapdown", "go_behind"],
+      "recommended_entries": ["inside_tie", "underhook"],
+      "legal_actions_priority": [
+        "re_angle_step",
+        "knee_tap",
+        "body_lock",
+        "throw_by",
+        "snapdown",
+        "go_behind",
+        "disengage"
+      ],
+      "sequences": [
+        {
+          "name": "whizzer_knee_tap",
+          "steps": [
+            { "action": "underhook" },
+            { "action": "re_angle_step", "expect_opponent": ["pummel_overhook", "circle_out"] },
+            { "action": "knee_tap", "expect_opponent": ["falls", "base_widens", "circles_out"] }
+          ]
+        },
+        {
+          "name": "circle_to_throw_by",
+          "steps": [
+            { "action": "underhook" },
+            { "action": "throw_by", "expect_opponent": ["circle_out"] },
+            { "action": "go_behind" }
+          ]
+        },
+        {
+          "name": "close_to_body_lock",
+          "steps": [
+            { "action": "underhook" },
+            { "action": "re_angle_step" },
+            { "action": "body_lock", "expect_opponent": ["hips_back", "pummels_out", "locked"] }
+          ]
+        }
+      ]
+    },
+    {
+      "system": "overhook_whizzer",
+      "description": "Exploit opponent underhook using overhook pressure to kick out or spin behind.",
+      "high_level_goals": [
+        "Neutralize opponent underhook",
+        "Create separation and angle",
+        "Convert to go-behind or reset",
+        "Punish over-commitment"
+      ],
+      "primary_attacks": ["whizzer_kickout", "go_behind", "snapdown", "inside_step_counter"],
+      "recommended_entries": ["overhook"],
+      "legal_actions_priority": [
+        "whizzer_kickout",
+        "inside_step_counter",
+        "snapdown",
+        "go_behind",
+        "disengage"
+      ],
+      "sequences": [
+        {
+          "name": "kickout_to_reset",
+          "steps": [
+            { "action": "overhook" },
+            { "action": "whizzer_kickout" },
+            { "action": "disengage" }
+          ]
+        },
+        {
+          "name": "kickout_to_go_behind",
+          "steps": [
+            { "action": "overhook" },
+            { "action": "whizzer_kickout" },
+            { "action": "go_behind" }
+          ]
+        }
+      ]
+    },
+    {
+      "system": "open_no_tie",
+      "description": "Timing and distance system attacking off reaching, planting, and movement mistakes.",
+      "high_level_goals": [
+        "Create reach or plant reactions",
+        "Attack from open range",
+        "Reshot off opponent commitment",
+        "Avoid prolonged contact when desired"
+      ],
+      "primary_attacks": ["low_single", "snatch_single", "blast_double", "single_leg", "reshot"],
+      "recommended_entries": ["disengage"],
+      "legal_actions_priority": [
+        "level_change",
+        "low_single",
+        "snatch_single",
+        "blast_double",
+        "enter_contact",
+        "reshot"
+      ],
+      "sequences": [
+        {
+          "name": "reach_to_low_single",
+          "steps": [
+            { "action": "level_change" },
+            { "action": "low_single", "expect_opponent": ["sprawl", "hops_back", "downblock"] }
+          ]
+        },
+        {
+          "name": "plant_to_blast_double",
+          "steps": [
+            { "action": "level_change" },
+            { "action": "blast_double", "expect_opponent": ["sprawl", "hips_back", "late_react"] }
+          ]
+        },
+        {
+          "name": "opponent_shoots_reshot",
+          "steps": [
+            { "action": "sprawl" },
+            { "action": "spin_behind" },
+            { "action": "reshot" }
+          ]
+        }
+      ]
+    },
+    {
+      "system": "counter_shot",
+      "description": "Defensive scoring system turning opponent shots into head control and angles.",
+      "high_level_goals": [
+        "Stop shot safely",
+        "Win head position",
+        "Score via spin/go-behind or front headlock",
+        "Chain immediately to offense"
+      ],
+      "primary_attacks": ["sprawl", "spin_behind", "front_headlock", "go_behind", "reshot"],
+      "recommended_entries": ["sprawl"],
+      "legal_actions_priority": [
+        "sprawl",
+        "spin_behind",
+        "front_headlock",
+        "go_behind",
+        "reshot"
+      ],
+      "sequences": [
+        {
+          "name": "sprawl_spin_score",
+          "steps": [
+            { "action": "sprawl" },
+            { "action": "spin_behind" },
+            { "action": "go_behind" }
+          ]
+        },
+        {
+          "name": "sprawl_front_headlock",
+          "steps": [
+            { "action": "sprawl" },
+            { "action": "front_headlock" },
+            { "action": "go_behind" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

@@ -207,6 +207,64 @@
             font-family: 'Courier New', monospace;
         }
         
+        .system-select {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            border: 2px solid #ff9900;
+            border-radius: 8px;
+            background: #0a0a0a;
+            color: #ff9900;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        
+        .system-select:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(255, 153, 0, 0.5);
+        }
+        
+        .system-info {
+            font-size: 1em;
+            color: #999;
+            line-height: 1.6;
+        }
+        
+        .system-info h3 {
+            color: #ff9900;
+            font-size: 1.1em;
+            margin: 10px 0 5px 0;
+            text-transform: uppercase;
+        }
+        
+        .system-info ul {
+            margin: 5px 0 10px 20px;
+            padding: 0;
+        }
+        
+        .system-info li {
+            margin: 3px 0;
+            font-size: 1em;
+        }
+        
+        .opponent-reaction {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2em;
+            color: #ff6699;
+            text-shadow: 0 0 10px #ff6699;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        
+        .opponent-reaction.show {
+            opacity: 1;
+        }
+        
         .hidden {
             display: none;
         }
@@ -388,6 +446,8 @@
             <div class="timer" id="timer"></div>
         </div>
         
+        <div class="opponent-reaction" id="opponentReaction"></div>
+        
         <div class="control-group">
             <div class="button-group">
                 <button class="btn-primary" id="startBtn">START</button>
@@ -404,20 +464,20 @@
         </div>
         
         <div class="control-group hidden" id="courseSelector">
-            <h2>Course</h2>
-            <div class="button-group">
-                <button class="btn-secondary active" data-course="foundations">Setup & Transition</button>
-                <button class="btn-secondary" data-course="defense">Defense to Offense</button>
-                <button class="btn-secondary" data-course="chaos">Mid-Shot Chaos</button>
-                <button class="btn-secondary" data-course="collar_tie">Collar Tie</button>
-                <button class="btn-secondary" data-course="inside_tie">Inside Tie</button>
-                <button class="btn-secondary" data-course="russian_tie">Russian Tie</button>
-                <button class="btn-secondary" data-course="arm_drag">Arm Drag</button>
-                <button class="btn-secondary" data-course="front_headlock">Front Headlock</button>
-            </div>
+            <h2>System</h2>
+            <select id="systemSelect" class="system-select">
+                <option value="collar_tie">Collar Tie</option>
+                <option value="inside_tie">Inside Tie</option>
+                <option value="two_on_one">Two-on-One</option>
+                <option value="underhook">Underhook</option>
+                <option value="overhook_whizzer">Overhook/Whizzer</option>
+                <option value="open_no_tie">Open (No Tie)</option>
+                <option value="counter_shot">Counter Shot</option>
+            </select>
+            <div id="systemInfo" class="system-info"></div>
         </div>
         
-        <div class="control-group">
+        <div class="control-group" id="optionsGroup">
             <h2>Options</h2>
             <div class="button-group">
                 <button class="btn-secondary" id="comboBtn">Combos: OFF</button>
@@ -457,6 +517,19 @@
     </div>
 
     <script>
+        // Load courses data
+        let SYSTEMS = {};
+        
+        fetch('courses.json')
+            .then(r => r.json())
+            .then(data => {
+                SYSTEMS = data.systems.reduce((acc, sys) => {
+                    acc[sys.system] = sys;
+                    return acc;
+                }, {});
+                updateSystemInfo();
+            });
+        
         // Action definitions
         const ACTIONS = {
             easy: ['Circle', 'Sprawl', 'Shoot', 'Down block'],
@@ -499,66 +572,6 @@
                     ['Sweep single', 'High crotch', 'Reshoot'],
                     ['Level change', 'Double', 'Reshoot']
                 ]
-            },
-            collar_tie: {
-                name: 'Collar Tie Series',
-                sequences: [
-                    ['Snap', 'Snap', 'Shoot'],
-                    ['Snap', 'Circle left', 'Shoot'],
-                    ['Snap', 'Circle right', 'Shoot'],
-                    ['Snap', 'Reshoot'],
-                    ['Snap', 'Left single'],
-                    ['Snap', 'Right single'],
-                    ['Snap', 'Double']
-                ]
-            },
-            inside_tie: {
-                name: 'Inside Tie Series',
-                sequences: [
-                    ['Forward', 'Left single'],
-                    ['Forward', 'Right single'],
-                    ['Fake', 'Double'],
-                    ['Forward', 'Double'],
-                    ['Forward', 'Sweep single'],
-                    ['Fake left', 'Double'],
-                    ['Fake right', 'Double']
-                ]
-            },
-            russian_tie: {
-                name: 'Russian Tie Series',
-                sequences: [
-                    ['Circle left', 'Circle left'],
-                    ['Circle right', 'Circle right'],
-                    ['Circle left', 'Left single'],
-                    ['Circle right', 'Right single'],
-                    ['Snap', 'Circle left'],
-                    ['Snap', 'Circle right'],
-                    ['Forward', 'Circle left', 'Shoot']
-                ]
-            },
-            arm_drag: {
-                name: 'Arm Drag Series',
-                sequences: [
-                    ['Circle left', 'Left single'],
-                    ['Circle right', 'Right single'],
-                    ['Circle left', 'Shoot'],
-                    ['Circle right', 'Shoot'],
-                    ['Level change', 'Left single'],
-                    ['Level change', 'Right single'],
-                    ['Circle left', 'Circle left', 'Shoot']
-                ]
-            },
-            front_headlock: {
-                name: 'Front Headlock Series',
-                sequences: [
-                    ['Snap', 'Snap'],
-                    ['Snap', 'Circle left'],
-                    ['Snap', 'Circle right'],
-                    ['Snap', 'Reshoot'],
-                    ['Snap', 'Level change', 'Shoot'],
-                    ['Sprawl', 'Snap'],
-                    ['Down block', 'Snap']
-                ]
             }
         };
 
@@ -595,7 +608,7 @@
         // Speed configurations
         const SPEED_CONFIG = {
             slow: { delay: [2500, 3500], jitter: 0.1, playbackRate: 0.85 },
-            normal: { delay: [2000, 2500], jitter: 0.1, playbackRate: 0.9 },
+            normal: { delay: [2500, 3000], jitter: 0.1, playbackRate: 0.9 },
             fast: { delay: [1300, 1800], jitter: 0.15, playbackRate: 1.0 },
             chaos: { delay: [700, 1100], jitter: 0.2, playbackRate: 1.15 }
         };
@@ -606,7 +619,7 @@
             speed: 'normal',
             combosEnabled: false,
             mode: 'random', // 'random' or 'course'
-            course: 'foundations',
+            system: 'collar_tie',
             workTime: 60,
             restTime: 30,
             volume: 0.8,
@@ -631,6 +644,37 @@
         const comboBtn = document.getElementById('comboBtn');
         const customTiming = document.getElementById('customTiming');
         const courseSelector = document.getElementById('courseSelector');
+        const optionsGroup = document.getElementById('optionsGroup');
+        const systemSelect = document.getElementById('systemSelect');
+        const systemInfo = document.getElementById('systemInfo');
+        const opponentReaction = document.getElementById('opponentReaction');
+        
+        // Update system info display
+        function updateSystemInfo() {
+            const sys = SYSTEMS[state.system];
+            if (!sys) return;
+            
+            systemInfo.innerHTML = `
+                <h3>Goals</h3>
+                <ul>
+                    ${sys.high_level_goals.map(g => `<li>${g}</li>`).join('')}
+                </ul>
+                <h3>Primary Attacks</h3>
+                <ul>
+                    ${sys.primary_attacks.map(a => `<li>${formatAction(a)}</li>`).join('')}
+                </ul>
+            `;
+        }
+        
+        function formatAction(action) {
+            return action.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        }
+        
+        function showOpponentReaction(reaction) {
+            opponentReaction.textContent = formatAction(reaction);
+            opponentReaction.classList.add('show');
+            setTimeout(() => opponentReaction.classList.remove('show'), 2000);
+        }
 
         // Speech synthesis
         function speak(text, playbackRate = 1.0) {
@@ -652,12 +696,26 @@
 
         // Select next action
         function selectAction() {
-            // Course mode - use predefined sequences
+            // Course mode - use system sequences
             if (state.mode === 'course') {
-                const sequences = COURSES[state.course].sequences;
-                const sequence = sequences[state.courseSequenceIndex % sequences.length];
+                const sys = SYSTEMS[state.system];
+                if (!sys || !sys.sequences) return ['Move'];
+                
+                const sequences = sys.sequences;
+                const seq = sequences[state.courseSequenceIndex % sequences.length];
                 state.courseSequenceIndex++;
-                return sequence;
+                
+                // Convert sequence steps to action labels with opponent reactions
+                const actions = seq.steps.map(step => formatAction(step.action));
+                
+                // Show opponent reaction if present
+                if (seq.steps.length > 0 && seq.steps[0].expect_opponent) {
+                    const reactions = seq.steps[0].expect_opponent;
+                    const reaction = reactions[Math.floor(Math.random() * reactions.length)];
+                    setTimeout(() => showOpponentReaction(reaction), 1500);
+                }
+                
+                return actions;
             }
             
             // Random mode - use all hard actions
@@ -849,20 +907,19 @@
                 
                 if (state.mode === 'course') {
                     courseSelector.classList.remove('hidden');
+                    optionsGroup.classList.add('hidden');
                 } else {
                     courseSelector.classList.add('hidden');
+                    optionsGroup.classList.remove('hidden');
                 }
             });
         });
         
-        // Course buttons
-        document.querySelectorAll('[data-course]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('[data-course]').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                state.course = btn.dataset.course;
-                state.courseSequenceIndex = 0;
-            });
+        // System select
+        systemSelect.addEventListener('change', (e) => {
+            state.system = e.target.value;
+            state.courseSequenceIndex = 0;
+            updateSystemInfo();
         });
     </script>
 </body>
