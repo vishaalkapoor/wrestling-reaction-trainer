@@ -794,6 +794,7 @@
             restTime: 20,
             volume: 0.75,
             lastAction: null,
+            recentActions: [], // Track last 3 actions to avoid repetition
             currentPhase: 'ready', // 'ready', 'work', 'rest'
             timeRemaining: 0,
             courseSequenceIndex: 0,
@@ -1156,18 +1157,27 @@
                 // Fallback to legacy actions if moves not loaded yet
                 const actions = ACTIONS.hard;
                 let action;
+                let attempts = 0;
                 do {
                     action = actions[Math.floor(Math.random() * actions.length)];
-                } while (action === state.lastAction && actions.length > 1);
+                    attempts++;
+                } while (state.recentActions.includes(action) && attempts < 20);
+                
+                state.recentActions.push(action);
+                if (state.recentActions.length > 3) state.recentActions.shift();
                 state.lastAction = action;
                 return [action];
             }
             
             let move;
+            let attempts = 0;
             do {
                 move = BASIC_MOVES[Math.floor(Math.random() * BASIC_MOVES.length)];
-            } while (move.label === state.lastAction && BASIC_MOVES.length > 1);
+                attempts++;
+            } while (state.recentActions.includes(move.label) && attempts < 20);
             
+            state.recentActions.push(move.label);
+            if (state.recentActions.length > 3) state.recentActions.shift();
             state.lastAction = move.label;
             return [move.label];
         }
