@@ -636,6 +636,34 @@
       ],
       "risk": "high",
       "energy": "high"
+    },
+    {
+      "id": "fake_sweep_single",
+      "label": "Fake Sweep Single",
+      "category": "setup",
+      "systems": [
+        "inside_tie"
+      ],
+      "typical_reactions": [
+        "hips_back",
+        "whizzer"
+      ],
+      "risk": "low",
+      "energy": "low"
+    },
+    {
+      "id": "fake_high_crotch",
+      "label": "Fake High Crotch",
+      "category": "setup",
+      "systems": [
+        "inside_tie"
+      ],
+      "typical_reactions": [
+        "hips_back",
+        "crackdown"
+      ],
+      "risk": "low",
+      "energy": "low"
     }
   ],
   "combos": [
@@ -1856,6 +1884,206 @@
           "next_steps": [
             {
               "action": "reshot"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "wrist_control_inside",
+      "name": "Wrist Control to Inside Tie",
+      "system": "inside_tie",
+      "objective": "Control wrist, establish inside tie position.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup"
+      ],
+      "steps": [
+        {
+          "action": "wrist_control"
+        },
+        {
+          "action": "inside_tie"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "breaks_grip",
+            "circles_out"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "breaks_grip",
+          "next_steps": [
+            {
+              "action": "stance_reset"
+            }
+          ],
+          "resolution": "reset"
+        }
+      ]
+    },
+    {
+      "id": "fake_sweep_arm_drag",
+      "name": "Fake Sweep to Arm Drag",
+      "system": "inside_tie",
+      "objective": "Fake sweep single, opponent reacts, arm drag for angle.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "inside_tie"
+        },
+        {
+          "action": "fake_sweep_single"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "hips_back",
+            "whizzer"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "hips_back",
+          "next_steps": [
+            {
+              "action": "arm_drag"
+            },
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        },
+        {
+          "if_opponent_reaction": "whizzer",
+          "next_steps": [
+            {
+              "action": "arm_drag"
+            },
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "fake_high_c_sweep",
+      "name": "Fake High Crotch to Sweep Single",
+      "system": "inside_tie",
+      "objective": "Fake high crotch, opponent reacts, sweep single.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "inside_tie"
+        },
+        {
+          "action": "fake_high_crotch"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "crackdown",
+            "hips_back"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "crackdown",
+          "next_steps": [
+            {
+              "action": "level_change"
+            },
+            {
+              "action": "sweep_single"
+            }
+          ],
+          "resolution": "near_score"
+        },
+        {
+          "if_opponent_reaction": "hips_back",
+          "next_steps": [
+            {
+              "action": "level_change"
+            },
+            {
+              "action": "sweep_single"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "fake_sweep_high_c",
+      "name": "Fake Sweep to High Crotch",
+      "system": "inside_tie",
+      "objective": "Fake sweep single, opponent reacts, high crotch.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "inside_tie"
+        },
+        {
+          "action": "fake_sweep_single"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "whizzer",
+            "hips_back"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "whizzer",
+          "next_steps": [
+            {
+              "action": "level_change"
+            },
+            {
+              "action": "high_crotch"
+            }
+          ],
+          "resolution": "near_score"
+        },
+        {
+          "if_opponent_reaction": "hips_back",
+          "next_steps": [
+            {
+              "action": "level_change"
+            },
+            {
+              "action": "high_crotch"
             }
           ],
           "resolution": "near_score"
