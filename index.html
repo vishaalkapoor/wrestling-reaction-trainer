@@ -661,8 +661,13 @@
                 </select>
             </div>
             <div class="custom-row">
-                <span>Coach:</span>
-                <button class="btn-secondary" id="coachBtn" style="width: 120px;">Coach: OFF</button>
+                <span>Coach Intensity:</span>
+                <div class="volume-lights" id="coachLights">
+                    <div class="light" data-level="0"></div>
+                    <div class="light" data-level="1"></div>
+                    <div class="light" data-level="2"></div>
+                    <div class="light" data-level="3"></div>
+                </div>
             </div>
             <div class="custom-row">
                 <span>Speech Speed:</span>
@@ -787,21 +792,52 @@
             "My grandma moves quicker than that!",
             "Is that all you got?",
             "Stop thinking. Just move!",
-            "Weak! Again!",
-            "You're better than this!",
-            "Push through it!",
-            "Champions don't quit!",
-            "Dig deeper!",
-            "That's pathetic!",
-            "Move your feet!",
-            "Where's the intensity?",
-            "You want it or not?",
-            "Soft hands! Tighten up!",
-            "Level change! Come on!",
-            "Stop being lazy!",
-            "Earn it!",
-            "Nobody's impressed!"
-        ];
+        // Coach phrases by intensity level
+        const COACH_PHRASES = {
+            motivational: [
+                "You're better than this!",
+                "Push through it!",
+                "Champions don't quit!",
+                "Dig deeper!",
+                "Move your feet!",
+                "You want it or not?",
+                "Earn it!",
+                "Let's go!",
+                "Stay focused!",
+                "Keep grinding!"
+            ],
+            insults: [
+                "You call that a sprawl?",
+                "No one cares. Work harder.",
+                "Faster!",
+                "My grandma moves quicker than that!",
+                "Is that all you got?",
+                "Stop thinking. Just move!",
+                "Weak! Again!",
+                "That's pathetic!",
+                "Where's the intensity?",
+                "Soft hands! Tighten up!",
+                "Level change! Come on!",
+                "Stop being lazy!",
+                "Nobody's impressed!"
+            ],
+            crashout: [
+                "ARE YOU EVEN TRYING?!",
+                "EMBARRASSING!",
+                "GET OFF THE MAT!",
+                "YOU'RE WASTING MY TIME!",
+                "WHAT WAS THAT?!",
+                "I'VE SEEN BETTER AT PRACTICE SQUAD!",
+                "YOU CALL YOURSELF A WRESTLER?!",
+                "PATHETIC! DO IT AGAIN!",
+                "MOVE THOSE FEET OR GO HOME!",
+                "ZERO EFFORT! ZERO RESULTS!",
+                "THIS IS A JOKE!",
+                "YOU'RE BETTER THAN THIS... OR ARE YOU?!",
+                "UNACCEPTABLE!",
+                "WHERE'S THE FIRE?!"
+            ]
+        };
 
         // Speed configurations
         const SPEED_CONFIG = {
@@ -824,6 +860,7 @@
             lastAction: null,
             recentActions: [], // Track last 3 actions to avoid repetition
             coachEnabled: false,
+            coachLevel: 0, // 0=off, 1=motivational, 2=insults, 3=crashout
             currentPhase: 'ready', // 'ready', 'work', 'rest'
             timeRemaining: 0,
             courseSequenceIndex: 0,
@@ -851,8 +888,8 @@
         const volumeLights = document.getElementById('volumeLights');
         const speechLights = document.getElementById('speechLights');
         const comboSpeedLights = document.getElementById('comboSpeedLights');
+        const coachLights = document.getElementById('coachLights');
         const comboBtn = document.getElementById('comboBtn');
-        const coachBtn = document.getElementById('coachBtn');
         const showNextBtn = document.getElementById('showNextBtn');
         const showNextBtnCourse = document.getElementById('showNextBtnCourse');
         const showReactionBtn = document.getElementById('showReactionBtn');
@@ -924,6 +961,19 @@
             // Level 1: 100ms, Level 2: 50ms, Level 3: 20ms, Level 4: 0ms
             const pauseTimes = [100, 50, 20, 0];
             state.delayMultiplier = pauseTimes[level - 1];
+        }
+        
+        // Initialize coach intensity lights
+        function setCoachLights(level) {
+            const lights = coachLights.querySelectorAll('.light');
+            lights.forEach((light, i) => {
+                if (i < level) {
+                    light.classList.add('active');
+                } else {
+                    light.classList.remove('active');
+                }
+            });
+            state.coachLevel = level;
         }
         
         // Volume light interaction
@@ -1032,10 +1082,45 @@
             }
         });
         
+        // Coach intensity light interaction
+        let coachDragging = false;
+        
+        coachLights.addEventListener('mousedown', (e) => {
+            if (e.target.classList.contains('light')) {
+                coachDragging = true;
+                const level = parseInt(e.target.dataset.level);
+                setCoachLights(level);
+            }
+        });
+        
+        coachLights.addEventListener('mousemove', (e) => {
+            if (coachDragging && e.target.classList.contains('light')) {
+                const level = parseInt(e.target.dataset.level);
+                setCoachLights(level);
+            }
+        });
+        
+        coachLights.addEventListener('touchstart', (e) => {
+            if (e.target.classList.contains('light')) {
+                const level = parseInt(e.target.dataset.level);
+                setCoachLights(level);
+            }
+        });
+        
+        coachLights.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            const element = document.elementFromPoint(touch.clientX, touch.clientY);
+            if (element && element.classList.contains('light')) {
+                const level = parseInt(element.dataset.level);
+                setCoachLights(level);
+            }
+        });
+        
         document.addEventListener('mouseup', () => {
             isDragging = false;
             speechDragging = false;
             comboSpeedDragging = false;
+            coachDragging = false;
         });
         
         // Update system info display
@@ -1232,9 +1317,17 @@
                 nextMove.textContent = '';
             }
             
-            // Randomly add coach phrase (20% chance when enabled)
-            if (state.coachEnabled && Math.random() < 0.2) {
-                const coachPhrase = COACH_PHRASES[Math.floor(Math.random() * COACH_PHRASES.length)];
+            // Randomly add coach phrase based on intensity level
+            if (state.coachLevel > 0 && Math.random() < 0.2) {
+                let phraseArray;
+                if (state.coachLevel === 1) {
+                    phraseArray = COACH_PHRASES.motivational;
+                } else if (state.coachLevel === 2) {
+                    phraseArray = COACH_PHRASES.insults;
+                } else if (state.coachLevel === 3) {
+                    phraseArray = COACH_PHRASES.crashout;
+                }
+                const coachPhrase = phraseArray[Math.floor(Math.random() * phraseArray.length)];
                 actions.push(coachPhrase);
             }
             
@@ -1423,13 +1516,6 @@
             if (!state.showNext) nextMove.textContent = '';
         });
         
-        // Coach toggle
-        coachBtn.addEventListener('click', () => {
-            state.coachEnabled = !state.coachEnabled;
-            coachBtn.textContent = `Coach: ${state.coachEnabled ? 'ON' : 'OFF'}`;
-            coachBtn.classList.toggle('active');
-        });
-        
         // Show reaction toggle
         showReactionBtn.addEventListener('click', () => {
             state.showReaction = !state.showReaction;
@@ -1482,6 +1568,7 @@
         setVolumeLights(6);
         setSpeechLights(2); // 1.0x
         setComboSpeedLights(4); // 0ms pause (instant)
+        setCoachLights(0); // Off by default
     </script>
 </body>
 </html>
