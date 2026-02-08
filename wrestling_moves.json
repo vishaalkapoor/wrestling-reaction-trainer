@@ -2089,6 +2089,350 @@
           "resolution": "near_score"
         }
       ]
+    },
+    {
+      "id": "underhook_angle_knee",
+      "name": "Underhook Angle to Knee Tap",
+      "system": "underhook",
+      "objective": "Secure underhook, create angle, knee tap finish.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "underhook"
+        },
+        {
+          "action": "angle_step"
+        },
+        {
+          "action": "knee_tap"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 3,
+          "likely_reactions": [
+            "hips_back",
+            "circles_out"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "circles_out",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "underhook_snap_go",
+      "name": "Underhook Snap to Go-Behind",
+      "system": "underhook",
+      "objective": "Underhook control, snap down, circle behind.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "underhook"
+        },
+        {
+          "action": "snapdown"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "hands_post",
+            "resists_up"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "hands_post",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "underhook_pummel_body_lock",
+      "name": "Underhook Pummel to Body Lock",
+      "system": "underhook",
+      "objective": "Fight for underhook, secure body lock.",
+      "difficulty": "advanced",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "pummel_inside"
+        },
+        {
+          "action": "underhook"
+        },
+        {
+          "action": "body_lock"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 3,
+          "likely_reactions": [
+            "hips_back",
+            "whizzer"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "whizzer",
+          "next_steps": [
+            {
+              "action": "knee_tap"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "underhook_throw_reattack",
+      "name": "Underhook Throw By Chain",
+      "system": "underhook",
+      "objective": "Opponent circles, throw by, continue attack.",
+      "difficulty": "advanced",
+      "tags": [
+        "counter",
+        "re-attack"
+      ],
+      "steps": [
+        {
+          "action": "underhook"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 1,
+          "likely_reactions": [
+            "circles_out"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "circles_out",
+          "next_steps": [
+            {
+              "action": "throw_by"
+            },
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "whizzer_pressure_kickout",
+      "name": "Whizzer Pressure Kickout",
+      "system": "overhook_whizzer",
+      "objective": "Apply whizzer pressure, kick out for separation.",
+      "difficulty": "beginner",
+      "tags": [
+        "counter",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "overhook"
+        },
+        {
+          "action": "whizzer_kickout"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "circles_out",
+            "breaks_grip"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "circles_out",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        },
+        {
+          "if_opponent_reaction": "breaks_grip",
+          "next_steps": [
+            {
+              "action": "stance_reset"
+            }
+          ],
+          "resolution": "reset"
+        }
+      ]
+    },
+    {
+      "id": "whizzer_snap_front_head",
+      "name": "Whizzer Snap to Front Headlock",
+      "system": "overhook_whizzer",
+      "objective": "Control whizzer, snap for front headlock.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "overhook"
+        },
+        {
+          "action": "snapdown"
+        },
+        {
+          "action": "front_headlock"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "hands_post",
+            "front_head_exposed"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "hands_post",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "score"
+        }
+      ]
+    },
+    {
+      "id": "whizzer_angle_attack",
+      "name": "Whizzer Angle to Attack",
+      "system": "overhook_whizzer",
+      "objective": "Control whizzer, create angle, attack opening.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "overhook"
+        },
+        {
+          "action": "angle_step"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "circles_out",
+            "squares_up"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "circles_out",
+          "next_steps": [
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        },
+        {
+          "if_opponent_reaction": "squares_up",
+          "next_steps": [
+            {
+              "action": "snapdown"
+            },
+            {
+              "action": "go_behind"
+            }
+          ],
+          "resolution": "near_score"
+        }
+      ]
+    },
+    {
+      "id": "whizzer_clear_reset",
+      "name": "Whizzer Clear to Reset",
+      "system": "overhook_whizzer",
+      "objective": "Control whizzer, clear tie, reset position.",
+      "difficulty": "beginner",
+      "tags": [
+        "counter",
+        "reset"
+      ],
+      "steps": [
+        {
+          "action": "overhook"
+        },
+        {
+          "action": "whizzer_kickout"
+        },
+        {
+          "action": "clear_tie"
+        }
+      ],
+      "reaction_points": [
+        {
+          "after_step": 2,
+          "likely_reactions": [
+            "breaks_grip"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "if_opponent_reaction": "breaks_grip",
+          "next_steps": [
+            {
+              "action": "stance_reset"
+            }
+          ],
+          "resolution": "reset"
+        }
+      ]
     }
   ]
 }
