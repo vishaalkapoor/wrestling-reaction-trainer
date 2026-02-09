@@ -1348,7 +1348,13 @@
             }
             
             // Randomly add coach phrase based on intensity level
-            if (state.coachLevel > 0 && Math.random() < 0.35) {
+            // Higher levels = more frequent yelling
+            let coachProbability = 0;
+            if (state.coachLevel === 1) coachProbability = 0.35;
+            if (state.coachLevel === 2) coachProbability = 0.40;
+            if (state.coachLevel === 3) coachProbability = 0.55;
+            
+            if (state.coachLevel > 0 && Math.random() < coachProbability) {
                 let phraseArray;
                 if (state.coachLevel === 1) {
                     phraseArray = COACH_PHRASES.motivational;
