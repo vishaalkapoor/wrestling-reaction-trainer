@@ -975,7 +975,7 @@
         function setCoachLights(level) {
             const lights = coachLights.querySelectorAll('.light');
             lights.forEach((light, i) => {
-                if (i < level) {
+                if (i <= level) {
                     light.classList.add('active');
                 } else {
                     light.classList.remove('active');
