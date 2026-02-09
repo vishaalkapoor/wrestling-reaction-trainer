@@ -612,7 +612,7 @@
         <div class="control-group" id="combosGroup">
             <h2>Options</h2>
             <div class="button-group">
-                <button class="btn-secondary" id="comboBtn">Combos: OFF</button>
+                <button class="btn-secondary active" id="comboBtn">Combos: ON</button>
                 <button class="btn-secondary" id="showNextBtn">Show Next: OFF</button>
                 <button class="btn-secondary" id="showReactionBtnRandom">Show Reaction: OFF</button>
             </div>
@@ -920,7 +920,7 @@
         let state = {
             running: false,
             speed: 'normal',
-            combosEnabled: false,
+            combosEnabled: true,
             mode: 'random', // 'random' or 'course'
             system: 'collar_tie',
             workTime: 60,
