@@ -839,7 +839,17 @@
                 "Do it right or don't do it!",
                 "You're better than this... barely!",
                 "Quit dragging your feet!",
-                "Show me something!"
+                "Show me something!",
+                "You're embarrassing yourself!",
+                "I've seen better from beginners!",
+                "Your technique is garbage!",
+                "You're not even trying!",
+                "Absolutely pitiful!",
+                "You should be ashamed!",
+                "This is a waste of time!",
+                "You're making excuses with your body!",
+                "Completely unacceptable!",
+                "You're getting destroyed out there!"
             ],
                 "Where's the intensity?",
                 "Soft hands! Tighten up!",
@@ -1344,7 +1354,7 @@
             }
             
             // Randomly add coach phrase based on intensity level
-            if (state.coachLevel > 0 && Math.random() < 0.2) {
+            if (state.coachLevel > 0 && Math.random() < 0.35) {
                 let phraseArray;
                 if (state.coachLevel === 1) {
                     phraseArray = COACH_PHRASES.motivational;
