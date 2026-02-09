@@ -1016,8 +1016,8 @@
                     light.classList.remove('active');
                 }
             });
-            // Amplify volume at max level
-            state.volume = level === 8 ? 1.5 : level / 8;
+            // Amplify volume at max level to 200%
+            state.volume = level === 8 ? 2.0 : level / 8;
         }
         
         // Initialize speech speed lights (0.9x to 1.2x)
