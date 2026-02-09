@@ -673,7 +673,7 @@
             <div class="custom-row">
                 <span>Voice:</span>
                 <select id="voiceSelect" class="voice-select">
-                    <option value="0">Default</option>
+                    <option value="-1">Default</option>
                 </select>
             </div>
             <div class="custom-row">
@@ -966,16 +966,20 @@
         let voices = [];
         function loadVoices() {
             voices = speechSynthesis.getVoices();
-            voiceSelect.innerHTML = voices.map((voice, i) => 
-                `<option value="${i}">${voice.name} (${voice.lang})</option>`
-            ).join('');
+            if (voices.length > 0) {
+                voiceSelect.innerHTML = '<option value="-1">Default</option>' + 
+                    voices.map((voice, i) => 
+                        `<option value="${i}">${voice.name} (${voice.lang})</option>`
+                    ).join('');
+            }
         }
         
         speechSynthesis.onvoiceschanged = loadVoices;
         loadVoices();
         
         voiceSelect.addEventListener('change', (e) => {
-            state.selectedVoice = voices[parseInt(e.target.value)];
+            const index = parseInt(e.target.value);
+            state.selectedVoice = index === -1 ? null : voices[index];
         });
         
         // Initialize volume lights
