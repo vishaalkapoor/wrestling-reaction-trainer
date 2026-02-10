@@ -664,6 +664,116 @@
       ],
       "risk": "low",
       "energy": "low"
+    },
+    {
+      "id": "single_leg_finish_run_pipe",
+      "label": "Single Leg Finish: Run the Pipe",
+      "category": "finish",
+      "systems": [
+        "counter_shot"
+      ],
+      "typical_reactions": [],
+      "risk": "medium",
+      "energy": "high"
+    },
+    {
+      "id": "single_leg_finish_dump",
+      "label": "Single Leg Finish: Dump",
+      "category": "finish",
+      "systems": [
+        "counter_shot"
+      ],
+      "typical_reactions": [],
+      "risk": "medium",
+      "energy": "high"
+    },
+    {
+      "id": "single_leg_finish_trip",
+      "label": "Single Leg Finish: Trip",
+      "category": "finish",
+      "systems": [
+        "counter_shot"
+      ],
+      "typical_reactions": [],
+      "risk": "medium",
+      "energy": "medium"
+    },
+    {
+      "id": "high_c_to_double",
+      "label": "High Crotch to Double",
+      "category": "finish",
+      "systems": [
+        "counter_shot"
+      ],
+      "typical_reactions": [],
+      "risk": "medium",
+      "energy": "high"
+    },
+    {
+      "id": "high_c_backstep",
+      "label": "High Crotch Backstep",
+      "category": "finish",
+      "systems": [
+        "counter_shot"
+      ],
+      "typical_reactions": [],
+      "risk": "medium",
+      "energy": "high"
+    },
+    {
+      "id": "high_c_to_back",
+      "label": "High Crotch to Back",
+      "category": "finish",
+      "systems": [
+        "counter_shot"
+      ],
+      "typical_reactions": [],
+      "risk": "medium",
+      "energy": "high"
+    },
+    {
+      "id": "high_c_lift_dump",
+      "label": "High Crotch Lift and Dump",
+      "category": "finish",
+      "systems": [
+        "counter_shot"
+      ],
+      "typical_reactions": [],
+      "risk": "medium",
+      "energy": "high"
+    },
+    {
+      "id": "double_angle_off",
+      "label": "Double Leg Angle Off",
+      "category": "finish",
+      "systems": [
+        "counter_shot"
+      ],
+      "typical_reactions": [],
+      "risk": "medium",
+      "energy": "high"
+    },
+    {
+      "id": "double_lift_dump",
+      "label": "Double Leg Lift and Dump",
+      "category": "finish",
+      "systems": [
+        "counter_shot"
+      ],
+      "typical_reactions": [],
+      "risk": "medium",
+      "energy": "high"
+    },
+    {
+      "id": "body_lock_lift_dump",
+      "label": "Body Lock Lift and Dump",
+      "category": "finish",
+      "systems": [
+        "underhook"
+      ],
+      "typical_reactions": [],
+      "risk": "high",
+      "energy": "high"
     }
   ],
   "combos": [
@@ -2433,6 +2543,258 @@
           "resolution": "reset"
         }
       ]
+    },
+    {
+      "id": "sweep_single_run_pipe",
+      "name": "Sweep Single to Run the Pipe",
+      "system": "counter_shot",
+      "objective": "Attack single leg, finish with run the pipe.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "sweep_single"
+        },
+        {
+          "action": "single_leg_finish_run_pipe"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "sweep_single_dump",
+      "name": "Sweep Single to Dump",
+      "system": "counter_shot",
+      "objective": "Attack single leg, finish with dump.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "sweep_single"
+        },
+        {
+          "action": "single_leg_finish_dump"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "sweep_single_trip",
+      "name": "Sweep Single to Trip",
+      "system": "counter_shot",
+      "objective": "Attack single leg, finish with trip.",
+      "difficulty": "beginner",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "sweep_single"
+        },
+        {
+          "action": "single_leg_finish_trip"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "high_crotch_to_double",
+      "name": "High Crotch to Double",
+      "system": "counter_shot",
+      "objective": "Attack high crotch, convert to double leg.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "high_crotch"
+        },
+        {
+          "action": "high_c_to_double"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "high_crotch_backstep",
+      "name": "High Crotch Backstep Finish",
+      "system": "counter_shot",
+      "objective": "Attack high crotch, finish with backstep.",
+      "difficulty": "advanced",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "high_crotch"
+        },
+        {
+          "action": "high_c_backstep"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "high_crotch_to_back",
+      "name": "High Crotch to Back",
+      "system": "counter_shot",
+      "objective": "Attack high crotch, transition to back.",
+      "difficulty": "advanced",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "high_crotch"
+        },
+        {
+          "action": "high_c_to_back"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "high_crotch_lift_dump",
+      "name": "High Crotch Lift and Dump",
+      "system": "counter_shot",
+      "objective": "Attack high crotch, finish with lift and dump.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "high_crotch"
+        },
+        {
+          "action": "high_c_lift_dump"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "double_angle_finish",
+      "name": "Double Leg Angle Off",
+      "system": "counter_shot",
+      "objective": "Attack double leg, finish with angle off.",
+      "difficulty": "beginner",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "double_leg"
+        },
+        {
+          "action": "double_angle_off"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "double_lift_finish",
+      "name": "Double Leg Lift and Dump",
+      "system": "counter_shot",
+      "objective": "Attack double leg, finish with lift and dump.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "double_leg"
+        },
+        {
+          "action": "double_lift_dump"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "body_lock_finish",
+      "name": "Body Lock to Lift and Dump",
+      "system": "underhook",
+      "objective": "Secure body lock, finish with lift and dump.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "body_lock"
+        },
+        {
+          "action": "body_lock_lift_dump"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "snatch_single_run_pipe",
+      "name": "Snatch Single to Run the Pipe",
+      "system": "counter_shot",
+      "objective": "Attack snatch single, finish with run the pipe.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "snatch_single"
+        },
+        {
+          "action": "single_leg_finish_run_pipe"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "snatch_single_dump",
+      "name": "Snatch Single to Dump",
+      "system": "counter_shot",
+      "objective": "Attack snatch single, finish with dump.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "snatch_single"
+        },
+        {
+          "action": "single_leg_finish_dump"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
     }
   ]
 }
