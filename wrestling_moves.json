@@ -667,7 +667,7 @@
     },
     {
       "id": "single_leg_finish_run_pipe",
-      "label": "Single: Run Pipe",
+      "label": "Run Pipe",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -678,7 +678,7 @@
     },
     {
       "id": "single_leg_finish_dump",
-      "label": "Single: Dump",
+      "label": "Dump",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -689,7 +689,7 @@
     },
     {
       "id": "single_leg_finish_trip",
-      "label": "Single: Trip",
+      "label": "Trip",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -700,7 +700,7 @@
     },
     {
       "id": "high_c_to_double",
-      "label": "High C to Double",
+      "label": "To Double",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -711,7 +711,7 @@
     },
     {
       "id": "high_c_backstep",
-      "label": "High C Backstep",
+      "label": "Backstep",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -722,7 +722,7 @@
     },
     {
       "id": "high_c_to_back",
-      "label": "High C to Back",
+      "label": "To Back",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -733,7 +733,7 @@
     },
     {
       "id": "high_c_lift_dump",
-      "label": "High C Lift Dump",
+      "label": "Lift Dump",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -744,7 +744,7 @@
     },
     {
       "id": "double_angle_off",
-      "label": "Double: Angle Off",
+      "label": "Angle Off",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -755,7 +755,7 @@
     },
     {
       "id": "double_lift_dump",
-      "label": "Double: Lift Dump",
+      "label": "Lift Dump",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -766,7 +766,7 @@
     },
     {
       "id": "body_lock_lift_dump",
-      "label": "Body Lock: Lift Dump",
+      "label": "Lift Dump",
       "category": "finish",
       "systems": [
         "underhook"
