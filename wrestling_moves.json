@@ -667,7 +667,7 @@
     },
     {
       "id": "single_leg_finish_run_pipe",
-      "label": "Single Leg Finish: Run the Pipe",
+      "label": "Single: Run Pipe",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -678,7 +678,7 @@
     },
     {
       "id": "single_leg_finish_dump",
-      "label": "Single Leg Finish: Dump",
+      "label": "Single: Dump",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -689,7 +689,7 @@
     },
     {
       "id": "single_leg_finish_trip",
-      "label": "Single Leg Finish: Trip",
+      "label": "Single: Trip",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -700,7 +700,7 @@
     },
     {
       "id": "high_c_to_double",
-      "label": "High Crotch to Double",
+      "label": "High C to Double",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -711,7 +711,7 @@
     },
     {
       "id": "high_c_backstep",
-      "label": "High Crotch Backstep",
+      "label": "High C Backstep",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -722,7 +722,7 @@
     },
     {
       "id": "high_c_to_back",
-      "label": "High Crotch to Back",
+      "label": "High C to Back",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -733,7 +733,7 @@
     },
     {
       "id": "high_c_lift_dump",
-      "label": "High Crotch Lift and Dump",
+      "label": "High C Lift Dump",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -744,7 +744,7 @@
     },
     {
       "id": "double_angle_off",
-      "label": "Double Leg Angle Off",
+      "label": "Double: Angle Off",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -755,7 +755,7 @@
     },
     {
       "id": "double_lift_dump",
-      "label": "Double Leg Lift and Dump",
+      "label": "Double: Lift Dump",
       "category": "finish",
       "systems": [
         "counter_shot"
@@ -766,7 +766,7 @@
     },
     {
       "id": "body_lock_lift_dump",
-      "label": "Body Lock Lift and Dump",
+      "label": "Body Lock: Lift Dump",
       "category": "finish",
       "systems": [
         "underhook"
@@ -2546,7 +2546,7 @@
     },
     {
       "id": "sweep_single_run_pipe",
-      "name": "Sweep Single to Run the Pipe",
+      "name": "Sweep Single \u2192 Run Pipe",
       "system": "counter_shot",
       "objective": "Attack single leg, finish with run the pipe.",
       "difficulty": "intermediate",
@@ -2630,7 +2630,7 @@
     },
     {
       "id": "high_crotch_backstep",
-      "name": "High Crotch Backstep Finish",
+      "name": "High C Backstep",
       "system": "counter_shot",
       "objective": "Attack high crotch, finish with backstep.",
       "difficulty": "advanced",
@@ -2672,7 +2672,7 @@
     },
     {
       "id": "high_crotch_lift_dump",
-      "name": "High Crotch Lift and Dump",
+      "name": "High C Lift Dump",
       "system": "counter_shot",
       "objective": "Attack high crotch, finish with lift and dump.",
       "difficulty": "intermediate",
@@ -2693,7 +2693,7 @@
     },
     {
       "id": "double_angle_finish",
-      "name": "Double Leg Angle Off",
+      "name": "Double \u2192 Angle Off",
       "system": "counter_shot",
       "objective": "Attack double leg, finish with angle off.",
       "difficulty": "beginner",
@@ -2714,7 +2714,7 @@
     },
     {
       "id": "double_lift_finish",
-      "name": "Double Leg Lift and Dump",
+      "name": "Double \u2192 Lift Dump",
       "system": "counter_shot",
       "objective": "Attack double leg, finish with lift and dump.",
       "difficulty": "intermediate",
@@ -2735,7 +2735,7 @@
     },
     {
       "id": "body_lock_finish",
-      "name": "Body Lock to Lift and Dump",
+      "name": "Body Lock \u2192 Lift Dump",
       "system": "underhook",
       "objective": "Secure body lock, finish with lift and dump.",
       "difficulty": "intermediate",
@@ -2756,7 +2756,7 @@
     },
     {
       "id": "snatch_single_run_pipe",
-      "name": "Snatch Single to Run the Pipe",
+      "name": "Snatch Single \u2192 Run Pipe",
       "system": "counter_shot",
       "objective": "Attack snatch single, finish with run the pipe.",
       "difficulty": "intermediate",
