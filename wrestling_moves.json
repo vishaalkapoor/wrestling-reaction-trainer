@@ -774,6 +774,21 @@
       "typical_reactions": [],
       "risk": "high",
       "energy": "high"
+    },
+    {
+      "id": "wrist_drag",
+      "label": "Wrist Drag",
+      "category": "attack",
+      "systems": [
+        "inside_tie",
+        "two_on_one"
+      ],
+      "typical_reactions": [
+        "circles_out",
+        "posts_hand"
+      ],
+      "risk": "medium",
+      "energy": "medium"
     }
   ],
   "combos": [
@@ -2791,6 +2806,54 @@
         },
         {
           "action": "single_leg_finish_dump"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "wrist_control_drag_body_lock",
+      "name": "Wrist Control \u2192 Wrist Drag \u2192 Body Lock",
+      "system": "inside_tie",
+      "objective": "Control wrist, drag to body lock.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "wrist_control"
+        },
+        {
+          "action": "wrist_drag"
+        },
+        {
+          "action": "body_lock"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "wrist_control_drag_overtie",
+      "name": "Wrist Control \u2192 Wrist Drag \u2192 Overtie",
+      "system": "inside_tie",
+      "objective": "Control wrist, drag to overtie position.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "transition"
+      ],
+      "steps": [
+        {
+          "action": "wrist_control"
+        },
+        {
+          "action": "wrist_drag"
+        },
+        {
+          "action": "overhook"
         }
       ],
       "reaction_points": [],
