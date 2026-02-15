@@ -626,7 +626,7 @@
         <div class="control-group" id="combosGroup">
             <h2>Options</h2>
             <div class="button-group">
-                <button class="btn-secondary active" id="comboBtn">Combos: ON</button>
+                <button class="btn-secondary active" id="comboModeBtn">Mode: Combo</button>
                 <button class="btn-secondary" id="showNextBtn">Show Next: OFF</button>
                 <button class="btn-secondary" id="showReactionBtnRandom">Show Reaction: OFF</button>
             </div>
@@ -972,7 +972,7 @@
         const speechLights = document.getElementById('speechLights');
         const comboSpeedLights = document.getElementById('comboSpeedLights');
         const coachLights = document.getElementById('coachLights');
-        const comboBtn = document.getElementById('comboBtn');
+        const comboModeBtn = document.getElementById('comboModeBtn');
         const showNextBtn = document.getElementById('showNextBtn');
         const showNextBtnCourse = document.getElementById('showNextBtnCourse');
         const showReactionBtn = document.getElementById('showReactionBtn');
@@ -1586,11 +1586,11 @@
             state.restTime = parseInt(e.target.value) || 30;
         });
 
-        // Combo toggle
-        comboBtn.addEventListener('click', () => {
+        // Combo mode toggle
+        comboModeBtn.addEventListener('click', () => {
             state.combosEnabled = !state.combosEnabled;
-            comboBtn.textContent = `Combos: ${state.combosEnabled ? 'ON' : 'OFF'}`;
-            comboBtn.classList.toggle('active');
+            comboModeBtn.textContent = `Mode: ${state.combosEnabled ? 'Combo' : 'Simple'}`;
+            comboModeBtn.classList.toggle('active');
         });
         
         // Show next toggle
