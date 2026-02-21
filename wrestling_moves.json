@@ -898,7 +898,7 @@
           "action": "level_change"
         },
         {
-          "action": "reshoot"
+          "action": "sweep_single"
         }
       ],
       "reaction_points": [],
