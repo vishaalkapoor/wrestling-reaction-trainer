@@ -740,13 +740,13 @@
             fetch('courses.json').then(r => r.json()),
             fetch('wrestling_moves.json').then(r => r.json())
         ]).then(([coursesData, movesData]) => {
-            SYSTEMS = coursesData.systems.reduce((acc, sys) => {
-                acc[sys.system] = sys;
-                return acc;
-            }, {});
+            SYSTEMS = coursesData;
             BASIC_MOVES = movesData.basic_moves;
             COMBOS = movesData.combos;
+            console.log('Loaded:', BASIC_MOVES.length, 'basic moves,', COMBOS.length, 'combos');
             updateSystemInfo();
+        }).catch(err => {
+            console.error('Error loading data:', err);
         });
         
         // Action definitions (legacy - kept for compatibility)
