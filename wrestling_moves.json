@@ -2047,6 +2047,195 @@
       ],
       "reaction_points": [],
       "branches": []
+    },
+    {
+      "id": "snap_feint_sweep",
+      "name": "Snap Feint \u2192 Sweep Single",
+      "system": "open_no_tie",
+      "objective": "Feint snap, opponent reacts, sweep single.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "snap_feint"
+        },
+        {
+          "action": "sweep_single"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "snap_feint_double",
+      "name": "Snap Feint \u2192 Double",
+      "system": "open_no_tie",
+      "objective": "Feint snap, opponent reacts, double leg.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "snap_feint"
+        },
+        {
+          "action": "double_leg"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "level_feint_sweep",
+      "name": "Level Feint \u2192 Sweep Single",
+      "system": "open_no_tie",
+      "objective": "Feint level change, opponent stands tall, sweep single.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "level_feint"
+        },
+        {
+          "action": "sweep_single"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "level_feint_high_c",
+      "name": "Level Feint \u2192 High Crotch",
+      "system": "open_no_tie",
+      "objective": "Feint level change, opponent stands tall, high crotch.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "level_feint"
+        },
+        {
+          "action": "high_crotch"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "foot_feint_double",
+      "name": "Foot Feint \u2192 Double",
+      "system": "open_no_tie",
+      "objective": "Foot feint, opponent shifts weight, double leg.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "foot_feint"
+        },
+        {
+          "action": "double_leg"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "foot_feint_snatch",
+      "name": "Foot Feint \u2192 Snatch Single",
+      "system": "open_no_tie",
+      "objective": "Foot feint, opponent shifts weight, snatch single.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "foot_feint"
+        },
+        {
+          "action": "snatch_single"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "fake_sweep_high_c_direct",
+      "name": "Fake Sweep \u2192 High Crotch",
+      "system": "open_no_tie",
+      "objective": "Fake sweep single, opponent reacts, high crotch.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "fake_sweep_single"
+        },
+        {
+          "action": "high_crotch"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "fake_high_c_sweep_direct",
+      "name": "Fake High Crotch \u2192 Sweep",
+      "system": "open_no_tie",
+      "objective": "Fake high crotch, opponent reacts, sweep single.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "fake_high_crotch"
+        },
+        {
+          "action": "sweep_single"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "fake_high_c_double",
+      "name": "Fake High Crotch \u2192 Double",
+      "system": "open_no_tie",
+      "objective": "Fake high crotch, opponent reacts, double leg.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "fake_high_crotch"
+        },
+        {
+          "action": "double_leg"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
     }
   ]
 }
