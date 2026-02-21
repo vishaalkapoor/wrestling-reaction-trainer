@@ -683,13 +683,12 @@
   ],
   "combos": [
     {
-      "id": "snap_go",
-      "name": "Snap to Go-Behind",
+      "id": "snap_go_behind",
+      "name": "Snapdown \u2192 Go-Behind",
       "system": "collar_tie",
-      "objective": "Break posture, force hands post, circle behind.",
+      "objective": "Snap down, spin behind.",
       "difficulty": "beginner",
       "tags": [
-        "setup",
         "attack",
         "finish"
       ],
@@ -699,49 +698,21 @@
         },
         {
           "action": "snapdown"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "hands_post",
-            "resists_up"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "hands_post",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
         },
         {
-          "if_opponent_reaction": "resists_up",
-          "next_steps": [
-            {
-              "action": "snapdown"
-            },
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
+          "action": "spin_behind"
         }
-      ]
+      ],
+      "reaction_points": [],
+      "branches": []
     },
     {
       "id": "snap_front_head",
-      "name": "Snap to Front Headlock",
+      "name": "Snapdown \u2192 Front Headlock",
       "system": "collar_tie",
-      "objective": "Break posture, secure front headlock control.",
+      "objective": "Snap down, chin strap, front headlock.",
       "difficulty": "intermediate",
       "tags": [
-        "setup",
         "attack",
         "finish"
       ],
@@ -751,123 +722,73 @@
         },
         {
           "action": "snapdown"
+        },
+        {
+          "action": "chin_strap"
         },
         {
           "action": "front_headlock"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "hands_post",
-            "front_head_exposed"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "hands_post",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "score"
-        },
-        {
-          "if_opponent_reaction": "circles_out",
-          "next_steps": [
-            {
-              "action": "stance_reset"
-            }
-          ],
-          "resolution": "reset"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
-      "id": "collar_duck",
-      "name": "Collar Tie Duck Under",
+      "id": "collar_duck_go",
+      "name": "Collar Tie \u2192 Duck Under \u2192 Go-Behind",
       "system": "collar_tie",
-      "objective": "Opponent stiff-arms, duck under for back exposure.",
+      "objective": "Duck under from collar tie.",
       "difficulty": "intermediate",
       "tags": [
-        "counter",
-        "attack"
+        "attack",
+        "finish"
       ],
       "steps": [
         {
           "action": "collar_tie"
+        },
+        {
+          "action": "level_change"
+        },
+        {
+          "action": "duck_under"
+        },
+        {
+          "action": "go_behind"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 1,
-          "likely_reactions": [
-            "stiff_arm"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "stiff_arm",
-          "next_steps": [
-            {
-              "action": "duck_under"
-            },
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
-      "id": "collar_shuck",
-      "name": "Collar Tie Shuck By",
+      "id": "collar_shuck_go",
+      "name": "Collar Tie \u2192 Shuck By \u2192 Go-Behind",
       "system": "collar_tie",
-      "objective": "Opponent resists, shuck by for angle.",
+      "objective": "Shuck by to go-behind.",
       "difficulty": "beginner",
       "tags": [
-        "counter",
-        "attack"
+        "attack",
+        "finish"
       ],
       "steps": [
         {
           "action": "collar_tie"
+        },
+        {
+          "action": "shuck_by"
+        },
+        {
+          "action": "go_behind"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 1,
-          "likely_reactions": [
-            "stiff_arm",
-            "resists_up"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "stiff_arm",
-          "next_steps": [
-            {
-              "action": "shuck_by"
-            },
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
       "id": "snap_feint_shot",
-      "name": "Snap Feint to Shot",
+      "name": "Snap Feint \u2192 Shot",
       "system": "collar_tie",
-      "objective": "Fake snap, opponent posts, attack legs.",
+      "objective": "Feint snap, opponent posts, shoot.",
       "difficulty": "intermediate",
       "tags": [
         "setup",
@@ -879,37 +800,376 @@
         },
         {
           "action": "snap_feint"
+        },
+        {
+          "action": "penetration_step"
         }
       ],
-      "reaction_points": [
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "sprawl_spin",
+      "name": "Sprawl \u2192 Spin Behind",
+      "system": "counter_shot",
+      "objective": "Sprawl, win head, spin behind.",
+      "difficulty": "beginner",
+      "tags": [
+        "defense",
+        "finish"
+      ],
+      "steps": [
         {
-          "after_step": 2,
-          "likely_reactions": [
-            "hands_post",
-            "resists_up"
-          ]
+          "action": "sprawl"
+        },
+        {
+          "action": "head_position_win"
+        },
+        {
+          "action": "spin_behind"
         }
       ],
-      "branches": [
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "sprawl_front_head",
+      "name": "Sprawl \u2192 Front Headlock",
+      "system": "counter_shot",
+      "objective": "Sprawl, chin strap, front headlock.",
+      "difficulty": "intermediate",
+      "tags": [
+        "defense",
+        "finish"
+      ],
+      "steps": [
         {
-          "if_opponent_reaction": "resists_up",
-          "next_steps": [
-            {
-              "action": "level_change"
-            },
-            {
-              "action": "double_leg"
-            }
-          ],
-          "resolution": "near_score"
+          "action": "sprawl"
+        },
+        {
+          "action": "chin_strap"
+        },
+        {
+          "action": "front_headlock"
         }
-      ]
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "downblock_angle_go",
+      "name": "Downblock \u2192 Angle \u2192 Go-Behind",
+      "system": "counter_shot",
+      "objective": "Downblock, angle, go-behind.",
+      "difficulty": "beginner",
+      "tags": [
+        "defense",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "downblock"
+        },
+        {
+          "action": "angle_step"
+        },
+        {
+          "action": "go_behind"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "sprawl_reshot",
+      "name": "Sprawl \u2192 Re-Shot",
+      "system": "counter_shot",
+      "objective": "Sprawl, opponent comes up, re-shot.",
+      "difficulty": "advanced",
+      "tags": [
+        "defense",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "sprawl"
+        },
+        {
+          "action": "level_change"
+        },
+        {
+          "action": "reshoot"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "sweep_run_pipe",
+      "name": "Sweep Single \u2192 Run Pipe",
+      "system": "counter_shot",
+      "objective": "Sweep single, run the pipe.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "sweep_single"
+        },
+        {
+          "action": "elevate"
+        },
+        {
+          "action": "run_pipe"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "sweep_dump",
+      "name": "Sweep Single \u2192 Dump",
+      "system": "counter_shot",
+      "objective": "Sweep single, shelf, dump.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "sweep_single"
+        },
+        {
+          "action": "elevate"
+        },
+        {
+          "action": "dump"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "sweep_trip",
+      "name": "Sweep Single \u2192 Trip",
+      "system": "counter_shot",
+      "objective": "Sweep single, inside trip.",
+      "difficulty": "beginner",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "sweep_single"
+        },
+        {
+          "action": "elevate"
+        },
+        {
+          "action": "trip"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "high_c_double",
+      "name": "High Crotch \u2192 Double",
+      "system": "counter_shot",
+      "objective": "High crotch, cut corner, double.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "high_crotch"
+        },
+        {
+          "action": "cut_corner"
+        },
+        {
+          "action": "double_leg"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "high_c_backstep",
+      "name": "High Crotch \u2192 Backstep",
+      "system": "counter_shot",
+      "objective": "High crotch, lift, backstep finish.",
+      "difficulty": "advanced",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "high_crotch"
+        },
+        {
+          "action": "lift"
+        },
+        {
+          "action": "backstep"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "high_c_go_behind",
+      "name": "High Crotch \u2192 Go-Behind",
+      "system": "counter_shot",
+      "objective": "High crotch, opponent squares, go-behind.",
+      "difficulty": "advanced",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "high_crotch"
+        },
+        {
+          "action": "go_behind"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "high_c_lift_dump",
+      "name": "High Crotch \u2192 Lift Dump",
+      "system": "counter_shot",
+      "objective": "High crotch, lock, lift, dump.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "high_crotch"
+        },
+        {
+          "action": "lift"
+        },
+        {
+          "action": "dump"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "double_angle",
+      "name": "Double \u2192 Angle Finish",
+      "system": "counter_shot",
+      "objective": "Double leg, cut angle, finish.",
+      "difficulty": "beginner",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "double_leg"
+        },
+        {
+          "action": "cut_corner"
+        },
+        {
+          "action": "finish"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "double_lift_dump",
+      "name": "Double \u2192 Lift Dump",
+      "system": "counter_shot",
+      "objective": "Double leg, lock, lift, dump.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "double_leg"
+        },
+        {
+          "action": "lift"
+        },
+        {
+          "action": "dump"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "snatch_run_pipe",
+      "name": "Snatch Single \u2192 Run Pipe",
+      "system": "counter_shot",
+      "objective": "Snatch single, run the pipe.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "snatch_single"
+        },
+        {
+          "action": "elevate"
+        },
+        {
+          "action": "run_pipe"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "snatch_dump",
+      "name": "Snatch Single \u2192 Dump",
+      "system": "counter_shot",
+      "objective": "Snatch single, shelf, dump.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "snatch_single"
+        },
+        {
+          "action": "elevate"
+        },
+        {
+          "action": "dump"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
     },
     {
       "id": "inside_sweep",
-      "name": "Inside Tie Sweep Single",
+      "name": "Inside Tie \u2192 Sweep Single",
       "system": "inside_tie",
-      "objective": "Control inside, level change, sweep single.",
+      "objective": "Inside tie, level change, sweep single.",
       "difficulty": "beginner",
       "tags": [
         "setup",
@@ -926,42 +1186,14 @@
           "action": "sweep_single"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 3,
-          "likely_reactions": [
-            "hop_defense",
-            "whizzer",
-            "sprawl"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "whizzer",
-          "next_steps": [
-            {
-              "action": "high_crotch"
-            }
-          ],
-          "resolution": "near_score"
-        },
-        {
-          "if_opponent_reaction": "sprawl",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
       "id": "inside_high_c",
-      "name": "Inside Tie High Crotch",
+      "name": "Inside Tie \u2192 High Crotch",
       "system": "inside_tie",
-      "objective": "Control inside, level change, high crotch finish.",
+      "objective": "Inside tie, level change, high crotch.",
       "difficulty": "beginner",
       "tags": [
         "setup",
@@ -978,74 +1210,41 @@
           "action": "high_crotch"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 3,
-          "likely_reactions": [
-            "crackdown",
-            "whizzer"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "crackdown",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
-      "id": "inside_sweep_whizzer_go",
-      "name": "Sweep Single Whizzer to Go-Behind",
+      "id": "sweep_whizzer_go",
+      "name": "Sweep \u2192 Whizzer \u2192 Go-Behind",
       "system": "inside_tie",
-      "objective": "Attack sweep, opponent whizzers, circle behind.",
+      "objective": "Sweep single, opponent whizzers, limp arm, go-behind.",
       "difficulty": "intermediate",
       "tags": [
         "attack",
-        "re-attack",
-        "finish"
+        "counter"
       ],
       "steps": [
         {
           "action": "inside_tie"
         },
         {
-          "action": "level_change"
+          "action": "sweep_single"
         },
         {
-          "action": "sweep_single"
+          "action": "limp_arm"
+        },
+        {
+          "action": "go_behind"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 3,
-          "likely_reactions": [
-            "whizzer"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "whizzer",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
       "id": "inside_double",
-      "name": "Inside Tie Double Leg",
+      "name": "Inside Tie \u2192 Double",
       "system": "inside_tie",
-      "objective": "Control inside, penetrate, double leg.",
+      "objective": "Inside tie, level change, penetration, double.",
       "difficulty": "intermediate",
       "tags": [
         "setup",
@@ -1065,33 +1264,63 @@
           "action": "double_leg"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 4,
-          "likely_reactions": [
-            "sprawl",
-            "hips_back"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "sprawl",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
       "id": "inside_arm_drag",
-      "name": "Inside Tie Arm Drag",
+      "name": "Inside Tie \u2192 Arm Drag \u2192 Go-Behind",
       "system": "inside_tie",
-      "objective": "Control inside, drag arm for angle.",
+      "objective": "Inside tie, arm drag, go-behind.",
       "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "inside_tie"
+        },
+        {
+          "action": "arm_drag"
+        },
+        {
+          "action": "go_behind"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "wrist_inside_attack",
+      "name": "Wrist Control \u2192 Inside Tie \u2192 Attack",
+      "system": "inside_tie",
+      "objective": "Wrist control, inside tie, level change, shot.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "wrist_control"
+        },
+        {
+          "action": "inside_tie"
+        },
+        {
+          "action": "level_change"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "fake_sweep_arm_drag",
+      "name": "Fake Sweep \u2192 Arm Drag",
+      "system": "inside_tie",
+      "objective": "Fake sweep, opponent pulls back, arm drag.",
+      "difficulty": "intermediate",
       "tags": [
         "setup",
         "attack"
@@ -1101,469 +1330,116 @@
           "action": "inside_tie"
         },
         {
-          "action": "arm_drag"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "circles_out",
-            "squares_up"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "circles_out",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
-    },
-    {
-      "id": "two_on_one_angle_knee",
-      "name": "Two-on-One Angle to Knee Tap",
-      "system": "two_on_one",
-      "objective": "Control arm, create angle, knee tap finish.",
-      "difficulty": "intermediate",
-      "tags": [
-        "setup",
-        "attack",
-        "finish"
-      ],
-      "steps": [
-        {
-          "action": "two_on_one_grip"
-        },
-        {
-          "action": "angle_step"
-        },
-        {
-          "action": "knee_tap"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 3,
-          "likely_reactions": [
-            "hips_back",
-            "circles_out"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "circles_out",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
-    },
-    {
-      "id": "two_on_one_square_snap",
-      "name": "Two-on-One Square to Snap",
-      "system": "two_on_one",
-      "objective": "Opponent squares up, snap down for control.",
-      "difficulty": "intermediate",
-      "tags": [
-        "counter",
-        "attack"
-      ],
-      "steps": [
-        {
-          "action": "two_on_one_grip"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 1,
-          "likely_reactions": [
-            "squares_up"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "squares_up",
-          "next_steps": [
-            {
-              "action": "snapdown"
-            },
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
-    },
-    {
-      "id": "two_on_one_shot",
-      "name": "Two-on-One Inside Step Shot",
-      "system": "two_on_one",
-      "objective": "Control arm, level change, inside step shot.",
-      "difficulty": "advanced",
-      "tags": [
-        "setup",
-        "attack"
-      ],
-      "steps": [
-        {
-          "action": "two_on_one_grip"
-        },
-        {
-          "action": "level_change"
-        },
-        {
-          "action": "inside_step_shot"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 3,
-          "likely_reactions": [
-            "sprawl",
-            "whizzer"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "sprawl",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
-    },
-    {
-      "id": "two_on_one_drag",
-      "name": "Two-on-One Arm Drag",
-      "system": "two_on_one",
-      "objective": "Control arm, drag for back exposure.",
-      "difficulty": "beginner",
-      "tags": [
-        "setup",
-        "attack"
-      ],
-      "steps": [
-        {
-          "action": "two_on_one_grip"
+          "action": "fake_sweep_single"
         },
         {
           "action": "arm_drag"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "circles_out"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "circles_out",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
-      "id": "underhook_whizzer_knee",
-      "name": "Underhook Whizzer to Knee Tap",
-      "system": "underhook",
-      "objective": "Opponent whizzers, attack near knee.",
+      "id": "fake_high_c_sweep",
+      "name": "Fake High Crotch \u2192 Sweep",
+      "system": "inside_tie",
+      "objective": "Fake high crotch, opponent steps back, sweep single.",
       "difficulty": "intermediate",
-      "tags": [
-        "counter",
-        "attack"
-      ],
-      "steps": [
-        {
-          "action": "underhook"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 1,
-          "likely_reactions": [
-            "whizzer"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "whizzer",
-          "next_steps": [
-            {
-              "action": "angle_step"
-            },
-            {
-              "action": "knee_tap"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
-    },
-    {
-      "id": "underhook_circle_throw",
-      "name": "Underhook Circle to Throw By",
-      "system": "underhook",
-      "objective": "Opponent circles, throw by for back.",
-      "difficulty": "intermediate",
-      "tags": [
-        "counter",
-        "attack"
-      ],
-      "steps": [
-        {
-          "action": "underhook"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 1,
-          "likely_reactions": [
-            "circles_out"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "circles_out",
-          "next_steps": [
-            {
-              "action": "throw_by"
-            },
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
-    },
-    {
-      "id": "underhook_body_lock",
-      "name": "Underhook Body Lock",
-      "system": "underhook",
-      "objective": "Secure underhook, lock body for throw.",
-      "difficulty": "advanced",
       "tags": [
         "setup",
         "attack"
       ],
       "steps": [
         {
-          "action": "underhook"
+          "action": "inside_tie"
         },
         {
-          "action": "angle_step"
+          "action": "fake_high_crotch"
+        },
+        {
+          "action": "sweep_single"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "fake_sweep_high_c",
+      "name": "Fake Sweep \u2192 High Crotch",
+      "system": "inside_tie",
+      "objective": "Fake sweep, opponent squares, high crotch.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "inside_tie"
+        },
+        {
+          "action": "fake_sweep_single"
+        },
+        {
+          "action": "high_crotch"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "wrist_drag_body_lock",
+      "name": "Wrist Drag \u2192 Body Lock",
+      "system": "inside_tie",
+      "objective": "Wrist drag, step in, body lock.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "wrist_control"
+        },
+        {
+          "action": "wrist_drag"
         },
         {
           "action": "body_lock"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 3,
-          "likely_reactions": [
-            "hips_back",
-            "whizzer"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "hips_back",
-          "next_steps": [
-            {
-              "action": "knee_tap"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
-      "id": "underhook_snap",
-      "name": "Underhook Snap",
-      "system": "underhook",
-      "objective": "Control underhook, snap for front head.",
+      "id": "wrist_drag_overtie",
+      "name": "Wrist Drag \u2192 Overtie",
+      "system": "inside_tie",
+      "objective": "Wrist drag, overhook.",
       "difficulty": "beginner",
       "tags": [
         "setup",
-        "attack"
+        "transition"
       ],
       "steps": [
         {
-          "action": "underhook"
+          "action": "wrist_control"
         },
         {
-          "action": "snapdown"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "hands_post",
-            "resists_up"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "hands_post",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
-    },
-    {
-      "id": "whizzer_kickout_go",
-      "name": "Whizzer Kickout to Go-Behind",
-      "system": "overhook_whizzer",
-      "objective": "Secure whizzer, kick out, circle behind.",
-      "difficulty": "intermediate",
-      "tags": [
-        "counter",
-        "attack"
-      ],
-      "steps": [
+          "action": "wrist_drag"
+        },
         {
           "action": "overhook"
-        },
-        {
-          "action": "whizzer_kickout"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "circles_out",
-            "breaks_grip"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "circles_out",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
-    },
-    {
-      "id": "whizzer_snap",
-      "name": "Whizzer Snap",
-      "system": "overhook_whizzer",
-      "objective": "Control whizzer, snap for front head.",
-      "difficulty": "beginner",
-      "tags": [
-        "setup",
-        "attack"
-      ],
-      "steps": [
-        {
-          "action": "overhook"
-        },
-        {
-          "action": "snapdown"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "hands_post"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "hands_post",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
-    },
-    {
-      "id": "whizzer_angle",
-      "name": "Whizzer Angle Step",
-      "system": "overhook_whizzer",
-      "objective": "Control whizzer, create angle for attack.",
-      "difficulty": "intermediate",
-      "tags": [
-        "setup",
-        "attack"
-      ],
-      "steps": [
-        {
-          "action": "overhook"
-        },
-        {
-          "action": "angle_step"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "circles_out",
-            "squares_up"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "circles_out",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
       "id": "reach_bait_snatch",
-      "name": "Reach Bait to Snatch Single",
+      "name": "Reach Bait \u2192 Snatch Single",
       "system": "open_no_tie",
-      "objective": "Bait reach, snatch single on extension.",
+      "objective": "Reach bait, opponent reaches, snatch single.",
       "difficulty": "intermediate",
       "tags": [
         "setup",
@@ -1572,33 +1448,19 @@
       "steps": [
         {
           "action": "reach_bait"
+        },
+        {
+          "action": "snatch_single"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 1,
-          "likely_reactions": [
-            "reaches"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "reaches",
-          "next_steps": [
-            {
-              "action": "snatch_single"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
       "id": "level_feint_blast",
-      "name": "Level Feint to Blast Double",
+      "name": "Level Feint \u2192 Blast Double",
       "system": "open_no_tie",
-      "objective": "Fake level, opponent reacts, blast double.",
+      "objective": "Level feint, opponent stands tall, blast double.",
       "difficulty": "advanced",
       "tags": [
         "setup",
@@ -1607,40 +1469,22 @@
       "steps": [
         {
           "action": "level_feint"
+        },
+        {
+          "action": "penetration_step"
+        },
+        {
+          "action": "double_leg"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 1,
-          "likely_reactions": [
-            "hips_back",
-            "sprawl"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "hips_back",
-          "next_steps": [
-            {
-              "action": "level_change"
-            },
-            {
-              "action": "penetration_step"
-            },
-            {
-              "action": "blast_double"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
       "id": "foot_feint_shot",
-      "name": "Foot Feint to Shot",
+      "name": "Foot Feint \u2192 Shot",
       "system": "open_no_tie",
-      "objective": "Fake step, opponent reaches, attack legs.",
+      "objective": "Foot feint, opponent reacts, level change, shot.",
       "difficulty": "beginner",
       "tags": [
         "setup",
@@ -1649,36 +1493,19 @@
       "steps": [
         {
           "action": "foot_feint"
+        },
+        {
+          "action": "level_change"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 1,
-          "likely_reactions": [
-            "reaches"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "reaches",
-          "next_steps": [
-            {
-              "action": "level_change"
-            },
-            {
-              "action": "double_leg"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
       "id": "open_double",
-      "name": "Open Double Leg",
+      "name": "Open Double",
       "system": "open_no_tie",
-      "objective": "Direct attack, penetrate, double leg.",
+      "objective": "Level change, penetration, double leg.",
       "difficulty": "intermediate",
       "tags": [
         "attack"
@@ -1694,32 +1521,14 @@
           "action": "double_leg"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 3,
-          "likely_reactions": [
-            "sprawl",
-            "hips_back"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "sprawl",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
       "id": "open_snatch",
       "name": "Open Snatch Single",
       "system": "open_no_tie",
-      "objective": "Direct attack, snatch extended leg.",
+      "objective": "Level change, snatch single.",
       "difficulty": "beginner",
       "tags": [
         "attack"
@@ -1732,550 +1541,86 @@
           "action": "snatch_single"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "hop_defense",
-            "sprawl"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "sprawl",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
-      "id": "sprawl_spin",
-      "name": "Sprawl to Spin Behind",
-      "system": "counter_shot",
-      "objective": "Defend shot, win head, spin behind.",
-      "difficulty": "beginner",
-      "tags": [
-        "counter",
-        "attack"
-      ],
-      "steps": [
-        {
-          "action": "sprawl"
-        },
-        {
-          "action": "head_position_win"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "counter_shot"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "counter_shot",
-          "next_steps": [
-            {
-              "action": "spin_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
-    },
-    {
-      "id": "sprawl_front_head",
-      "name": "Sprawl to Front Headlock",
-      "system": "counter_shot",
-      "objective": "Defend shot, secure front headlock.",
+      "id": "whizzer_kick_go",
+      "name": "Whizzer Kickout \u2192 Go-Behind",
+      "system": "overhook_whizzer",
+      "objective": "Whizzer kickout, angle, go-behind.",
       "difficulty": "intermediate",
       "tags": [
         "counter",
-        "attack"
+        "finish"
       ],
       "steps": [
         {
-          "action": "sprawl"
+          "action": "overhook"
         },
         {
-          "action": "head_position_win"
-        },
-        {
-          "action": "front_headlock"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 3,
-          "likely_reactions": [
-            "hands_post"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "hands_post",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "score"
-        }
-      ]
-    },
-    {
-      "id": "downblock_go",
-      "name": "Down Block to Go-Behind",
-      "system": "counter_shot",
-      "objective": "Block shot, circle behind.",
-      "difficulty": "beginner",
-      "tags": [
-        "counter",
-        "attack"
-      ],
-      "steps": [
-        {
-          "action": "downblock"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 1,
-          "likely_reactions": [
-            "counter_shot"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "counter_shot",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
-    },
-    {
-      "id": "sprawl_reshot",
-      "name": "Sprawl to Reshot",
-      "system": "counter_shot",
-      "objective": "Defend shot, immediately reattack.",
-      "difficulty": "advanced",
-      "tags": [
-        "counter",
-        "re-attack"
-      ],
-      "steps": [
-        {
-          "action": "sprawl"
-        },
-        {
-          "action": "spin_behind"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "counter_shot"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "counter_shot",
-          "next_steps": [
-            {
-              "action": "reshot"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
-    },
-    {
-      "id": "wrist_control_inside",
-      "name": "Wrist Control to Inside Tie",
-      "system": "inside_tie",
-      "objective": "Control wrist, establish inside tie position.",
-      "difficulty": "beginner",
-      "tags": [
-        "setup"
-      ],
-      "steps": [
-        {
-          "action": "wrist_control"
-        },
-        {
-          "action": "inside_tie"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "breaks_grip",
-            "circles_out"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "breaks_grip",
-          "next_steps": [
-            {
-              "action": "stance_reset"
-            }
-          ],
-          "resolution": "reset"
-        }
-      ]
-    },
-    {
-      "id": "fake_sweep_arm_drag",
-      "name": "Fake Sweep to Arm Drag",
-      "system": "inside_tie",
-      "objective": "Fake sweep single, opponent reacts, arm drag for angle.",
-      "difficulty": "intermediate",
-      "tags": [
-        "setup",
-        "attack"
-      ],
-      "steps": [
-        {
-          "action": "inside_tie"
-        },
-        {
-          "action": "fake_sweep_single"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "hips_back",
-            "whizzer"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "hips_back",
-          "next_steps": [
-            {
-              "action": "arm_drag"
-            },
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        },
-        {
-          "if_opponent_reaction": "whizzer",
-          "next_steps": [
-            {
-              "action": "arm_drag"
-            },
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
-    },
-    {
-      "id": "fake_high_c_sweep",
-      "name": "Fake High Crotch to Sweep Single",
-      "system": "inside_tie",
-      "objective": "Fake high crotch, opponent reacts, sweep single.",
-      "difficulty": "intermediate",
-      "tags": [
-        "setup",
-        "attack"
-      ],
-      "steps": [
-        {
-          "action": "inside_tie"
-        },
-        {
-          "action": "fake_high_crotch"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "crackdown",
-            "hips_back"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "crackdown",
-          "next_steps": [
-            {
-              "action": "level_change"
-            },
-            {
-              "action": "sweep_single"
-            }
-          ],
-          "resolution": "near_score"
-        },
-        {
-          "if_opponent_reaction": "hips_back",
-          "next_steps": [
-            {
-              "action": "level_change"
-            },
-            {
-              "action": "sweep_single"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
-    },
-    {
-      "id": "fake_sweep_high_c",
-      "name": "Fake Sweep to High Crotch",
-      "system": "inside_tie",
-      "objective": "Fake sweep single, opponent reacts, high crotch.",
-      "difficulty": "intermediate",
-      "tags": [
-        "setup",
-        "attack"
-      ],
-      "steps": [
-        {
-          "action": "inside_tie"
-        },
-        {
-          "action": "fake_sweep_single"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "whizzer",
-            "hips_back"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "whizzer",
-          "next_steps": [
-            {
-              "action": "level_change"
-            },
-            {
-              "action": "high_crotch"
-            }
-          ],
-          "resolution": "near_score"
-        },
-        {
-          "if_opponent_reaction": "hips_back",
-          "next_steps": [
-            {
-              "action": "level_change"
-            },
-            {
-              "action": "high_crotch"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
-    },
-    {
-      "id": "underhook_angle_knee",
-      "name": "Underhook Angle to Knee Tap",
-      "system": "underhook",
-      "objective": "Secure underhook, create angle, knee tap finish.",
-      "difficulty": "intermediate",
-      "tags": [
-        "setup",
-        "attack"
-      ],
-      "steps": [
-        {
-          "action": "underhook"
+          "action": "whizzer_kickout"
         },
         {
           "action": "angle_step"
         },
         {
-          "action": "knee_tap"
+          "action": "go_behind"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 3,
-          "likely_reactions": [
-            "hips_back",
-            "circles_out"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "circles_out",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
-      "id": "underhook_snap_go",
-      "name": "Underhook Snap to Go-Behind",
-      "system": "underhook",
-      "objective": "Underhook control, snap down, circle behind.",
+      "id": "whizzer_snap",
+      "name": "Whizzer \u2192 Snapdown",
+      "system": "overhook_whizzer",
+      "objective": "Whizzer, snapdown.",
       "difficulty": "beginner",
       "tags": [
-        "setup",
-        "attack",
-        "finish"
+        "counter",
+        "attack"
       ],
       "steps": [
         {
-          "action": "underhook"
+          "action": "overhook"
         },
         {
           "action": "snapdown"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "hands_post",
-            "resists_up"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "hands_post",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
-      "id": "underhook_pummel_body_lock",
-      "name": "Underhook Pummel to Body Lock",
-      "system": "underhook",
-      "objective": "Fight for underhook, secure body lock.",
-      "difficulty": "advanced",
+      "id": "whizzer_angle_attack",
+      "name": "Whizzer \u2192 Angle Attack",
+      "system": "overhook_whizzer",
+      "objective": "Whizzer, angle step, attack.",
+      "difficulty": "intermediate",
       "tags": [
-        "setup",
+        "counter",
         "attack"
       ],
       "steps": [
         {
-          "action": "pummel_inside"
+          "action": "overhook"
         },
         {
-          "action": "underhook"
-        },
-        {
-          "action": "body_lock"
+          "action": "angle_step"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 3,
-          "likely_reactions": [
-            "hips_back",
-            "whizzer"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "whizzer",
-          "next_steps": [
-            {
-              "action": "knee_tap"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
-      "id": "underhook_throw_reattack",
-      "name": "Underhook Throw By Chain",
-      "system": "underhook",
-      "objective": "Opponent circles, throw by, continue attack.",
-      "difficulty": "advanced",
-      "tags": [
-        "counter",
-        "re-attack"
-      ],
-      "steps": [
-        {
-          "action": "underhook"
-        }
-      ],
-      "reaction_points": [
-        {
-          "after_step": 1,
-          "likely_reactions": [
-            "circles_out"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "circles_out",
-          "next_steps": [
-            {
-              "action": "throw_by"
-            },
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
-    },
-    {
-      "id": "whizzer_pressure_kickout",
-      "name": "Whizzer Pressure Kickout",
+      "id": "whizzer_pressure_kick",
+      "name": "Whizzer Pressure \u2192 Kickout",
       "system": "overhook_whizzer",
-      "objective": "Apply whizzer pressure, kick out for separation.",
+      "objective": "Whizzer, hip pressure, kickout.",
       "difficulty": "beginner",
       "tags": [
-        "counter",
-        "attack"
+        "counter"
       ],
       "steps": [
         {
@@ -2285,45 +1630,18 @@
           "action": "whizzer_kickout"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "circles_out",
-            "breaks_grip"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "circles_out",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        },
-        {
-          "if_opponent_reaction": "breaks_grip",
-          "next_steps": [
-            {
-              "action": "stance_reset"
-            }
-          ],
-          "resolution": "reset"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
       "id": "whizzer_snap_front_head",
-      "name": "Whizzer Snap to Front Headlock",
+      "name": "Whizzer Snap \u2192 Front Headlock",
       "system": "overhook_whizzer",
-      "objective": "Control whizzer, snap for front headlock.",
+      "objective": "Whizzer, snapdown, front headlock.",
       "difficulty": "intermediate",
       "tags": [
-        "setup",
-        "attack"
+        "counter",
+        "finish"
       ],
       "steps": [
         {
@@ -2336,35 +1654,17 @@
           "action": "front_headlock"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "hands_post",
-            "front_head_exposed"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "hands_post",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
-      "id": "whizzer_angle_attack",
-      "name": "Whizzer Angle to Attack",
+      "id": "whizzer_angle_attack2",
+      "name": "Whizzer \u2192 Angle \u2192 Attack",
       "system": "overhook_whizzer",
-      "objective": "Control whizzer, create angle, attack opening.",
+      "objective": "Whizzer, angle, attack.",
       "difficulty": "intermediate",
       "tags": [
-        "setup",
+        "counter",
         "attack"
       ],
       "steps": [
@@ -2375,44 +1675,14 @@
           "action": "angle_step"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "circles_out",
-            "squares_up"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "circles_out",
-          "next_steps": [
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        },
-        {
-          "if_opponent_reaction": "squares_up",
-          "next_steps": [
-            {
-              "action": "snapdown"
-            },
-            {
-              "action": "go_behind"
-            }
-          ],
-          "resolution": "near_score"
-        }
-      ]
+      "reaction_points": [],
+      "branches": []
     },
     {
       "id": "whizzer_clear_reset",
-      "name": "Whizzer Clear to Reset",
+      "name": "Whizzer Clear \u2192 Reset",
       "system": "overhook_whizzer",
-      "objective": "Control whizzer, clear tie, reset position.",
+      "objective": "Whizzer, kickout, clear tie.",
       "difficulty": "beginner",
       "tags": [
         "counter",
@@ -2429,283 +1699,14 @@
           "action": "clear_tie"
         }
       ],
-      "reaction_points": [
-        {
-          "after_step": 2,
-          "likely_reactions": [
-            "breaks_grip"
-          ]
-        }
-      ],
-      "branches": [
-        {
-          "if_opponent_reaction": "breaks_grip",
-          "next_steps": [
-            {
-              "action": "stance_reset"
-            }
-          ],
-          "resolution": "reset"
-        }
-      ]
-    },
-    {
-      "id": "sweep_single_run_pipe",
-      "name": "Sweep Single \u2192 Run Pipe",
-      "system": "counter_shot",
-      "objective": "Attack single leg, finish with run the pipe.",
-      "difficulty": "intermediate",
-      "tags": [
-        "attack",
-        "finish"
-      ],
-      "steps": [
-        {
-          "action": "sweep_single"
-        },
-        {
-          "action": "single_leg_finish_run_pipe"
-        }
-      ],
       "reaction_points": [],
       "branches": []
     },
     {
-      "id": "sweep_single_dump",
-      "name": "Sweep Single to Dump",
-      "system": "counter_shot",
-      "objective": "Attack single leg, finish with dump.",
-      "difficulty": "intermediate",
-      "tags": [
-        "attack",
-        "finish"
-      ],
-      "steps": [
-        {
-          "action": "sweep_single"
-        },
-        {
-          "action": "single_leg_finish_dump"
-        }
-      ],
-      "reaction_points": [],
-      "branches": []
-    },
-    {
-      "id": "sweep_single_trip",
-      "name": "Sweep Single to Trip",
-      "system": "counter_shot",
-      "objective": "Attack single leg, finish with trip.",
-      "difficulty": "beginner",
-      "tags": [
-        "attack",
-        "finish"
-      ],
-      "steps": [
-        {
-          "action": "sweep_single"
-        },
-        {
-          "action": "single_leg_finish_trip"
-        }
-      ],
-      "reaction_points": [],
-      "branches": []
-    },
-    {
-      "id": "high_crotch_to_double",
-      "name": "High Crotch to Double",
-      "system": "counter_shot",
-      "objective": "Attack high crotch, convert to double leg.",
-      "difficulty": "intermediate",
-      "tags": [
-        "attack",
-        "finish"
-      ],
-      "steps": [
-        {
-          "action": "high_crotch"
-        },
-        {
-          "action": "high_c_to_double"
-        }
-      ],
-      "reaction_points": [],
-      "branches": []
-    },
-    {
-      "id": "high_crotch_backstep",
-      "name": "High C Backstep",
-      "system": "counter_shot",
-      "objective": "Attack high crotch, finish with backstep.",
-      "difficulty": "advanced",
-      "tags": [
-        "attack",
-        "finish"
-      ],
-      "steps": [
-        {
-          "action": "high_crotch"
-        },
-        {
-          "action": "high_c_backstep"
-        }
-      ],
-      "reaction_points": [],
-      "branches": []
-    },
-    {
-      "id": "high_crotch_to_back",
-      "name": "High Crotch to Back",
-      "system": "counter_shot",
-      "objective": "Attack high crotch, transition to back.",
-      "difficulty": "advanced",
-      "tags": [
-        "attack",
-        "finish"
-      ],
-      "steps": [
-        {
-          "action": "high_crotch"
-        },
-        {
-          "action": "high_c_to_back"
-        }
-      ],
-      "reaction_points": [],
-      "branches": []
-    },
-    {
-      "id": "high_crotch_lift_dump",
-      "name": "High C Lift Dump",
-      "system": "counter_shot",
-      "objective": "Attack high crotch, finish with lift and dump.",
-      "difficulty": "intermediate",
-      "tags": [
-        "attack",
-        "finish"
-      ],
-      "steps": [
-        {
-          "action": "high_crotch"
-        },
-        {
-          "action": "high_c_lift_dump"
-        }
-      ],
-      "reaction_points": [],
-      "branches": []
-    },
-    {
-      "id": "double_angle_finish",
-      "name": "Double \u2192 Angle Off",
-      "system": "counter_shot",
-      "objective": "Attack double leg, finish with angle off.",
-      "difficulty": "beginner",
-      "tags": [
-        "attack",
-        "finish"
-      ],
-      "steps": [
-        {
-          "action": "double_leg"
-        },
-        {
-          "action": "double_angle_off"
-        }
-      ],
-      "reaction_points": [],
-      "branches": []
-    },
-    {
-      "id": "double_lift_finish",
-      "name": "Double \u2192 Lift Dump",
-      "system": "counter_shot",
-      "objective": "Attack double leg, finish with lift and dump.",
-      "difficulty": "intermediate",
-      "tags": [
-        "attack",
-        "finish"
-      ],
-      "steps": [
-        {
-          "action": "double_leg"
-        },
-        {
-          "action": "double_lift_dump"
-        }
-      ],
-      "reaction_points": [],
-      "branches": []
-    },
-    {
-      "id": "body_lock_finish",
-      "name": "Body Lock \u2192 Lift Dump",
-      "system": "underhook",
-      "objective": "Secure body lock, finish with lift and dump.",
-      "difficulty": "intermediate",
-      "tags": [
-        "setup",
-        "finish"
-      ],
-      "steps": [
-        {
-          "action": "body_lock"
-        },
-        {
-          "action": "body_lock_lift_dump"
-        }
-      ],
-      "reaction_points": [],
-      "branches": []
-    },
-    {
-      "id": "snatch_single_run_pipe",
-      "name": "Snatch Single \u2192 Run Pipe",
-      "system": "counter_shot",
-      "objective": "Attack snatch single, finish with run the pipe.",
-      "difficulty": "intermediate",
-      "tags": [
-        "attack",
-        "finish"
-      ],
-      "steps": [
-        {
-          "action": "snatch_single"
-        },
-        {
-          "action": "single_leg_finish_run_pipe"
-        }
-      ],
-      "reaction_points": [],
-      "branches": []
-    },
-    {
-      "id": "snatch_single_dump",
-      "name": "Snatch Single to Dump",
-      "system": "counter_shot",
-      "objective": "Attack snatch single, finish with dump.",
-      "difficulty": "intermediate",
-      "tags": [
-        "attack",
-        "finish"
-      ],
-      "steps": [
-        {
-          "action": "snatch_single"
-        },
-        {
-          "action": "single_leg_finish_dump"
-        }
-      ],
-      "reaction_points": [],
-      "branches": []
-    },
-    {
-      "id": "wrist_control_drag_body_lock",
-      "name": "Wrist Control \u2192 Wrist Drag \u2192 Body Lock",
-      "system": "inside_tie",
-      "objective": "Control wrist, drag to body lock.",
+      "id": "two_angle_knee",
+      "name": "Two-on-One \u2192 Angle \u2192 Knee Tap",
+      "system": "two_on_one",
+      "objective": "Two-on-one, angle step, knee tap.",
       "difficulty": "intermediate",
       "tags": [
         "setup",
@@ -2713,10 +1714,148 @@
       ],
       "steps": [
         {
-          "action": "wrist_control"
+          "action": "two_on_one_grip"
         },
         {
-          "action": "wrist_drag"
+          "action": "angle_step"
+        },
+        {
+          "action": "knee_tap"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "two_snap",
+      "name": "Two-on-One \u2192 Snapdown",
+      "system": "two_on_one",
+      "objective": "Two-on-one, pull down, snapdown.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "two_on_one_grip"
+        },
+        {
+          "action": "snapdown"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "two_inside_shot",
+      "name": "Two-on-One \u2192 Inside Step Shot",
+      "system": "two_on_one",
+      "objective": "Two-on-one, level change, inside step shot.",
+      "difficulty": "advanced",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "two_on_one_grip"
+        },
+        {
+          "action": "level_change"
+        },
+        {
+          "action": "inside_step_shot"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "two_arm_drag",
+      "name": "Two-on-One \u2192 Arm Drag \u2192 Go-Behind",
+      "system": "two_on_one",
+      "objective": "Two-on-one, arm drag, go-behind.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "two_on_one_grip"
+        },
+        {
+          "action": "arm_drag"
+        },
+        {
+          "action": "go_behind"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "under_whizzer_knee",
+      "name": "Underhook \u2192 Whizzer \u2192 Knee Tap",
+      "system": "underhook",
+      "objective": "Underhook, opponent whizzers, angle, knee tap.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "underhook"
+        },
+        {
+          "action": "angle_step"
+        },
+        {
+          "action": "knee_tap"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "under_circle_throw",
+      "name": "Underhook \u2192 Circle \u2192 Throw By",
+      "system": "underhook",
+      "objective": "Underhook, circle, throw by.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "underhook"
+        },
+        {
+          "action": "throw_by"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "under_body_lock",
+      "name": "Underhook \u2192 Body Lock",
+      "system": "underhook",
+      "objective": "Underhook, angle step, body lock.",
+      "difficulty": "advanced",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "underhook"
+        },
+        {
+          "action": "angle_step"
         },
         {
           "action": "body_lock"
@@ -2726,24 +1865,138 @@
       "branches": []
     },
     {
-      "id": "wrist_control_drag_overtie",
-      "name": "Wrist Control \u2192 Wrist Drag \u2192 Overtie",
-      "system": "inside_tie",
-      "objective": "Control wrist, drag to overtie position.",
+      "id": "under_snap",
+      "name": "Underhook \u2192 Snapdown",
+      "system": "underhook",
+      "objective": "Underhook, snapdown.",
       "difficulty": "beginner",
       "tags": [
         "setup",
-        "transition"
+        "attack"
       ],
       "steps": [
         {
-          "action": "wrist_control"
+          "action": "underhook"
         },
         {
-          "action": "wrist_drag"
+          "action": "snapdown"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "under_angle_knee",
+      "name": "Underhook \u2192 Angle \u2192 Knee Tap",
+      "system": "underhook",
+      "objective": "Underhook, angle step, knee tap.",
+      "difficulty": "intermediate",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "underhook"
         },
         {
-          "action": "overhook"
+          "action": "angle_step"
+        },
+        {
+          "action": "knee_tap"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "under_snap_go",
+      "name": "Underhook \u2192 Snap \u2192 Go-Behind",
+      "system": "underhook",
+      "objective": "Underhook, snapdown, go-behind.",
+      "difficulty": "beginner",
+      "tags": [
+        "setup",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "underhook"
+        },
+        {
+          "action": "snapdown"
+        },
+        {
+          "action": "go_behind"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "pummel_under_body",
+      "name": "Pummel \u2192 Underhook \u2192 Body Lock",
+      "system": "underhook",
+      "objective": "Pummel inside, underhook, body lock.",
+      "difficulty": "advanced",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "pummel_inside"
+        },
+        {
+          "action": "underhook"
+        },
+        {
+          "action": "body_lock"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "under_throw_chain",
+      "name": "Underhook \u2192 Throw By \u2192 Chain",
+      "system": "underhook",
+      "objective": "Underhook, throw by, chain attack.",
+      "difficulty": "advanced",
+      "tags": [
+        "setup",
+        "attack"
+      ],
+      "steps": [
+        {
+          "action": "underhook"
+        },
+        {
+          "action": "throw_by"
+        }
+      ],
+      "reaction_points": [],
+      "branches": []
+    },
+    {
+      "id": "body_lock_lift_dump",
+      "name": "Body Lock \u2192 Lift Dump",
+      "system": "underhook",
+      "objective": "Body lock, lock hands, lift, dump.",
+      "difficulty": "intermediate",
+      "tags": [
+        "attack",
+        "finish"
+      ],
+      "steps": [
+        {
+          "action": "body_lock"
+        },
+        {
+          "action": "lift"
+        },
+        {
+          "action": "dump"
         }
       ],
       "reaction_points": [],
