@@ -15,7 +15,8 @@
       ],
       "typical_reactions": [],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": false
     },
     {
       "id": "step_in",
@@ -31,7 +32,8 @@
         "circles_out"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": false
     },
     {
       "id": "step_out",
@@ -48,7 +50,8 @@
         "plants_feet"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": false
     },
     {
       "id": "circle",
@@ -66,7 +69,8 @@
         "squares_up"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": true
     },
     {
       "id": "level_change",
@@ -83,7 +87,8 @@
         "hips_back"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": true
     },
     {
       "id": "penetration_step",
@@ -98,7 +103,8 @@
         "hips_back"
       ],
       "risk": "medium",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": true
     },
     {
       "id": "angle_step",
@@ -114,7 +120,8 @@
         "circles_out"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": false
     },
     {
       "id": "sprawl",
@@ -127,7 +134,8 @@
         "counter_shot"
       ],
       "risk": "low",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": true
     },
     {
       "id": "downblock",
@@ -140,7 +148,8 @@
         "counter_shot"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": true
     },
     {
       "id": "handfight_post",
@@ -154,7 +163,8 @@
         "breaks_grip"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": false
     },
     {
       "id": "wrist_control",
@@ -169,7 +179,8 @@
         "circles_out"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": false
     },
     {
       "id": "collar_tie",
@@ -183,7 +194,8 @@
         "breaks_grip"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": false
     },
     {
       "id": "inside_tie",
@@ -197,7 +209,8 @@
         "circles_out"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": false
     },
     {
       "id": "clear_tie",
@@ -210,7 +223,8 @@
       ],
       "typical_reactions": [],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": false
     },
     {
       "id": "pummel_inside",
@@ -225,7 +239,8 @@
         "whizzer"
       ],
       "risk": "medium",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": false
     },
     {
       "id": "two_on_one_grip",
@@ -239,7 +254,8 @@
         "breaks_grip"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": false
     },
     {
       "id": "underhook",
@@ -253,7 +269,8 @@
         "circles_out"
       ],
       "risk": "medium",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": false
     },
     {
       "id": "overhook",
@@ -267,7 +284,8 @@
         "circles_out"
       ],
       "risk": "medium",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": false
     },
     {
       "id": "head_position_win",
@@ -283,7 +301,8 @@
         "circles_out"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": false
     },
     {
       "id": "foot_feint",
@@ -298,7 +317,8 @@
         "hips_back"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": true
     },
     {
       "id": "level_feint",
@@ -313,7 +333,8 @@
         "hips_back"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": true
     },
     {
       "id": "snap_feint",
@@ -328,7 +349,8 @@
         "hands_post"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": true
     },
     {
       "id": "reach_bait",
@@ -341,7 +363,8 @@
         "reaches"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": false
     },
     {
       "id": "shoulder_fake",
@@ -356,7 +379,8 @@
         "hips_back"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": false
     },
     {
       "id": "misdirection_step",
@@ -372,7 +396,8 @@
         "plants_feet"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": false
     },
     {
       "id": "snapdown",
@@ -390,7 +415,8 @@
         "front_head_exposed"
       ],
       "risk": "low",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": false
     },
     {
       "id": "front_headlock",
@@ -405,7 +431,8 @@
         "circles_out"
       ],
       "risk": "medium",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": false
     },
     {
       "id": "go_behind",
@@ -421,7 +448,8 @@
       ],
       "typical_reactions": [],
       "risk": "low",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": false
     },
     {
       "id": "duck_under",
@@ -435,7 +463,8 @@
         "circles_out"
       ],
       "risk": "medium",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": false
     },
     {
       "id": "shuck_by",
@@ -449,7 +478,8 @@
         "circles_out"
       ],
       "risk": "medium",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": false
     },
     {
       "id": "arm_drag",
@@ -464,7 +494,8 @@
         "squares_up"
       ],
       "risk": "medium",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": false
     },
     {
       "id": "sweep_single",
@@ -479,7 +510,8 @@
         "whizzer"
       ],
       "risk": "medium",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": true
     },
     {
       "id": "snatch_single",
@@ -493,7 +525,8 @@
         "sprawl"
       ],
       "risk": "medium",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": true
     },
     {
       "id": "high_crotch",
@@ -509,7 +542,8 @@
         "whizzer"
       ],
       "risk": "medium",
-      "energy": "high"
+      "energy": "high",
+      "simple_mode": true
     },
     {
       "id": "double_leg",
@@ -524,7 +558,8 @@
         "hips_back"
       ],
       "risk": "high",
-      "energy": "high"
+      "energy": "high",
+      "simple_mode": true
     },
     {
       "id": "blast_double",
@@ -538,7 +573,8 @@
         "hips_back"
       ],
       "risk": "high",
-      "energy": "high"
+      "energy": "high",
+      "simple_mode": false
     },
     {
       "id": "inside_step_shot",
@@ -553,7 +589,8 @@
         "whizzer"
       ],
       "risk": "medium",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": false
     },
     {
       "id": "knee_tap",
@@ -568,7 +605,8 @@
         "circles_out"
       ],
       "risk": "medium",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": false
     },
     {
       "id": "body_lock",
@@ -582,7 +620,8 @@
         "whizzer"
       ],
       "risk": "high",
-      "energy": "high"
+      "energy": "high",
+      "simple_mode": false
     },
     {
       "id": "throw_by",
@@ -595,7 +634,8 @@
         "circles_out"
       ],
       "risk": "medium",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": false
     },
     {
       "id": "whizzer_kickout",
@@ -609,7 +649,8 @@
         "breaks_grip"
       ],
       "risk": "medium",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": false
     },
     {
       "id": "spin_behind",
@@ -620,7 +661,8 @@
       ],
       "typical_reactions": [],
       "risk": "low",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": false
     },
     {
       "id": "reshot",
@@ -635,7 +677,8 @@
         "hips_back"
       ],
       "risk": "high",
-      "energy": "high"
+      "energy": "high",
+      "simple_mode": false
     },
     {
       "id": "fake_sweep_single",
@@ -649,7 +692,8 @@
         "whizzer"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": true
     },
     {
       "id": "fake_high_crotch",
@@ -663,7 +707,8 @@
         "crackdown"
       ],
       "risk": "low",
-      "energy": "low"
+      "energy": "low",
+      "simple_mode": true
     },
     {
       "id": "wrist_drag",
@@ -678,7 +723,8 @@
         "posts_hand"
       ],
       "risk": "medium",
-      "energy": "medium"
+      "energy": "medium",
+      "simple_mode": false
     }
   ],
   "combos": [

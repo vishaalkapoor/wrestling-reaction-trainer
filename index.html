@@ -1374,10 +1374,15 @@
                 return [action];
             }
             
+            // Filter moves for simple mode
+            const availableMoves = state.combosEnabled 
+                ? BASIC_MOVES 
+                : BASIC_MOVES.filter(m => m.simple_mode);
+            
             let move;
             let attempts = 0;
             do {
-                move = BASIC_MOVES[Math.floor(Math.random() * BASIC_MOVES.length)];
+                move = availableMoves[Math.floor(Math.random() * availableMoves.length)];
                 attempts++;
             } while (state.recentActions.includes(move.label) && attempts < 20);
             
