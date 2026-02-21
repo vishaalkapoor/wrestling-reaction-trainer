@@ -1333,9 +1333,11 @@
             if (state.combosEnabled && Math.random() < 0.67 && COMBOS.length > 0) {
                 // Pick random combo
                 const combo = COMBOS[Math.floor(Math.random() * COMBOS.length)];
+                console.log('COMBO MODE: Selected combo:', combo.name);
                 
                 // Get main path actions
                 const actions = combo.steps.map(step => formatAction(step.action));
+                console.log('COMBO MODE: Actions:', actions);
                 
                 // Show opponent reactions if present
                 if (combo.reaction_points && combo.reaction_points.length > 0) {
@@ -1354,6 +1356,7 @@
                 return actions;
             }
             
+            console.log('SIMPLE MODE: Selecting basic move');
             // Select single basic move (avoid repeat)
             if (BASIC_MOVES.length === 0) {
                 // Fallback to legacy actions if moves not loaded yet
@@ -1591,6 +1594,9 @@
             state.combosEnabled = !state.combosEnabled;
             comboModeBtn.textContent = `Mode: ${state.combosEnabled ? 'Combo' : 'Simple'}`;
             comboModeBtn.classList.toggle('active');
+            console.log('Mode switched to:', state.combosEnabled ? 'COMBO' : 'SIMPLE');
+            console.log('COMBOS available:', COMBOS.length);
+            console.log('BASIC_MOVES available:', BASIC_MOVES.length);
         });
         
         // Show next toggle
