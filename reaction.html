@@ -30,7 +30,8 @@
 
         /* Test */
         #test { display: none; height: 100vh; width: 100vw; flex-direction: column; overflow: hidden; }
-        #topBar { height: 10%; display: flex; align-items: center; justify-content: center; font-size: 0.95em; color: #555; letter-spacing: 2px; }
+        #topBar { height: 10%; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; font-size: 0.95em; color: #555; letter-spacing: 2px; }
+        #cancelBtn { padding: 6px 14px; font-size: 0.75em; background: #1a1a1a; color: #ff3366; border: 1px solid #ff3366; border-radius: 6px; cursor: pointer; font-family: 'Courier New', monospace; text-transform: uppercase; letter-spacing: 1px; }
         #cueArea { height: 40%; display: flex; align-items: center; justify-content: center; flex-direction: column; }
         #cueText { font-size: 3.5em; font-weight: bold; letter-spacing: 4px; text-transform: uppercase; min-height: 1.2em; }
         #fb { font-size: 1.3em; margin-top: 6px; min-height: 1.4em; }
@@ -105,7 +106,7 @@
 </div>
 
 <div id="test">
-    <div id="topBar"></div>
+    <div id="topBar"><span id="trialCount"></span><button id="cancelBtn">✕ STOP</button></div>
     <div id="cueArea"><div id="cueText"></div><div id="fb"></div></div>
     <div id="zoneRow">
         <div class="zone w" id="zL">LEFT</div>
@@ -148,7 +149,7 @@ sel('m','mode'); sel('c','cue'); sel('s','speed'); sel('t','trials');
 
 // --- DOM ---
 const zL=document.getElementById('zL'), zR=document.getElementById('zR');
-const cueText=document.getElementById('cueText'), fb=document.getElementById('fb'), topBar=document.getElementById('topBar');
+const cueText=document.getElementById('cueText'), fb=document.getElementById('fb'), topBar=document.getElementById('topBar'), trialCount=document.getElementById('trialCount');
 
 // --- State ---
 let trial=0, res=[], cueTime=0, cueSide=null, waiting=false, isNoGo=false, dtimer=null;
@@ -170,7 +171,7 @@ function zones(cls, lt, rt) {
 
 function run() {
     if (trial >= C.trials) return showResults();
-    topBar.textContent = `${trial+1} / ${C.trials}`;
+    trialCount.textContent = `${trial+1} / ${C.trials}`;
     cueText.textContent='Ready'; cueText.className='cue-r'; fb.textContent='';
     zones('r','LEFT','RIGHT');
     waiting=false; isNoGo=false;
@@ -400,6 +401,10 @@ document.getElementById('goBtn').addEventListener('click', () => {
     trial=0; res=[]; show('test'); run();
 });
 document.getElementById('againBtn').addEventListener('click', () => { trial=0; res=[]; show('setup'); });
+document.getElementById('cancelBtn').addEventListener('click', () => {
+    clearTimeout(dtimer); waiting=false; speechSynthesis.cancel();
+    trial=0; res=[]; show('setup');
+});
 document.getElementById('histBtn').addEventListener('click', () => {
     show('results');
     document.getElementById('statsBox').innerHTML='<div class="sr"><span class="sl">Run a session to see stats</span></div>';
