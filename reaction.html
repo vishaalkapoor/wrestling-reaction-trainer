@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Reaction Timer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #4da6ff;
+            min-height: 100vh;
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* Setup */
+        #setup { padding: 20px; max-width: 520px; margin: 0 auto; }
+        h1 { text-align: center; font-size: 1.8em; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 20px #0080ff; margin-bottom: 20px; }
+        .cg { background: #0f0f0f; padding: 14px; border-radius: 10px; margin-bottom: 14px; border: 1px solid #0080ff; box-shadow: 0 0 8px rgba(0,128,255,0.2); }
+        .cg h2 { font-size: 0.9em; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; color: #4da6ff; }
+        .bg { display: flex; gap: 8px; flex-wrap: wrap; }
+        button { padding: 12px 16px; font-size: 0.95em; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-family: 'Courier New', monospace; text-transform: uppercase; letter-spacing: 1px; }
+        button:active { transform: scale(0.95); }
+        .bm { flex: 1; background: #1a1a1a; color: #ccc; border: 1px solid #0080ff; min-width: 70px; }
+        .bm.active { background: #0080ff; color: #0a0a0a; box-shadow: 0 0 12px #0080ff; }
+        .btn-go { width: 100%; padding: 16px; font-size: 1.2em; background: linear-gradient(135deg, #00ff88, #00cc66); color: #0a0a0a; box-shadow: 0 0 20px #00ff88; }
+
+        /* Test */
+        #test { display: none; height: 100vh; width: 100vw; flex-direction: column; overflow: hidden; }
+        #topBar { height: 10%; display: flex; align-items: center; justify-content: center; font-size: 0.95em; color: #555; letter-spacing: 2px; }
+        #cueArea { height: 40%; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        #cueText { font-size: 3.5em; font-weight: bold; letter-spacing: 4px; text-transform: uppercase; min-height: 1.2em; }
+        #fb { font-size: 1.3em; margin-top: 6px; min-height: 1.4em; }
+        #zoneRow { height: 50%; display: flex; gap: 4px; padding: 0 4px 4px; }
+        .zone { flex: 1; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2em; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; transition: background 0.1s; }
+        .zone.w { background: #111; color: #333; border: 2px solid #222; }
+        .zone.r { background: #0f0f0f; color: #4da6ff; border: 2px solid #0080ff; }
+        .zone.c { background: #003366; color: #fff; border: 2px solid #0080ff; text-shadow: 0 0 20px #0080ff; }
+        .zone.ok { background: #003d1a; color: #00ff88; border: 2px solid #00ff88; }
+        .zone.bad { background: #3d0011; color: #ff3366; border: 2px solid #ff3366; }
+        .zone.early { background: #3d2600; color: #ffaa00; border: 2px solid #ffaa00; }
+        .cue-r { color: #4da6ff; } .cue-go { color: #fff; text-shadow: 0 0 30px #0080ff; }
+        .cue-hold { color: #ff3366; text-shadow: 0 0 20px #ff3366; }
+        .cue-ok { color: #00ff88; } .cue-bad { color: #ff3366; } .cue-early { color: #ffaa00; }
+
+        /* Results */
+        #results { display: none; padding: 20px; max-width: 600px; margin: 0 auto; }
+        .sr { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1a1a1a; font-size: 1.05em; }
+        .sl { color: #999; } .sv { color: #4da6ff; font-weight: bold; }
+        .sv.g { color: #00ff88; } .sv.y { color: #ffaa00; } .sv.rd { color: #ff3366; }
+        #chart { width: 100%; height: 180px; margin: 16px 0; border: 1px solid #222; border-radius: 8px; background: #0f0f0f; }
+        #trialList { max-height: 160px; overflow-y: auto; font-size: 0.85em; color: #555; margin-top: 8px; }
+        .te { padding: 3px 0; } .te.bad { color: #ff3366; } .te.fs { color: #ffaa00; }
+
+        /* History */
+        #history { margin-top: 16px; }
+        #history h2 { font-size: 1em; color: #4da6ff; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 2px; }
+        #histChart { width: 100%; height: 140px; border: 1px solid #222; border-radius: 8px; background: #0f0f0f; }
+        #histList { font-size: 0.85em; color: #555; margin-top: 8px; max-height: 120px; overflow-y: auto; }
+
+        @media (orientation: portrait) { #cueText { font-size: 2.5em; } .zone { font-size: 1.4em; } }
+    </style>
+</head>
+<body>
+
+<div id="setup">
+    <h1>Reaction Timer</h1>
+    <div class="cg">
+        <h2>Mode</h2>
+        <div class="bg">
+            <button class="bm active" data-m="simple">Simple</button>
+            <button class="bm" data-m="choice">Left / Right</button>
+            <button class="bm" data-m="nogo">L/R + No-Go</button>
+        </div>
+    </div>
+    <div class="cg">
+        <h2>Cue</h2>
+        <div class="bg">
+            <button class="bm active" data-c="tones">Tones</button>
+            <button class="bm" data-c="voice">Voice</button>
+        </div>
+    </div>
+    <div class="cg">
+        <h2>Speed</h2>
+        <div class="bg">
+            <button class="bm" data-s="slow">Slow</button>
+            <button class="bm active" data-s="normal">Normal</button>
+            <button class="bm" data-s="fast">Fast</button>
+            <button class="bm" data-s="chaos">Chaos</button>
+        </div>
+    </div>
+    <div class="cg">
+        <h2>Trials</h2>
+        <div class="bg">
+            <button class="bm" data-t="10">10</button>
+            <button class="bm active" data-t="20">20</button>
+            <button class="bm" data-t="30">30</button>
+        </div>
+    </div>
+    <div class="cg"><button class="btn-go" id="goBtn">START</button></div>
+    <div class="cg"><button class="btn-go" id="histBtn" style="background:linear-gradient(135deg,#4da6ff,#0080ff);box-shadow:0 0 20px #0080ff;">HISTORY</button></div>
+</div>
+
+<div id="test">
+    <div id="topBar"></div>
+    <div id="cueArea"><div id="cueText"></div><div id="fb"></div></div>
+    <div id="zoneRow">
+        <div class="zone w" id="zL">LEFT</div>
+        <div class="zone w" id="zR">RIGHT</div>
+    </div>
+</div>
+
+<div id="results">
+    <h1>Results</h1>
+    <div class="cg" id="statsBox"></div>
+    <canvas id="chart"></canvas>
+    <div id="trialList"></div>
+    <div id="history">
+        <h2>Daily History</h2>
+        <canvas id="histChart"></canvas>
+        <div id="histList"></div>
+    </div>
+    <div class="cg" style="margin-top:14px"><button class="btn-go" id="againBtn">AGAIN</button></div>
+</div>
+
+<script>
+// --- Audio ---
+let actx;
+function ea() { if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)(); if (actx.state === 'suspended') actx.resume(); }
+function beep(f=880, d=0.08) { ea(); const o=actx.createOscillator(), g=actx.createGain(); o.frequency.value=f; g.gain.value=0.5; o.connect(g).connect(actx.destination); o.start(); o.stop(actx.currentTime+d); }
+
+// --- Config ---
+let C = { mode:'simple', cue:'tones', speed:'normal', trials:20 };
+const SPEED = { slow:[3000,5000], normal:[2000,4000], fast:[1200,2500], chaos:[600,1400] };
+
+function sel(attr, cfg_key) {
+    document.querySelectorAll(`[data-${attr}]`).forEach(b => b.addEventListener('click', () => {
+        document.querySelectorAll(`[data-${attr}]`).forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        C[cfg_key] = b.dataset[attr];
+        if (cfg_key === 'trials') C.trials = +b.dataset[attr];
+    }));
+}
+sel('m','mode'); sel('c','cue'); sel('s','speed'); sel('t','trials');
+
+// --- DOM ---
+const zL=document.getElementById('zL'), zR=document.getElementById('zR');
+const cueText=document.getElementById('cueText'), fb=document.getElementById('fb'), topBar=document.getElementById('topBar');
+
+// --- State ---
+let trial=0, res=[], cueTime=0, cueSide=null, waiting=false, isNoGo=false, dtimer=null;
+
+function show(id) {
+    document.getElementById('setup').style.display = id==='setup'?'block':'none';
+    const t=document.getElementById('test'); t.style.display=id==='test'?'flex':'none';
+    document.getElementById('results').style.display = id==='results'?'block':'none';
+}
+
+function zones(cls, lt, rt) {
+    const s = C.mode==='simple';
+    zR.style.display = s?'none':'';
+    zL.style.flex = s?'1 1 100%':'1';
+    zL.className='zone '+cls; zR.className='zone '+cls;
+    if(lt!=null) zL.textContent = s ? (cls==='r'?'READY':'HIT') : lt;
+    if(rt!=null) zR.textContent = rt;
+}
+
+function run() {
+    if (trial >= C.trials) return showResults();
+    topBar.textContent = `${trial+1} / ${C.trials}`;
+    cueText.textContent='Ready'; cueText.className='cue-r'; fb.textContent='';
+    zones('r','LEFT','RIGHT');
+    waiting=false; isNoGo=false;
+    const [lo,hi] = SPEED[C.speed];
+    dtimer = setTimeout(fire, lo + Math.random()*(hi-lo));
+}
+
+function fire() {
+    if (C.mode==='simple') cueSide='any';
+    else if (C.mode==='nogo' && Math.random()<0.25) { cueSide='hold'; isNoGo=true; }
+    else cueSide = Math.random()<0.5?'left':'right';
+
+    const vis = C.cue !== 'tones'; // tones = no visual direction
+
+    if (cueSide==='hold') {
+        if(vis){cueText.textContent='HOLD';cueText.className='cue-hold';}else{cueText.textContent='';}
+        zones('w','LEFT','RIGHT');
+    } else if (cueSide==='any') {
+        cueText.textContent=vis?'GO!':''; cueText.className='cue-go';
+        zones('c','HIT','HIT');
+    } else {
+        if(vis){cueText.textContent=cueSide==='left'?'← LEFT':'RIGHT →';cueText.className='cue-go';}else{cueText.textContent='';}
+        if(cueSide==='left'){zL.className='zone c';zR.className='zone r';}
+        else{zR.className='zone c';zL.className='zone r';}
+    }
+
+    // Audio
+    if (cueSide==='hold') {
+        beep(200, 0.2);
+    } else if (C.cue==='tones') {
+        beep(cueSide==='left'?400:cueSide==='right'?1000:880);
+    } else {
+        speechSynthesis.cancel();
+        const u=new SpeechSynthesisUtterance(cueSide==='any'?'go':cueSide);
+        u.rate=1.3; u.volume=1; speechSynthesis.speak(u);
+    }
+
+    cueTime=performance.now(); waiting=true;
+
+    if(isNoGo) dtimer=setTimeout(()=>{
+        if(isNoGo&&waiting){waiting=false;res.push({ms:null,side:null,cs:'hold',ok:true,fs:false,ng:true,ngOk:true});
+        cueText.textContent='GOOD';cueText.className='cue-ok';fb.textContent='';trial++;setTimeout(run,700);}
+    },1500);
+}
+
+function hit(side) {
+    if(document.getElementById('test').style.display!=='flex') return;
+    if(!waiting){
+        clearTimeout(dtimer);
+        res.push({ms:null,side,cs:null,ok:false,fs:true});
+        cueText.textContent='TOO EARLY';cueText.className='cue-early';fb.textContent='';
+        (side==='left'?zL:zR).className='zone early';
+        trial++;setTimeout(run,900);return;
+    }
+    waiting=false;clearTimeout(dtimer);
+    if(isNoGo){
+        res.push({ms:null,side,cs:'hold',ok:false,fs:false,ng:true,ngOk:false});
+        cueText.textContent='SHOULD HOLD';cueText.className='cue-bad';fb.textContent='';
+        (side==='left'?zL:zR).className='zone bad';
+        trial++;setTimeout(run,900);return;
+    }
+    const ms=Math.round(performance.now()-cueTime);
+    const ok=cueSide==='any'||side===cueSide;
+    res.push({ms,side,cs:cueSide,ok,fs:false});
+    const z=side==='left'?zL:zR;
+    if(ok){z.className='zone ok';cueText.textContent=ms+' ms';cueText.className='cue-ok';fb.textContent='';fb.style.color='#00ff88';}
+    else{z.className='zone bad';cueText.textContent=ms+' ms';cueText.className='cue-bad';fb.textContent='Wrong side';fb.style.color='#ff3366';}
+    trial++;setTimeout(run,900);
+}
+
+// --- Input ---
+zL.addEventListener('pointerdown',e=>{e.preventDefault();hit('left');});
+zR.addEventListener('pointerdown',e=>{e.preventDefault();hit('right');});
+document.addEventListener('keydown',e=>{
+    if(document.getElementById('test').style.display!=='flex') return;
+    if(e.code==='Space'){e.preventDefault();hit(C.mode==='simple'?'left':'left');}
+    if(e.code==='ArrowLeft'||e.code==='KeyA') hit('left');
+    if(e.code==='ArrowRight'||e.code==='KeyL') hit('right');
+});
+
+// --- Chart drawing ---
+function drawChart(canvas, data, color='#4da6ff', label='ms') {
+    const ctx=canvas.getContext('2d');
+    const W=canvas.width=canvas.offsetWidth*2, H=canvas.height=canvas.offsetHeight*2;
+    ctx.scale(2,2); const w=W/2, h=H/2;
+    ctx.clearRect(0,0,w,h);
+    if(!data.length) return;
+    const mn=Math.min(...data), mx=Math.max(...data);
+    const pad={t:20,b:25,l:45,r:10};
+    const cw=w-pad.l-pad.r, ch=h-pad.t-pad.b;
+    const range=Math.max(mx-mn,20);
+    const yMin=Math.max(0,mn-range*0.1), yMax=mx+range*0.1;
+
+    // Grid
+    ctx.strokeStyle='#1a1a1a'; ctx.lineWidth=0.5;
+    for(let i=0;i<4;i++){const y=pad.t+ch*(i/3);ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();
+    ctx.fillStyle='#555';ctx.font='10px Courier New';ctx.textAlign='right';
+    ctx.fillText(Math.round(yMax-(yMax-yMin)*(i/3))+label,pad.l-4,y+3);}
+
+    // Line
+    ctx.strokeStyle=color; ctx.lineWidth=1.5; ctx.beginPath();
+    data.forEach((v,i)=>{
+        const x=pad.l+(data.length===1?cw/2:cw*i/(data.length-1));
+        const y=pad.t+ch*(1-(v-yMin)/(yMax-yMin));
+        i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    });
+    ctx.stroke();
+
+    // Dots
+    ctx.fillStyle=color;
+    data.forEach((v,i)=>{
+        const x=pad.l+(data.length===1?cw/2:cw*i/(data.length-1));
+        const y=pad.t+ch*(1-(v-yMin)/(yMax-yMin));
+        ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill();
+    });
+
+    // Median line
+    const sorted=[...data].sort((a,b)=>a-b);
+    const med=sorted[Math.floor(sorted.length/2)];
+    const my=pad.t+ch*(1-(med-yMin)/(yMax-yMin));
+    ctx.strokeStyle='#00ff8866';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(pad.l,my);ctx.lineTo(w-pad.r,my);ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle='#00ff88';ctx.font='9px Courier New';ctx.textAlign='left';
+    ctx.fillText('med '+med,pad.l+2,my-4);
+}
+
+// --- Results ---
+function showResults() {
+    show('results');
+    const valid=res.filter(r=>!r.fs&&r.ok&&r.ms!=null);
+    const times=valid.map(r=>r.ms).sort((a,b)=>a-b);
+    const wrong=res.filter(r=>!r.fs&&!r.ok&&!r.ng).length;
+    const fss=res.filter(r=>r.fs).length;
+    const ngFail=res.filter(r=>r.ng&&!r.ngOk).length;
+    const totalGo=res.filter(r=>!r.fs&&r.cs!=='hold').length;
+    const correctGo=valid.length;
+    const leftT=valid.filter(r=>r.side==='left').map(r=>r.ms);
+    const rightT=valid.filter(r=>r.side==='right').map(r=>r.ms);
+    const avg=a=>a.length?Math.round(a.reduce((s,v)=>s+v,0)/a.length):null;
+    const cc=v=>v<220?'g':v<270?'y':'rd';
+    const row=(l,v,c)=>`<div class="sr"><span class="sl">${l}</span><span class="sv ${c||''}">${v}</span></div>`;
+
+    let h='';
+    if(times.length){
+        const med=times[Math.floor(times.length/2)], mn=avg(times);
+        const std=Math.round(Math.sqrt(times.reduce((s,t)=>s+(t-mn)**2,0)/times.length));
+        const acc=totalGo?Math.round(correctGo/totalGo*100):0;
+        h+=row('Median',med+' ms',cc(med));
+        h+=row('Mean',mn+' ms',cc(mn));
+        h+=row('Best',times[0]+' ms',cc(times[0]));
+        h+=row('Worst',times[times.length-1]+' ms');
+        h+=row('Std Dev',std+' ms');
+        h+=row('Accuracy',acc+'%',acc>=90?'g':acc>=70?'y':'rd');
+        if(leftT.length) h+=row('Left Avg',avg(leftT)+' ms',cc(avg(leftT)));
+        if(rightT.length) h+=row('Right Avg',avg(rightT)+' ms',cc(avg(rightT)));
+    } else h+=row('No valid trials','—');
+    h+=row('Wrong Side',wrong);
+    h+=row('False Starts',fss);
+    if(C.mode==='nogo') h+=row('No-Go Fails',ngFail);
+    document.getElementById('statsBox').innerHTML=h;
+
+    // Per-trial chart
+    document.getElementById('chart').style.display='';
+    const chartData=res.map(r=>r.ms).filter(v=>v!=null);
+    drawChart(document.getElementById('chart'), chartData);
+
+    // Trial list
+    document.getElementById('trialList').innerHTML=res.map((r,i)=>{
+        const n=`#${i+1}`;
+        if(r.fs) return `<div class="te fs">${n}: FALSE START</div>`;
+        if(r.ng&&!r.ngOk) return `<div class="te bad">${n}: NO-GO FAIL</div>`;
+        if(r.ng&&r.ngOk) return `<div class="te">${n}: HOLD ✓</div>`;
+        if(!r.ok) return `<div class="te bad">${n}: ${r.ms} ms (wrong)</div>`;
+        return `<div class="te">${n}: ${r.ms} ms — ${r.side||'hit'}</div>`;
+    }).join('');
+
+    // Save to history
+    if(times.length){
+        const med=times[Math.floor(times.length/2)];
+        saveSession(med, avg(times), times[0], C.mode, C.speed);
+    }
+    renderHistory();
+}
+
+// --- localStorage history ---
+const STORE_KEY = 'reaction_history';
+function getHistory() { try{return JSON.parse(localStorage.getItem(STORE_KEY))||[];}catch(e){return[];} }
+function saveSession(median, mean, best, mode, speed) {
+    const hist=getHistory();
+    hist.push({ date: new Date().toISOString(), median, mean, best, mode, speed });
+    // Keep last 200 sessions
+    if(hist.length>200) hist.splice(0,hist.length-200);
+    localStorage.setItem(STORE_KEY, JSON.stringify(hist));
+}
+
+function renderHistory() {
+    const hist=getHistory();
+    if(!hist.length){document.getElementById('history').style.display='none';return;}
+    document.getElementById('history').style.display='';
+
+    // Group by day
+    const days={};
+    hist.forEach(h=>{
+        const d=h.date.slice(0,10);
+        if(!days[d]) days[d]=[];
+        days[d].push(h);
+    });
+
+    // Daily median of medians
+    const dailyData=Object.entries(days).sort().slice(-30).map(([d,sessions])=>{
+        const meds=sessions.map(s=>s.median).sort((a,b)=>a-b);
+        return {date:d, median:meds[Math.floor(meds.length/2)], count:sessions.length};
+    });
+
+    drawChart(document.getElementById('histChart'), dailyData.map(d=>d.median), '#00ff88', 'ms');
+
+    document.getElementById('histList').innerHTML=dailyData.reverse().map(d=>
+        `<div style="padding:3px 0;display:flex;justify-content:space-between"><span>${d.date}</span><span style="color:#4da6ff">${d.median} ms</span><span style="color:#555">${d.count} sessions</span></div>`
+    ).join('');
+}
+
+// --- Start ---
+document.getElementById('goBtn').addEventListener('click', () => {
+    ea();
+    if(C.cue==='voice'){const p=new SpeechSynthesisUtterance('');p.volume=0;speechSynthesis.speak(p);}
+    trial=0; res=[]; show('test'); run();
+});
+document.getElementById('againBtn').addEventListener('click', () => { trial=0; res=[]; show('setup'); });
+document.getElementById('histBtn').addEventListener('click', () => {
+    show('results');
+    document.getElementById('statsBox').innerHTML='<div class="sr"><span class="sl">Run a session to see stats</span></div>';
+    document.getElementById('chart').style.display='none';
+    document.getElementById('trialList').innerHTML='';
+    renderHistory();
+});
+</script>
+</body>
+</html>
