@@ -70,11 +70,15 @@
 <div id="setup">
     <h1>Reaction Timer</h1>
     <div class="cg">
-        <h2>Mode</h2>
+        <h2>Reaction Drills</h2>
         <div class="bg">
             <button class="bm active" data-m="simple">Simple</button>
             <button class="bm" data-m="choice">Left / Right</button>
-            <button class="bm" data-m="nogo">Combo</button>
+            <button class="bm" data-m="nogo">L/R + No-Go</button>
+        </div>
+        <h2 style="margin-top:10px">Stance Drills</h2>
+        <div class="bg">
+            <button class="bm" data-m="stance">In Motion</button>
         </div>
     </div>
     <div class="cg">
@@ -161,13 +165,18 @@ function show(id) {
 }
 
 function zones(cls, lt, rt) {
-    const s = C.mode==='simple';
+    const s = C.mode==='simple' || C.mode==='stance';
     zR.style.display = s?'none':'';
     zL.style.flex = s?'1 1 100%':'1';
     zL.className='zone '+cls; zR.className='zone '+cls;
     if(lt!=null) zL.textContent = s ? (cls==='r'?'READY':'HIT') : lt;
     if(rt!=null) zR.textContent = rt;
 }
+
+const STANCE_ACTIONS = [
+    'sprawl','down block','level change','circle left','circle right',
+    'snap down','hip back','reshoot','switch','underhook'
+];
 
 function run() {
     if (trial >= C.trials) return showResults();
@@ -180,6 +189,19 @@ function run() {
 }
 
 function fire() {
+    if (C.mode==='stance') {
+        cueSide='any';
+        const action = STANCE_ACTIONS[Math.floor(Math.random()*STANCE_ACTIONS.length)];
+        cueText.textContent=action.toUpperCase(); cueText.className='cue-go';
+        zones('c','TAP','TAP');
+        // Always voice for stance mode
+        speechSynthesis.cancel();
+        const u=new SpeechSynthesisUtterance(action);
+        u.rate=1.2; u.volume=1; speechSynthesis.speak(u);
+        cueTime=performance.now(); waiting=true;
+        return;
+    }
+
     if (C.mode==='simple') cueSide='any';
     else if (C.mode==='nogo' && Math.random()<0.25) { cueSide='hold'; isNoGo=true; }
     else cueSide = Math.random()<0.5?'left':'right';
