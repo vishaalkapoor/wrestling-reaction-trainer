@@ -174,15 +174,20 @@ function zones(cls, lt, rt) {
 }
 
 const STANCE_ACTIONS = [
-    'sprawl','down block','level change','circle left','circle right',
-    'snap down','hip back','reshoot','switch','underhook'
+    'knee sprawl','sprawl','hip back',
+    'left down block','right down block','reshoot'
 ];
 
 function run() {
     if (trial >= C.trials) return showResults();
     trialCount.textContent = `${trial+1} / ${C.trials}`;
     cueText.textContent='Ready'; cueText.className='cue-r'; fb.textContent='';
-    zones('r','LEFT','RIGHT');
+    if (C.mode==='stance') {
+        zones('w','','');
+        zL.style.display='none'; zR.style.display='none';
+    } else {
+        zones('r','LEFT','RIGHT');
+    }
     waiting=false; isNoGo=false;
     const [lo,hi] = SPEED[C.speed];
     dtimer = setTimeout(fire, lo + Math.random()*(hi-lo));
@@ -190,15 +195,18 @@ function run() {
 
 function fire() {
     if (C.mode==='stance') {
-        cueSide='any';
         const action = STANCE_ACTIONS[Math.floor(Math.random()*STANCE_ACTIONS.length)];
         cueText.textContent=action.toUpperCase(); cueText.className='cue-go';
-        zones('c','TAP','TAP');
-        // Always voice for stance mode
         speechSynthesis.cancel();
         const u=new SpeechSynthesisUtterance(action);
-        u.rate=1.2; u.volume=1; speechSynthesis.speak(u);
-        cueTime=performance.now(); waiting=true;
+        u.rate=1.2; u.volume=1;
+        u.onend = () => {
+            cueText.textContent=''; 
+            res.push({ms:null,side:null,cs:action,ok:true,fs:false,stanceDrill:true});
+            trial++;
+            setTimeout(run, 300);
+        };
+        speechSynthesis.speak(u);
         return;
     }
 
@@ -338,7 +346,13 @@ function showResults() {
     const row=(l,v,c)=>`<div class="sr"><span class="sl">${l}</span><span class="sv ${c||''}">${v}</span></div>`;
 
     let h='';
-    if(times.length){
+    if(C.mode==='stance'){
+        // Stance mode: just show drill summary
+        const actions={};
+        res.filter(r=>r.stanceDrill).forEach(r=>{actions[r.cs]=(actions[r.cs]||0)+1;});
+        h+=row('Drills Completed',res.length,'g');
+        Object.entries(actions).forEach(([a,c])=>h+=row(a,c+'×'));
+    } else if(times.length){
         const med=times[Math.floor(times.length/2)], mn=avg(times);
         const std=Math.round(Math.sqrt(times.reduce((s,t)=>s+(t-mn)**2,0)/times.length));
         const acc=totalGo?Math.round(correctGo/totalGo*100):0;
@@ -364,6 +378,7 @@ function showResults() {
     // Trial list
     document.getElementById('trialList').innerHTML=res.map((r,i)=>{
         const n=`#${i+1}`;
+        if(r.stanceDrill) return `<div class="te">${n}: ${r.cs}</div>`;
         if(r.fs) return `<div class="te fs">${n}: FALSE START</div>`;
         if(r.ng&&!r.ngOk) return `<div class="te bad">${n}: NO-GO FAIL</div>`;
         if(r.ng&&r.ngOk) return `<div class="te">${n}: HOLD ✓</div>`;
